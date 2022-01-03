@@ -13,23 +13,3 @@
 
 }
 
-.header {
-    grid-area: h;
-    background-color: burlywood;
-}
-.header img{
-    width: 150px;
-}
-
-.nav {
-    grid-area: n;
-    background-color: coral;
-}
-
-.content {
-    grid-area: c;
-    background-color: lightgreen;
-}
-.content img{
-    width: 600px;
-}
