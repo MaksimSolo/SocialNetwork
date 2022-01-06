@@ -24,3 +24,4 @@ export function Post(props: PostType) {
     );
 };
 
+
