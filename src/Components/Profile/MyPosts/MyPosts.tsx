@@ -1,8 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from "./Post/Post";
+import {postDataType} from "../../../index";
 
-export function MyPosts() {
+
+export type MyPostsType = {
+    postData?: Array<postDataType>
+}
+
+export function MyPosts(props: MyPostsType) {
+
+    let [likeCount, setLikeCount] = useState<number>(0)
+
+
+    let postsItems = props.postData?.map(post => <Post message={post.message}
+                                                       id={post.id}
+                                                       likeCount={likeCount}
+                                                       setLikeCount={setLikeCount}/>)
     return (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
@@ -16,8 +30,7 @@ export function MyPosts() {
                 </div>
             </div>
             <div className={classes.posts}>
-                <Post message="Hi,guys, i'm still in Bryansk today!"/>
-                <Post message="Merry Christmas and Happy NY, everybody!"/>
+                {postsItems}
             </div>
         </div>
     );

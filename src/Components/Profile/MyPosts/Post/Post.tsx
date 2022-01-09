@@ -1,16 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import classes from './Post.module.css';
 
 export type PostType = {
+    id: string
     message: string
+    likeCount: number
+    setLikeCount: (likeCount: number) => void
 }
 
 export function Post(props: PostType) {
-    let [likeCount, setLikeCount] = useState<number>(0)
+
 
     const countLikes = () => {
-        likeCount = likeCount + 1;
-        setLikeCount(likeCount)
+        const likes = props.likeCount + 1;
+        props.setLikeCount(likes)
     }
     return (
         <div className={classes.item}>
@@ -18,7 +21,7 @@ export function Post(props: PostType) {
                 src="https://w7.pngwing.com/pngs/42/801/png-transparent-creative-girls-avatar-art-girls-avatar-star-star-girl-avatar.png"/>
             {props.message}
             <div>
-                <span onClick={countLikes}>like</span> - {likeCount}
+                <span onClick={countLikes}>like</span> - {props.likeCount}
             </div>
         </div>
     );
