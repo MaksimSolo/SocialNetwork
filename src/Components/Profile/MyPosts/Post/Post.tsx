@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Post.module.css';
 
-export type PostType = {
+type PostType = {
     id: string
     message: string
     likeCount: number

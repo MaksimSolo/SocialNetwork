@@ -1,8 +1,15 @@
 import React from 'react';
 import classes from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
+import {Friends} from "./Friends/Friends";
+import {FriendsDataType} from "../../redux/state";
 
-export const Navbar = () => {
+type NavbarType = {
+    friendsData: Array<FriendsDataType>
+}
+
+export const Navbar = (props: NavbarType) => {
+        const friendsItems = props.friendsData.map(friend => <Friends id={friend.id} name={friend.name} img={friend.img}/>)
         return (
             <nav className={classes.nav}>
                 <div className={classes.item}>
@@ -18,7 +25,14 @@ export const Navbar = () => {
                     <NavLink to='/music' className={({isActive}) => isActive ? classes.active : ''}>Music</NavLink>
                 </div>
                 <div className={classes.item}>
-                    <NavLink to='/settings' className={({isActive}) => isActive ? classes.active : ''}>Settings</NavLink>
+                    <NavLink to='/settings'
+                             className={({isActive}) => isActive ? classes.active : ''}>Settings</NavLink>
+                </div>
+                <div className={classes.friends}>
+                    <h2>Friends</h2>
+
+                        {friendsItems}
+
                 </div>
             </nav>
         );

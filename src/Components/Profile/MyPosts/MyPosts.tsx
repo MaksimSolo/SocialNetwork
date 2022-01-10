@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {postDataType} from "../../../index";
+import {PostDataType} from "../../../redux/state";
 
 
-export type MyPostsType = {
-    postData?: Array<postDataType>
+type MyPostsType = {
+    postData: Array<PostDataType>
 }
 
 export function MyPosts(props: MyPostsType) {
@@ -13,7 +13,7 @@ export function MyPosts(props: MyPostsType) {
     let [likeCount, setLikeCount] = useState<number>(0)
 
 
-    let postsItems = props.postData?.map(post => <Post message={post.message}
+    let postsItems = props.postData.map(post => <Post message={post.message}
                                                        id={post.id}
                                                        likeCount={likeCount}
                                                        setLikeCount={setLikeCount}/>)
