@@ -19,7 +19,10 @@ export function App(props: AppProps) {
             <Navbar friendsData={props.state.friendsSideBar.friendsData}/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path='/profile' element={<Profile postData={props.state.profileData.postData}/>}/>
+                    <Route path='/profile' element={<Profile postData={props.state.profileData.postData}
+                                                             addPost={props.state.profileData.addPost}
+                                                             updatePostText={props.state.profileData.updatePostText}
+                                                             newPostText={props.state.profileData.newPostText}/>}/>
                     <Route path='/dialogs'
                            element={<Dialogs messageData={props.state.messagesPage.messagesData}
                                              dialogsData={props.state.messagesPage.dialogsData}/>}/>
