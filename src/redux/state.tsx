@@ -1,4 +1,4 @@
-import {rerenderEntireTree} from "../render";
+let rerenderEntireTree: () => void;
 
 export type PostDataType = {
     id: string
@@ -76,19 +76,23 @@ export const state: StateType = {
             {id: '2', message: "Merry Christmas and Happy NY, everybody!"}
         ],
         addPost: function () {
-            debugger
+
             state.profileData.postData.push({id: '3', message: state.profileData.newPostText})
-            rerenderEntireTree(state)
+            rerenderEntireTree()
             state.profileData.newPostText = ''
         },
         newPostText: '',
         updatePostText: function (newText) {
-            debugger
+
             state.profileData.newPostText = newText;
-            rerenderEntireTree(state)
+            rerenderEntireTree()
 
         }
     }
+}
+
+export let subscribe = function (observer: () => void) {
+    rerenderEntireTree=observer;
 }
 
 

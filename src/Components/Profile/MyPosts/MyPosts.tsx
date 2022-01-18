@@ -18,12 +18,12 @@ export function MyPosts(props: MyPostsType) {
 
 
     let addPostByButtonAdd = () => {
-        debugger
+
         props.addPost()
     }
 
     const updatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        debugger
+
         let newText = textRef.current  as HTMLTextAreaElement
         props.updatePostText(newText.value)
     }
