@@ -16,15 +16,12 @@ export function MyPosts(props: MyPostsType) {
     let [likeCount, setLikeCount] = useState<number>(0)
     let textRef = useRef<HTMLTextAreaElement>(null)
 
-
     let addPostByButtonAdd = () => {
-
         props.addPost()
     }
 
-    const updatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-
-        let newText = textRef.current  as HTMLTextAreaElement
+    let updatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let newText = textRef.current as HTMLTextAreaElement
         props.updatePostText(newText.value)
     }
 

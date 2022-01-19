@@ -5,10 +5,11 @@ import {Navbar} from "./Components/Navbar/Navbar";
 import {Profile} from "./Components/Profile/Profile";
 import {Dialogs} from "./Components/Dialogs/Dialogs";
 import {Routes, Route} from "react-router-dom";
-import {StateType} from "./redux/state";
+import {StateType, store, StoreType} from "./redux/state";
 
 
 export type AppProps = {
+    store: StoreType
     state: StateType
 }
 
@@ -20,8 +21,8 @@ export function App(props: AppProps) {
             <div className='app-wrapper-content'>
                 <Routes>
                     <Route path='/profile' element={<Profile postData={props.state.profileData.postData}
-                                                             addPost={props.state.profileData.addPost}
-                                                             updatePostText={props.state.profileData.updatePostText}
+                                                             addPost={props.store.addPost.bind(store)}
+                                                             updatePostText={props.store.updatePostText.bind(store)}
                                                              newPostText={props.state.profileData.newPostText}/>}/>
                     <Route path='/dialogs'
                            element={<Dialogs messageData={props.state.messagesPage.messagesData}
