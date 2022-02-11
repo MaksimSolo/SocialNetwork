@@ -1,28 +1,27 @@
 import React, {ChangeEvent, useRef, useState} from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {PostDataType} from "../../../redux/state";
+import {ActionType, PostDataType} from "../../../redux/state";
 
 
 type MyPostsType = {
     postData: Array<PostDataType>
-    addPost: () => void
-    updatePostText: (text: string) => void
+    dispatch: (action: ActionType) => void
     newPostText: string
 }
 
 export function MyPosts(props: MyPostsType) {
 
     let [likeCount, setLikeCount] = useState<number>(0)
-    let textRef = useRef<HTMLTextAreaElement>(null)
+
 
     let addPostByButtonAdd = () => {
-        props.addPost()
+        props.dispatch({type: 'ADD-POST', newPostText: props.newPostText})
     }
 
     let updatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let newText = textRef.current as HTMLTextAreaElement
-        props.updatePostText(newText.value)
+        let newText = e.currentTarget.value;
+        props.dispatch({type: 'UPDATE-POST-TEXT', newText})
     }
 
     let postsItems = props.postData.map(post => <Post message={post.message}
@@ -34,7 +33,7 @@ export function MyPosts(props: MyPostsType) {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={textRef}
+                    <textarea
                               value={props.newPostText}
                               onChange={updatePostText}/>
                 </div>

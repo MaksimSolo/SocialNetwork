@@ -30,16 +30,25 @@ export type StateType = {
     profileData: ProfileDataType
 }
 export type StoreType = {
-    rerenderEntireTree: () => void
+    _rerenderEntireTree: () => void
     _state: StateType
-    addPost: () => void
-    updatePostText: (newText: string) => void
+    dispatch: (action: ActionType) => void
     subscribe: (observer: () => void) => void
     getState: () => void
 }
+export type AddPostType = {
+    type: 'ADD-POST'
+    newPostText: string
+}
+export type UpdatePostTextType = {
+    type: 'UPDATE-POST-TEXT'
+    newText: string
+}
+export type ActionType = AddPostType | UpdatePostTextType;
+
 
 export let store = {
-    rerenderEntireTree: function () {
+    _rerenderEntireTree: function () {
     },
     _state: {
         friendsSideBar: {
@@ -84,21 +93,27 @@ export let store = {
             newPostText: '',
         }
     },
-    addPost: function () {
-        debugger
-        this._state.profileData.postData.push({id: '3', message: this._state.profileData.newPostText})
-        this.rerenderEntireTree()
-        this._state.profileData.newPostText = ''
-    },
-    updatePostText: function (newText: string) {
-        debugger
-        this._state.profileData.newPostText = newText;
-        this.rerenderEntireTree()
-    },
+
     subscribe: function (observer: () => void) {
-        this.rerenderEntireTree = observer;
+        this._rerenderEntireTree = observer;
     },
     getState: function () {
         return this._state
+    },
+    dispatch(action: ActionType) {
+        switch (action.type) {
+            case 'ADD-POST':
+                this._state.profileData.postData.push({
+                    id: JSON.stringify(new Date().getTime()),
+                    message: action.newPostText
+                })
+                this._rerenderEntireTree()
+                this._state.profileData.newPostText = ''
+                break;
+            case "UPDATE-POST-TEXT":
+                this._state.profileData.newPostText = action.newText;
+                this._rerenderEntireTree()
+                break;
+        }
     }
 }
