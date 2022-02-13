@@ -25,7 +25,9 @@ export function App(props: AppProps) {
                                                              newPostText={props.state.profileData.newPostText}/>}/>
                     <Route path='/dialogs'
                            element={<Dialogs messageData={props.state.messagesPage.messagesData}
-                                             dialogsData={props.state.messagesPage.dialogsData}/>}/>
+                                             dialogsData={props.state.messagesPage.dialogsData}
+                                             textToSendMessage={props.state.messagesPage.textToSendMessage}
+                                             dispatch={props.store.dispatch.bind(store)}/>}/>
                     {/*<Route path='/news' element={<News/>}/>
                     <Route path='/music' element={<Music/>}/>
                     <Route path='/settings' element={<Settings/>}/>*/}

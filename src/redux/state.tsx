@@ -22,6 +22,7 @@ export type ProfileDataType = {
 export type MessagesPageType = {
     messagesData: Array<MessageDataType>
     dialogsData: Array<DialogsDataType>
+    textToSendMessage:string
 }
 export type FriendsSideBarType = { friendsData: Array<FriendsDataType> }
 export type StateType = {
@@ -39,6 +40,9 @@ export type StoreType = {
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
+const SEND_MESSAGE = 'SEND_MESSAGE';
+const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT';
+
 
 export type AddPostType = {
     type: typeof ADD_POST
@@ -48,14 +52,26 @@ export type UpdatePostTextType = {
     type: typeof UPDATE_POST_TEXT
     newText: string
 }
-export type ActionType = AddPostType | UpdatePostTextType;
+export type SendMessageType = {
+    type: typeof SEND_MESSAGE
+    textToSendMessage: string
+}
+export type UpdateMessageTextType = {
+    type: typeof UPDATE_MESSAGE_TEXT
+    newTextToMessage: string
+}
 
 
-
-export const addPostAC = (newPostText: string): AddPostType=>({type: ADD_POST, newPostText})
-export const updatePostTextAC = (newText: string): UpdatePostTextType=>({type: UPDATE_POST_TEXT, newText})
+export type ActionType = AddPostType | UpdatePostTextType | SendMessageType | UpdateMessageTextType
 
 
+export const addPostAC = (newPostText: string): AddPostType => ({type: ADD_POST, newPostText})
+export const updatePostTextAC = (newText: string): UpdatePostTextType => ({type: UPDATE_POST_TEXT, newText})
+export const sendMessageAC = (textToSendMessage: string): SendMessageType => ({type: SEND_MESSAGE, textToSendMessage})
+export const updateMessageTextAC = (newTextToMessage: string): UpdateMessageTextType => ({
+    type: UPDATE_MESSAGE_TEXT,
+    newTextToMessage
+})
 
 
 export let store = {
@@ -87,6 +103,7 @@ export let store = {
                 {id: '2', text: 'I have some lessons in the evening!'},
                 {id: '3', text: 'Native JS is so fun and so important!'},
             ],
+            textToSendMessage: '',
             dialogsData: [
                 {id: '1', name: 'Miroslav'},
                 {id: '2', name: 'Anna'},
@@ -125,7 +142,20 @@ export let store = {
                 this._state.profileData.newPostText = action.newText;
                 this._rerenderEntireTree()
                 break;
-            default: throw new Error('invalid type');
+            case SEND_MESSAGE:
+                this._state.messagesPage.messagesData.push({
+                    id: JSON.stringify(new Date().getTime()),
+                    text: action.textToSendMessage
+                });
+                this._rerenderEntireTree();
+                this._state.messagesPage.textToSendMessage = '';
+                break;
+            case UPDATE_MESSAGE_TEXT:
+                this._state.messagesPage.textToSendMessage= action.newTextToMessage;
+                this._rerenderEntireTree();
+                break;
+            default:
+                throw new Error('invalid type');
         }
     }
 }
