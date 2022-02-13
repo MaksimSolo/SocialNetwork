@@ -36,15 +36,26 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
     getState: () => void
 }
+
+const ADD_POST = 'ADD-POST';
+const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
+
 export type AddPostType = {
-    type: 'ADD-POST'
+    type: typeof ADD_POST
     newPostText: string
 }
 export type UpdatePostTextType = {
-    type: 'UPDATE-POST-TEXT'
+    type: typeof UPDATE_POST_TEXT
     newText: string
 }
 export type ActionType = AddPostType | UpdatePostTextType;
+
+
+
+export const addPostAC = (newPostText: string): AddPostType=>({type: ADD_POST, newPostText})
+export const updatePostTextAC = (newText: string): UpdatePostTextType=>({type: UPDATE_POST_TEXT, newText})
+
+
 
 
 export let store = {
@@ -102,7 +113,7 @@ export let store = {
     },
     dispatch(action: ActionType) {
         switch (action.type) {
-            case 'ADD-POST':
+            case ADD_POST:
                 this._state.profileData.postData.push({
                     id: JSON.stringify(new Date().getTime()),
                     message: action.newPostText
@@ -110,10 +121,11 @@ export let store = {
                 this._rerenderEntireTree()
                 this._state.profileData.newPostText = ''
                 break;
-            case "UPDATE-POST-TEXT":
+            case UPDATE_POST_TEXT:
                 this._state.profileData.newPostText = action.newText;
                 this._rerenderEntireTree()
                 break;
+            default: throw new Error('invalid type');
         }
     }
 }
