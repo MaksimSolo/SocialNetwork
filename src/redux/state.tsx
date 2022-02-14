@@ -1,3 +1,6 @@
+import {AddPostType, profileDataReducer, UpdatePostTextType} from "./profileDataReducer";
+import {messagesPageReducer, SendMessageType, UpdateMessageTextType} from "./messagesPageReducer";
+
 export type PostDataType = {
     id: string
     message: string
@@ -22,7 +25,7 @@ export type ProfileDataType = {
 export type MessagesPageType = {
     messagesData: Array<MessageDataType>
     dialogsData: Array<DialogsDataType>
-    textToSendMessage:string
+    textToSendMessage: string
 }
 export type FriendsSideBarType = { friendsData: Array<FriendsDataType> }
 export type StateType = {
@@ -38,41 +41,8 @@ export type StoreType = {
     getState: () => void
 }
 
-const ADD_POST = 'ADD-POST';
-const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
-const SEND_MESSAGE = 'SEND_MESSAGE';
-const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT';
-
-
-export type AddPostType = {
-    type: typeof ADD_POST
-    newPostText: string
-}
-export type UpdatePostTextType = {
-    type: typeof UPDATE_POST_TEXT
-    newText: string
-}
-export type SendMessageType = {
-    type: typeof SEND_MESSAGE
-    textToSendMessage: string
-}
-export type UpdateMessageTextType = {
-    type: typeof UPDATE_MESSAGE_TEXT
-    newTextToMessage: string
-}
-
 
 export type ActionType = AddPostType | UpdatePostTextType | SendMessageType | UpdateMessageTextType
-
-
-export const addPostAC = (newPostText: string): AddPostType => ({type: ADD_POST, newPostText})
-export const updatePostTextAC = (newText: string): UpdatePostTextType => ({type: UPDATE_POST_TEXT, newText})
-export const sendMessageAC = (textToSendMessage: string): SendMessageType => ({type: SEND_MESSAGE, textToSendMessage})
-export const updateMessageTextAC = (newTextToMessage: string): UpdateMessageTextType => ({
-    type: UPDATE_MESSAGE_TEXT,
-    newTextToMessage
-})
-
 
 export let store = {
     _rerenderEntireTree: function () {
@@ -129,33 +99,9 @@ export let store = {
         return this._state
     },
     dispatch(action: ActionType) {
-        switch (action.type) {
-            case ADD_POST:
-                this._state.profileData.postData.push({
-                    id: JSON.stringify(new Date().getTime()),
-                    message: action.newPostText
-                })
-                this._rerenderEntireTree()
-                this._state.profileData.newPostText = ''
-                break;
-            case UPDATE_POST_TEXT:
-                this._state.profileData.newPostText = action.newText;
-                this._rerenderEntireTree()
-                break;
-            case SEND_MESSAGE:
-                this._state.messagesPage.messagesData.push({
-                    id: JSON.stringify(new Date().getTime()),
-                    text: action.textToSendMessage
-                });
-                this._rerenderEntireTree();
-                this._state.messagesPage.textToSendMessage = '';
-                break;
-            case UPDATE_MESSAGE_TEXT:
-                this._state.messagesPage.textToSendMessage= action.newTextToMessage;
-                this._rerenderEntireTree();
-                break;
-            default:
-                throw new Error('invalid type');
-        }
+        profileDataReducer(this._state.profileData, action);
+        messagesPageReducer(this._state.messagesPage, action)
+        this._rerenderEntireTree();
     }
 }
+
