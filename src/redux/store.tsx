@@ -1,5 +1,6 @@
 import {AddPostType, profileDataReducer, UpdatePostTextType} from "./profileDataReducer";
 import {messagesPageReducer, SendMessageType, UpdateMessageTextType} from "./messagesPageReducer";
+import {AppStateType} from "./redux-store";
 
 export type PostDataType = {
     id: string
@@ -38,7 +39,7 @@ export type StoreType = {
     _state: StateType
     dispatch: (action: ActionType) => void
     subscribe: (observer: () => void) => void
-    getState: () => void
+    getState: () => AppStateType
 }
 
 
