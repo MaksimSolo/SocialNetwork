@@ -1,4 +1,4 @@
-import {ActionType, ProfileDataType,} from "./state";
+import {ActionType, ProfileDataType,} from "./store";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
@@ -12,7 +12,17 @@ export type UpdatePostTextType = {
     newText: string
 }
 
-export const profileDataReducer = (state: ProfileDataType, action: ActionType):ProfileDataType => {
+let initialState: ProfileDataType = {
+    postData: [
+        {id: '1', message: "Hi,guys, i'm still in Bryansk today!"},
+        {id: '2', message: "Merry Christmas and Happy NY, everybody!"}
+    ],
+        newPostText: '',
+}
+
+
+
+export const profileDataReducer = (state: ProfileDataType = initialState, action: ActionType):ProfileDataType => {
     switch (action.type) {
         case ADD_POST:
             state.postData.push({

@@ -1,5 +1,6 @@
 import {AddPostType, profileDataReducer, UpdatePostTextType} from "./profileDataReducer";
 import {messagesPageReducer, SendMessageType, UpdateMessageTextType} from "./messagesPageReducer";
+import {AppStateType} from "./redux-store";
 
 export type PostDataType = {
     id: string
@@ -28,17 +29,17 @@ export type MessagesPageType = {
     textToSendMessage: string
 }
 export type FriendsSideBarType = { friendsData: Array<FriendsDataType> }
-export type StateType = {
+/*export type StateType = {
     friendsSideBar: FriendsSideBarType
     messagesPage: MessagesPageType
     profileData: ProfileDataType
-}
+}*/
 export type StoreType = {
     _rerenderEntireTree: () => void
-    _state: StateType
+    _state: AppStateType
     dispatch: (action: ActionType) => void
     subscribe: (observer: () => void) => void
-    getState: () => void
+    getState: () => AppStateType
 }
 
 
