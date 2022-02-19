@@ -2,30 +2,28 @@ import React, {ChangeEvent,} from 'react';
 import classes from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {ActionType, DialogsDataType, MessageDataType,} from "../../redux/store";
-import {sendMessageAC, updateMessageTextAC} from "../../redux/messagesPageReducer";
+import {MessagesPageType,} from "../../redux/store";
 
 
 export type DialogsType = {
-    messageData: Array<MessageDataType>
-    dialogsData: Array<DialogsDataType>
-    textToSendMessage: string
-    dispatch: (action: ActionType) => void
+    messagesPage: MessagesPageType
+    sendMessageByButtonADD: () => void
+    updateMessageText: (newTextToMessage: string) => void
 }
 
 export const Dialogs = (props: DialogsType) => {
 
 
     const sendMessageByButtonADD = () => {
-        props.dispatch(sendMessageAC(props.textToSendMessage))
+        props.sendMessageByButtonADD()
     }
     const updateMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newTextToMessage = e.currentTarget.value;
-        props.dispatch(updateMessageTextAC(newTextToMessage))
+        props.updateMessageText(newTextToMessage)
     }
 
-    const dialogItems = props.dialogsData.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>);
-    const messagesItems = props.messageData.map(mess => <Message text={mess.text} id={mess.id}/>)
+    const dialogItems = props.messagesPage.dialogsData.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>);
+    const messagesItems = props.messagesPage.messagesData.map(mess => <Message text={mess.text} id={mess.id}/>)
 
     return (
         <div className={classes.dialogs}>
@@ -34,7 +32,7 @@ export const Dialogs = (props: DialogsType) => {
             </div>
             <div className={classes.messages}>
                 {messagesItems}
-                <textarea value={props.textToSendMessage}
+                <textarea value={props.messagesPage.textToSendMessage}
                           onChange={updateMessageText}/>
                 <div>
                     <button onClick={sendMessageByButtonADD}>ADD</button>

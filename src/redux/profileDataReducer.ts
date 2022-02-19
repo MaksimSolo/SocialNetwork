@@ -14,20 +14,20 @@ export type UpdatePostTextType = {
 
 let initialState: ProfileDataType = {
     postData: [
-        {id: '1', message: "Hi,guys, i'm still in Bryansk today!"},
-        {id: '2', message: "Merry Christmas and Happy NY, everybody!"}
+        {id: '1', message: "Hi,guys, i'm still in Bryansk today!", likeCount: 2345},
+        {id: '2', message: "Merry Christmas and Happy NY, everybody!", likeCount: 987}
     ],
-        newPostText: '',
+    newPostText: '',
 }
 
 
-
-export const profileDataReducer = (state: ProfileDataType = initialState, action: ActionType):ProfileDataType => {
+export const profileDataReducer = (state: ProfileDataType = initialState, action: ActionType): ProfileDataType => {
     switch (action.type) {
         case ADD_POST:
             state.postData.push({
                 id: JSON.stringify(new Date().getTime()),
                 message: action.newPostText,
+                likeCount: 0,
             })
             state.newPostText = '';
             return state;

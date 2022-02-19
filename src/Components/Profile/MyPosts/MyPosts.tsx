@@ -1,42 +1,39 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {ActionType, PostDataType} from "../../../redux/store";
-import {addPostAC, updatePostTextAC} from "../../../redux/profileDataReducer";
+import {PostDataType, ProfileDataType} from "../../../redux/store";
 
 
 type MyPostsType = {
-    postData: Array<PostDataType>
-    dispatch: (action: ActionType) => void
-    newPostText: string
+    profileData: ProfileDataType
+    addPost: () => void
+    updatePostText: (newText: string) => void
 }
 
 export function MyPosts(props: MyPostsType) {
 
-    let [likeCount, setLikeCount] = useState<number>(0)
-
 
     let addPostByButtonAdd = () => {
-        props.dispatch(addPostAC(props.newPostText))
+        props.addPost();
     }
 
     let updatePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let newText = e.currentTarget.value;
-        props.dispatch(updatePostTextAC(newText))
+        let newText: string = e.currentTarget.value;
+        props.updatePostText(newText);
     }
 
-    let postsItems = props.postData.map(post => <Post message={post.message}
+    let postsItems = props.profileData.postData.map(post => <Post message={post.message}
                                                       id={post.id}
-                                                      likeCount={likeCount}
-                                                      setLikeCount={setLikeCount}/>)
+                                                      likeCount={post.likeCount}
+    />)
     return (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
                     <textarea
-                              value={props.newPostText}
-                              onChange={updatePostText}/>
+                        value={props.profileData.newPostText}
+                        onChange={updatePostText}/>
                 </div>
                 <div>
                     <button onClick={addPostByButtonAdd}>ADD</button>

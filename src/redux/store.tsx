@@ -5,6 +5,7 @@ import {AppStateType} from "./redux-store";
 export type PostDataType = {
     id: string
     message: string
+    likeCount:number
 }
 export type DialogsDataType = {
     id: string
@@ -86,8 +87,8 @@ export let store = {
         },
         profileData: {
             postData: [
-                {id: '1', message: "Hi,guys, i'm still in Bryansk today!"},
-                {id: '2', message: "Merry Christmas and Happy NY, everybody!"}
+                {id: '1', message: "Hi,guys, i'm still in Bryansk today!", likeCount: 2345},
+                {id: '2', message: "Merry Christmas and Happy NY, everybody!", likeCount: 987}
             ],
             newPostText: '',
         }
