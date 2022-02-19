@@ -1,10 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import {App} from './App';
-import {store} from "./redux/store";
 
 test.skip('Renders <App /> component correctly', () => {
-  render(<App store={store} state={store.getState()}/>);
+  render(<App />);
   const linkElement = screen.getByText(/Getting started with React testing library/i);
   expect(linkElement).toBeInTheDocument();
 });
@@ -12,7 +11,7 @@ test.skip('Renders <App /> component correctly', () => {
 
 describe.skip("<App />", () => {
   it("Renders <App /> component correctly", () => {
-    render(<App store={store} state={store.getState()}/>);
+    render(<App />);
     expect(screen.getByText(/Getting started with React testing library/i)).toBeInTheDocument();
   });
 });
