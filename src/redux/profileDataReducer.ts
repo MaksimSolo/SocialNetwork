@@ -5,7 +5,7 @@ const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 
 export type AddPostType = {
     type: typeof ADD_POST
-    newPostText: string
+    // newPostText: string
 }
 export type UpdatePostTextType = {
     type: typeof UPDATE_POST_TEXT
@@ -24,20 +24,22 @@ let initialState: ProfileDataType = {
 export const profileDataReducer = (state: ProfileDataType = initialState, action: ActionType): ProfileDataType => {
     switch (action.type) {
         case ADD_POST:
-            state.postData.push({
-                id: JSON.stringify(new Date().getTime()),
-                message: action.newPostText,
-                likeCount: 0,
-            })
-            state.newPostText = '';
-            return state;
+            let textToPost = state.newPostText;
+            return {
+                ...state, postData: [...state.postData, {
+                    id: JSON.stringify(new Date().getTime()),
+                    message: textToPost,
+                    likeCount: 0}],
+                newPostText: '',
+            };
         case UPDATE_POST_TEXT:
-            state.newPostText = action.newText;
-            return state;
+            return {
+                ...state, newPostText: action.newText
+            };
         default:
             return state;
     }
 }
 
-export const addPostAC = (newPostText: string): AddPostType => ({type: ADD_POST, newPostText});
+export const addPostAC = (): AddPostType => ({type: ADD_POST});
 export const updatePostTextAC = (newText: string): UpdatePostTextType => ({type: UPDATE_POST_TEXT, newText})

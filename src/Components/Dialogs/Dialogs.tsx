@@ -22,8 +22,8 @@ export const Dialogs = (props: DialogsType) => {
         props.updateMessageText(newTextToMessage)
     }
 
-    const dialogItems = props.messagesPage.dialogsData.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>);
-    const messagesItems = props.messagesPage.messagesData.map(mess => <Message text={mess.text} id={mess.id}/>)
+    const dialogItems = props.messagesPage.dialogsData.map(dialog => <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>);
+    const messagesItems = props.messagesPage.messagesData.map(mess => <Message key={mess.id} text={mess.text} id={mess.id}/>)
 
     return (
         <div className={classes.dialogs}>

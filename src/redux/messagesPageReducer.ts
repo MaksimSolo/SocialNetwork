@@ -7,7 +7,6 @@ const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT';
 
 export type SendMessageType = {
     type: typeof SEND_MESSAGE
-    textToSendMessage: string
 }
 export type UpdateMessageTextType = {
     type: typeof UPDATE_MESSAGE_TEXT
@@ -35,21 +34,20 @@ let initialState = {
 export const messagesPageReducer = (state: MessagesPageType = initialState, action: ActionType): MessagesPageType => {
     switch (action.type) {
         case SEND_MESSAGE:
-            state.messagesData.push({
-                id: JSON.stringify(new Date().getTime()),
-                text: action.textToSendMessage
-            });
-            state.textToSendMessage = '';
-            return state;
+            return {
+                ...state, messagesData: [...state.messagesData, {
+                    id: JSON.stringify(new Date().getTime()),
+                    text: state.textToSendMessage
+                }], textToSendMessage: '',
+            }
         case UPDATE_MESSAGE_TEXT:
-            state.textToSendMessage = action.newTextToMessage;
-            return state;
+            return {...state, textToSendMessage: action.newTextToMessage}
         default:
             return state;
     }
 }
 
-export const sendMessageAC = (textToSendMessage: string): SendMessageType => ({type: SEND_MESSAGE, textToSendMessage})
+export const sendMessageAC = (): SendMessageType => ({type: SEND_MESSAGE,})
 export const updateMessageTextAC = (newTextToMessage: string): UpdateMessageTextType => ({
     type: UPDATE_MESSAGE_TEXT,
     newTextToMessage

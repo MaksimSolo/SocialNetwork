@@ -1,16 +1,17 @@
 import React from 'react';
 import './App.css';
 import {Header} from "./Components/Header/Header";
-import {Navbar} from "./Components/Navbar/Navbar";
 import {Profile} from "./Components/Profile/Profile";
 import {Routes, Route} from "react-router-dom";
 import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
 import {NavbarContainer} from "./Components/Navbar/NavbarContainer";
 
 
-export type AppProps = {}
 
-export function App(props: AppProps) {
+
+
+export function App() {
+
     return (
         <div className='app-wrapper'>
             <Header/>

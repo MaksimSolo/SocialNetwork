@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {PostDataType, ProfileDataType} from "../../../redux/store";
+import {ProfileDataType} from "../../../redux/store";
 
 
 type MyPostsType = {
@@ -12,7 +12,6 @@ type MyPostsType = {
 
 export function MyPosts(props: MyPostsType) {
 
-
     let addPostByButtonAdd = () => {
         props.addPost();
     }
@@ -22,10 +21,13 @@ export function MyPosts(props: MyPostsType) {
         props.updatePostText(newText);
     }
 
-    let postsItems = props.profileData.postData.map(post => <Post message={post.message}
-                                                      id={post.id}
-                                                      likeCount={post.likeCount}
-    />)
+    let postsItems = props.profileData.postData.map(post =>
+        <Post
+            key={post.id}
+            message={post.message}
+            id={post.id}
+            likeCount={post.likeCount}
+        />)
     return (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>

@@ -1,4 +1,11 @@
-import {ActionType, FriendsSideBarType, } from "./store";
+import {FriendsSideBarType,} from "./store";
+
+const DO_SOME = 'DO_SOME';
+
+export type doSomeType = {
+    type: typeof DO_SOME
+}
+
 
 let initialState = {
     friendsData: [
@@ -21,8 +28,13 @@ let initialState = {
 }
 
 
-export const friendsSideBarReducer = (state: FriendsSideBarType = initialState, action: ActionType): FriendsSideBarType => {
-
+export const friendsSideBarReducer = (state: FriendsSideBarType = initialState, action: doSomeType): FriendsSideBarType => {
+    switch (action.type) {
+        case DO_SOME:
+            return state
+        default:
             return state;
     }
+}
 
+export const doSomeAC = (): doSomeType => ({type: DO_SOME})

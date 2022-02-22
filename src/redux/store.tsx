@@ -29,7 +29,7 @@ export type MessagesPageType = {
     dialogsData: Array<DialogsDataType>
     textToSendMessage: string
 }
-export type FriendsSideBarType = { friendsData: Array<FriendsDataType> }
+export type FriendsSideBarType = { friendsData: Array<FriendsDataType>}
 /*export type StateType = {
     friendsSideBar: FriendsSideBarType
     messagesPage: MessagesPageType
@@ -46,7 +46,7 @@ export type StoreType = {
 
 export type ActionType = AddPostType | UpdatePostTextType | SendMessageType | UpdateMessageTextType
 
-export let store = {
+ let store = {
     _rerenderEntireTree: function () {
     },
     _state: {

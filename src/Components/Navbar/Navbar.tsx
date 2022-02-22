@@ -2,14 +2,21 @@ import React from 'react';
 import classes from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
 import {Friends} from "./Friends/Friends";
-import {FriendsDataType} from "../../redux/store";
+import {FriendsSideBarType} from "../../redux/store";
 
 type NavbarType = {
-    friendsData: Array<FriendsDataType>
+    friendsSideBar: FriendsSideBarType
+    doSome: () => void
 }
 
 export const Navbar = (props: NavbarType) => {
-        const friendsItems = props.friendsData.map(friend => <Friends id={friend.id} name={friend.name} img={friend.img}/>)
+
+        const friendsItems = props.friendsSideBar.friendsData.map((friend) => {
+                return (
+                    <Friends key={friend.id} id={friend.id} name={friend.name} img={friend.img}/>
+                )
+            }
+        )
         return (
             <nav className={classes.nav}>
                 <div className={classes.item}>
@@ -31,7 +38,7 @@ export const Navbar = (props: NavbarType) => {
                 <div className={classes.friends}>
                     <h2>Friends</h2>
 
-                        {friendsItems}
+                    {friendsItems}
 
                 </div>
             </nav>
