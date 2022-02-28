@@ -14,6 +14,7 @@ export type DialogsType = {
 export const Dialogs = (props: DialogsType) => {
 
 
+
     const sendMessageByButtonADD = () => {
         props.sendMessageByButtonADD()
     }

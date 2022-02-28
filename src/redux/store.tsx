@@ -1,11 +1,12 @@
 import {AddPostType, profileDataReducer, UpdatePostTextType} from "./profileDataReducer";
 import {messagesPageReducer, SendMessageType, UpdateMessageTextType} from "./messagesPageReducer";
 import {AppStateType} from "./redux-store";
+import {SetUsersType, ToggleFollowType} from "./usersDataReducer";
 
 export type PostDataType = {
     id: string
     message: string
-    likeCount:number
+    likeCount: number
 }
 export type DialogsDataType = {
     id: string
@@ -29,7 +30,7 @@ export type MessagesPageType = {
     dialogsData: Array<DialogsDataType>
     textToSendMessage: string
 }
-export type FriendsSideBarType = { friendsData: Array<FriendsDataType>}
+export type FriendsSideBarType = { friendsData: Array<FriendsDataType> }
 /*export type StateType = {
     friendsSideBar: FriendsSideBarType
     messagesPage: MessagesPageType
@@ -44,9 +45,15 @@ export type StoreType = {
 }
 
 
-export type ActionType = AddPostType | UpdatePostTextType | SendMessageType | UpdateMessageTextType
+export type ActionType =
+    AddPostType
+    | UpdatePostTextType
+    | SendMessageType
+    | UpdateMessageTextType
+    | ToggleFollowType
+    | SetUsersType
 
- let store = {
+let store = {
     _rerenderEntireTree: function () {
     },
     _state: {

@@ -5,6 +5,7 @@ import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 
 export function Profile() {
+    debugger
     return (
         <div className={classes.profile}>
             <ProfileInfo/>
