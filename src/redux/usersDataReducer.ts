@@ -5,24 +5,25 @@ const SET_USERS = 'SET_USERS';
 
 export type ToggleFollowType = {
     type: typeof TOGGLE_FOLLOW
-    userID: string
+    userID: number
 }
 export type SetUsersType = {
     type: typeof SET_USERS
     users: Array<UsersType>
 }
 
-type LocationType = {
-    city: string
-    country: string
+type PhotoUserType = {
+    small: string
+    large: string
 }
 export type UsersType = {
-    id: string
-    photoUrl: string
-    followed: boolean
-    fullName: string
+    name: string
+    id: number
+    uniqueUrlName: string
+    photos: PhotoUserType
     status: string
-    location: LocationType
+    followed: boolean
+
 }
 export type UsersDataType = {
     users: Array<UsersType>
@@ -45,5 +46,5 @@ export const usersDataReducer = (state: UsersDataType = initialState, action: Ac
 }
 
 
-export const toggleFollowAC = (userID: string): ToggleFollowType => ({type: TOGGLE_FOLLOW, userID})
+export const toggleFollowAC = (userID: number): ToggleFollowType => ({type: TOGGLE_FOLLOW, userID})
 export const setUsersAC = (users: Array<UsersType>): SetUsersType => ({type: SET_USERS, users})

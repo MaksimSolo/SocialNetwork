@@ -1,43 +1,22 @@
 import React from 'react';
 import {UsersType} from "../../redux/usersDataReducer";
 import style from './Users.module.css'
+import axios from "axios";
+import userPhoto from './../../images/userr.png'
 
 type UsersPropType = {
     users: Array<UsersType>
-    toggleFollow: (userID: string) => void
+    toggleFollow: (userID: number) => void
     setUsers: (users: Array<UsersType>) => void
 }
 export const Users = (props: UsersPropType) => {
     console.log('USERS')
 
-    if (props.users.length ===0) {
-        props.setUsers([
-                {
-                    id: '1',
-                    photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq1C2FrebT4DbIExkejoMYfuE92NJBQsDjBg&usqp=CAU',
-                    followed: true,
-                    fullName: 'Maksim',
-                    status: "Hi everybody, i'm student",
-                    location: {city: 'Bryansk', country: 'Russia'}
-                },
-                {
-                    id: '2',
-                    photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq1C2FrebT4DbIExkejoMYfuE92NJBQsDjBg&usqp=CAU',
-                    followed: false,
-                    fullName: 'Anna',
-                    status: 'Stop War!',
-                    location: {city: 'Antonovka', country: 'Russia'}
-                },
-                {
-                    id: '3',
-                    photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq1C2FrebT4DbIExkejoMYfuE92NJBQsDjBg&usqp=CAU',
-                    followed: true,
-                    fullName: 'Hasbulla',
-                    status: 'Believe in Jesus',
-                    location: {city: 'Amman', country: 'Jordan'}
-                },
-            ],
-        )
+    if (props.users.length === 0) {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            debugger
+            props.setUsers(response.data.items)
+        })
     }
     return (
         <div>
@@ -46,8 +25,8 @@ export const Users = (props: UsersPropType) => {
                 <span>
                     <div>
                         <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq1C2FrebT4DbIExkejoMYfuE92NJBQsDjBg&usqp=CAU"
-                            alt=""
+                            src={u.photos.small? u.photos.small: userPhoto}
+                            alt={userPhoto}
                             className={style.usersPhoto}/>
                     </div>
                     <div>
@@ -61,13 +40,13 @@ export const Users = (props: UsersPropType) => {
                 </span>
                     <span>
                      <span>
-                         <div>{u.fullName}</div>
+                         <div>{u.name}</div>
                          <div>{u.status}</div>
                      </span>
-                    <span>
+                    {/*<span>
                         <div>{u.location.country}</div>
                         <div>{u.location.city}</div>
-                    </span>
+                    </span>*/}
                 </span>
                 </div>
             )}

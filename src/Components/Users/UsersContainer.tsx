@@ -7,7 +7,7 @@ import {setUsersAC, toggleFollowAC, UsersType} from "../../redux/usersDataReduce
 const mapStateToProps = (state: AppStateType) => ({users: state.usersData.users});
 const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
-        toggleFollow: (userID: string) => {
+        toggleFollow: (userID: number) => {
             dispatch(toggleFollowAC(userID))
         },
         setUsers: (users: Array<UsersType>) => {
