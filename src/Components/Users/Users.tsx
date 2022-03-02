@@ -1,26 +1,27 @@
 import React from 'react';
 import {UsersType} from "../../redux/usersDataReducer";
-import style from './Users.module.css'
 import axios from "axios";
-import userPhoto from './../../images/userr.png'
+import userPhoto from "../../images/userr.png";
+import style from "./Users.module.css";
+
 
 type UsersPropType = {
     users: Array<UsersType>
     toggleFollow: (userID: number) => void
     setUsers: (users: Array<UsersType>) => void
 }
-export const Users = (props: UsersPropType) => {
-    console.log('USERS')
 
-    if (props.users.length === 0) {
+export class Users extends React.Component<UsersPropType, UsersPropType> {
+    constructor(props: UsersPropType) {
+        super(props);
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-            debugger
-            props.setUsers(response.data.items)
-        })
+                this.props.setUsers(response.data.items)
+            }
+        );
     }
-    return (
-        <div>
-            {props.users.map(u =>
+    render=()=>{
+        return <div>
+            {this.props.users.map(u =>
                 <div key={u.id}>
                 <span>
                     <div>
@@ -31,10 +32,10 @@ export const Users = (props: UsersPropType) => {
                     </div>
                     <div>
                         {u.followed ? <button onClick={() => {
-                                props.toggleFollow(u.id)
+                                this.props.toggleFollow(u.id)
                             }}>Unfollow</button> :
                             <button onClick={() => {
-                                props.toggleFollow(u.id)
+                                this.props.toggleFollow(u.id)
                             }}>Follow</button>}
                     </div>
                 </span>
@@ -43,14 +44,15 @@ export const Users = (props: UsersPropType) => {
                          <div>{u.name}</div>
                          <div>{u.status}</div>
                      </span>
-                    {/*<span>
-                        <div>{u.location.country}</div>
-                        <div>{u.location.city}</div>
-                    </span>*/}
+                        <span>
+                        <div>{'u.location.country'}</div>
+                        <div>{'u.location.city'}</div>
+                    </span>
                 </span>
                 </div>
             )}
         </div>
-    )
-};
+    }
+
+}
 
