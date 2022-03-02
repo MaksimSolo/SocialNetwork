@@ -3,6 +3,7 @@ import {UsersType} from "../../redux/usersDataReducer";
 import axios from "axios";
 import userPhoto from "../../images/userr.png";
 import style from "./Users.module.css";
+import {AppStateType} from "../../redux/redux-store";
 
 
 type UsersPropType = {
@@ -11,14 +12,15 @@ type UsersPropType = {
     setUsers: (users: Array<UsersType>) => void
 }
 
-export class Users extends React.Component<UsersPropType, UsersPropType> {
-    constructor(props: UsersPropType) {
-        super(props);
+export class Users extends React.Component<UsersPropType, AppStateType> {
+
+    componentDidMount() {
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
                 this.props.setUsers(response.data.items)
             }
         );
     }
+
     render=()=>{
         return <div>
             {this.props.users.map(u =>
