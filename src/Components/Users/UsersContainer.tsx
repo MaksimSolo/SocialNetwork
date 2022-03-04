@@ -5,7 +5,7 @@ import {
     changeCurrentPageAC,
     setUsersAC,
     setUsersTotalCountAC,
-    toggleFollowAC,
+    toggleFollowAC, toggleInProgressAC, toggleInProgressType,
     UsersType
 } from "../../redux/usersDataReducer";
 import React from "react";
@@ -18,6 +18,8 @@ type UsersAPIComponentPropType = {
     pageSize: number
     currentPage: number
     toggleFollow: (userID: number) => void
+    toggleInProgress: (inProgress: boolean) => void,
+    inProgress: boolean
     setUsers: (users: Array<UsersType>) => void
     changeCurrentPage: (newPage: number) => void
     setUsersTotalCount: (totalUsersCount: number) => void
@@ -26,17 +28,21 @@ type UsersAPIComponentPropType = {
 export class UsersAPIComponent extends React.Component<UsersAPIComponentPropType, AppStateType> {
 
     componentDidMount() {
+        this.props.toggleInProgress(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
                 this.props.setUsers(response.data.items);
                 this.props.setUsersTotalCount(response.data.totalCount)
+                this.props.toggleInProgress(false)
             }
         );
     }
 
     onChangingCurrentPage = (newPage: number) => {
         this.props.changeCurrentPage(newPage);
+        this.props.toggleInProgress(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${newPage}&count=${this.props.pageSize}`).then(response => {
                 this.props.setUsers(response.data.items);
+                this.props.toggleInProgress(false)
             }
         );
     }
@@ -49,12 +55,16 @@ export class UsersAPIComponent extends React.Component<UsersAPIComponentPropType
                           setUsers={this.props.setUsers}
                           setUsersTotalCount={this.props.setUsersTotalCount}
                           totalUsersCount={this.props.totalUsersCount}
-                          toggleFollow={this.props.toggleFollow}/>
+                          toggleFollow={this.props.toggleFollow}
+                          inProgress={this.props.inProgress}
+    />
 
 }
 
-const mapStateToProps = (state: AppStateType) => ({users: state.usersData.users, totalUsersCount: state.usersData.totalUsersCount,
-    pageSize: state.usersData.pageSize, currentPage: state.usersData.currentPage});
+const mapStateToProps = (state: AppStateType) => ({
+    users: state.usersData.users, totalUsersCount: state.usersData.totalUsersCount,
+    pageSize: state.usersData.pageSize, currentPage: state.usersData.currentPage, inProgress: state.usersData.inProgress
+});
 const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
         toggleFollow: (userID: number) => {
@@ -63,11 +73,14 @@ const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
         setUsers: (users: Array<UsersType>) => {
             dispatch(setUsersAC(users))
         },
-        changeCurrentPage: (newPage:number)=>{
-          dispatch(changeCurrentPageAC(newPage))
+        changeCurrentPage: (newPage: number) => {
+            dispatch(changeCurrentPageAC(newPage))
         },
-        setUsersTotalCount: (totalUsersCount:number)=>{
+        setUsersTotalCount: (totalUsersCount: number) => {
             dispatch(setUsersTotalCountAC(totalUsersCount))
+        },
+        toggleInProgress: (inProgress: boolean) => {
+            dispatch(toggleInProgressAC(inProgress))
         }
     }
 }

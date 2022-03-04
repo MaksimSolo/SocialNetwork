@@ -1,7 +1,13 @@
 import {AddPostType, profileDataReducer, UpdatePostTextType} from "./profileDataReducer";
 import {messagesPageReducer, SendMessageType, UpdateMessageTextType} from "./messagesPageReducer";
 import {AppStateType} from "./redux-store";
-import {ChangeCurrentPageType, SetUsersTotalCountType, SetUsersType, ToggleFollowType} from "./usersDataReducer";
+import {
+    ChangeCurrentPageType,
+    SetUsersTotalCountType,
+    SetUsersType,
+    ToggleFollowType,
+    toggleInProgressType
+} from "./usersDataReducer";
 
 export type PostDataType = {
     id: string
@@ -54,6 +60,7 @@ export type ActionType =
     | SetUsersType
     | ChangeCurrentPageType
     | SetUsersTotalCountType
+    | toggleInProgressType
 
 let store = {
     _rerenderEntireTree: function () {

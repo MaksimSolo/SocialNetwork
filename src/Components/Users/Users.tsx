@@ -2,6 +2,7 @@ import React from 'react';
 import style from "./Users.module.css";
 import userPhoto from "../../images/userr.png";
 import {UsersType} from "../../redux/usersDataReducer";
+import Preloader from "../Preloader/Preloader";
 
 
 type UsersPropType = {
@@ -14,27 +15,29 @@ type UsersPropType = {
     changeCurrentPage: (newPage: number) => void
     setUsersTotalCount: (totalUsersCount: number) => void
     onChangingCurrentPage: (newPage: number) => void
+    inProgress: boolean
 }
 
-export const Users = (props:UsersPropType) => {
+export const Users = (props: UsersPropType) => {
 
-        let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
     const pagesNumbers = [];
     for (let i = 1; i <= pagesCount; i++) {
         pagesNumbers.push(i)
     }
     return (
-    <div>
         <div>
-            {pagesNumbers.map(p => {
-                    return <span className={props.currentPage === p ? style.selectedPage : ''}
-                                 onClick={(e) => props.onChangingCurrentPage(p)}>..{p}</span>
-                }
-            )}
-        </div>
-        {
-            props.users.map(u =>
-                <div key={u.id}>
+            <div>
+                {pagesNumbers.map(p => {
+                        return <span className={props.currentPage === p ? style.selectedPage : ''}
+                                     onClick={(e) => props.onChangingCurrentPage(p)}>..{p}</span>
+                    }
+                )}
+                <Preloader inProgress={props.inProgress}/>
+            </div>
+            {
+                props.users.map(u =>
+                        <div key={u.id}>
                     <span>
                     <div>
                     <img
@@ -51,7 +54,7 @@ export const Users = (props:UsersPropType) => {
                     }}>Follow</button>}
                     </div>
                     </span>
-                    <span>
+                            <span>
                     <span>
                     <div>{u.name}</div>
                     <div>{u.status}</div>
@@ -61,9 +64,9 @@ export const Users = (props:UsersPropType) => {
                     <div>{'u.location.city'}</div>
                     </span>
                     </span>
-                </div>
-            )
-        }
-    </div>
+                        </div>
+                )
+            }
+        </div>
     )
 };
