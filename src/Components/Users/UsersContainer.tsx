@@ -1,18 +1,19 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {ActionType} from "../../redux/store";
 import {
-    changeCurrentPageAC,
-    setUsersAC,
-    setUsersTotalCountAC,
-    toggleFollowAC, toggleInProgressAC, toggleInProgressType,
+    changeCurrentPage,
+    setUsers,
+    setUsersTotalCount,
+    toggleFollow,
+    toggleInProgress,
     UsersType
 } from "../../redux/usersDataReducer";
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
+import Preloader from "../Preloader/Preloader";
 
-type UsersAPIComponentPropType = {
+type UsersContainerPropType = {
     users: Array<UsersType>
     totalUsersCount: number,
     pageSize: number
@@ -25,7 +26,7 @@ type UsersAPIComponentPropType = {
     setUsersTotalCount: (totalUsersCount: number) => void
 }
 
-export class UsersAPIComponent extends React.Component<UsersAPIComponentPropType, AppStateType> {
+class UsersContainer extends React.Component<UsersContainerPropType, AppStateType> {
 
     componentDidMount() {
         this.props.toggleInProgress(true)
@@ -47,25 +48,28 @@ export class UsersAPIComponent extends React.Component<UsersAPIComponentPropType
         );
     }
 
-    render = () => <Users users={this.props.users}
-                          changeCurrentPage={this.props.changeCurrentPage}
-                          onChangingCurrentPage={this.onChangingCurrentPage}
-                          currentPage={this.props.currentPage}
-                          pageSize={this.props.pageSize}
-                          setUsers={this.props.setUsers}
-                          setUsersTotalCount={this.props.setUsersTotalCount}
-                          totalUsersCount={this.props.totalUsersCount}
-                          toggleFollow={this.props.toggleFollow}
-                          inProgress={this.props.inProgress}
-    />
-
+    render = () =>
+        <>
+            {this.props.inProgress ? <Preloader/> : null}
+            <Users users={this.props.users}
+                   changeCurrentPage={this.props.changeCurrentPage}
+                   onChangingCurrentPage={this.onChangingCurrentPage}
+                   currentPage={this.props.currentPage}
+                   pageSize={this.props.pageSize}
+                   setUsers={this.props.setUsers}
+                   setUsersTotalCount={this.props.setUsersTotalCount}
+                   totalUsersCount={this.props.totalUsersCount}
+                   toggleFollow={this.props.toggleFollow}
+            />
+        </>
 }
 
 const mapStateToProps = (state: AppStateType) => ({
     users: state.usersData.users, totalUsersCount: state.usersData.totalUsersCount,
     pageSize: state.usersData.pageSize, currentPage: state.usersData.currentPage, inProgress: state.usersData.inProgress
 });
-const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
+//предыдущий вариант mapDispatchToProps
+/*const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
         toggleFollow: (userID: number) => {
             dispatch(toggleFollowAC(userID))
@@ -83,5 +87,14 @@ const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
             dispatch(toggleInProgressAC(inProgress))
         }
     }
-}
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
+}*/
+
+
+export default connect(mapStateToProps,
+    {
+        toggleFollow,
+        setUsers,
+        changeCurrentPage,
+        setUsersTotalCount,
+        toggleInProgress
+    })(UsersContainer)

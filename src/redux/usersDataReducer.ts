@@ -28,8 +28,6 @@ export type toggleInProgressType = {
 }
 
 
-
-
 type PhotoUserType = {
     small: string
     large: string
@@ -78,12 +76,12 @@ export const usersDataReducer = (state: UsersDataType = initialState, action: Ac
 }
 
 
-export const toggleFollowAC = (userID: number): ToggleFollowType => ({type: TOGGLE_FOLLOW, userID})
-export const setUsersAC = (users: Array<UsersType>): SetUsersType => ({type: SET_USERS, users})
-export const changeCurrentPageAC = (newPage: number): ChangeCurrentPageType => ({type: CHANGE_CURRENT_PAGE, newPage})
-export const setUsersTotalCountAC = (totalUsersCount: number): SetUsersTotalCountType => ({
+export const toggleFollow = (userID: number): ToggleFollowType => ({type: TOGGLE_FOLLOW, userID})
+export const setUsers = (users: Array<UsersType>): SetUsersType => ({type: SET_USERS, users})
+export const changeCurrentPage = (newPage: number): ChangeCurrentPageType => ({type: CHANGE_CURRENT_PAGE, newPage})
+export const setUsersTotalCount = (totalUsersCount: number): SetUsersTotalCountType => ({
     type: SET_USERS_TOTALCOUNT,
     totalUsersCount
 })
-export const toggleInProgressAC = (inProgress: boolean): toggleInProgressType => ({type: TOGGLE_INPROGRESS, inProgress})
+export const toggleInProgress = (inProgress: boolean): toggleInProgressType => ({type: TOGGLE_INPROGRESS, inProgress})
 

@@ -1,17 +1,13 @@
 import React from 'react';
 import preloader from '../../images/Infinity-1.5s-240px.gif'
 
-type PreloaderType = {
-    inProgress: boolean
-}
 
-const Preloader = (props: PreloaderType) => {
+const Preloader = () => {
+    console.log("Preloader")
     return (
-        <>
-            {props.inProgress ? <div>
-                <img src={preloader}/>
-                </div> : null}
-        </>
+        <div>
+            <img src={preloader}/>
+        </div>
     );
 };
 

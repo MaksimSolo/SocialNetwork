@@ -5,7 +5,7 @@ import {Profile} from "./Components/Profile/Profile";
 import {Routes, Route} from "react-router-dom";
 import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
 import {NavbarContainer} from "./Components/Navbar/NavbarContainer";
-import {UsersContainer} from "./Components/Users/UsersContainer";
+import UsersContainer from "./Components/Users/UsersContainer";
 
 
 
@@ -30,5 +30,3 @@ export function App() {
         </div>
     );
 }
-
-
