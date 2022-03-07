@@ -1,4 +1,10 @@
-import {AddPostType, profileDataReducer, UpdatePostTextType} from "./profileDataReducer";
+import {
+    AddPostType,
+    profileDataReducer,
+    SetUserProfileType,
+    UpdatePostTextType,
+    UsersProfilePropsType
+} from "./profileDataReducer";
 import {messagesPageReducer, SendMessageType, UpdateMessageTextType} from "./messagesPageReducer";
 import {AppStateType} from "./redux-store";
 import {
@@ -30,6 +36,8 @@ export type FriendsDataType = {
 export type ProfileDataType = {
     postData: Array<PostDataType>
     newPostText: string
+    usersProfile: UsersProfilePropsType | null;
+
 }
 export type MessagesPageType = {
     messagesData: Array<MessageDataType>
@@ -61,6 +69,7 @@ export type ActionType =
     | ChangeCurrentPageType
     | SetUsersTotalCountType
     | toggleInProgressType
+    | SetUserProfileType
 
 let store = {
     _rerenderEntireTree: function () {
@@ -116,10 +125,10 @@ let store = {
     getState: function () {
         return this._state
     },
-    dispatch(action: ActionType) {
-        profileDataReducer(this._state.profileData, action);
-        messagesPageReducer(this._state.messagesPage, action)
-        this._rerenderEntireTree();
-    }
+    /*  dispatch(action: ActionType) {
+          profileDataReducer(this._state.profileData, action);
+          messagesPageReducer(this._state.messagesPage, action)
+          this._rerenderEntireTree();
+      }*/
 }
 
