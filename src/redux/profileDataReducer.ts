@@ -33,7 +33,7 @@ export type UsersProfilePropsType = {
     "lookingForAJob": true,
     "lookingForAJobDescription": string,
     "fullName": string,
-    userId: number,
+    "userId": number,
     "photos": {
         "small": string,
         "large": string,
