@@ -14,6 +14,7 @@ import {
     ToggleFollowType,
     toggleInProgressType
 } from "./usersDataReducer";
+import {applyAuthDataType} from "./authReducer";
 
 export type PostDataType = {
     id: string
@@ -70,6 +71,7 @@ export type ActionType =
     | SetUsersTotalCountType
     | toggleInProgressType
     | SetUserProfileType
+    | applyAuthDataType
 
 let store = {
     _rerenderEntireTree: function () {
