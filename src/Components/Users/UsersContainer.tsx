@@ -30,7 +30,9 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
 
     componentDidMount() {
         this.props.toggleInProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        }).then(response => {
                 this.props.setUsers(response.data.items);
                 this.props.setUsersTotalCount(response.data.totalCount)
                 this.props.toggleInProgress(false)
@@ -41,7 +43,9 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
     onChangingCurrentPage = (newPage: number) => {
         this.props.changeCurrentPage(newPage);
         this.props.toggleInProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${newPage}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${newPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        }).then(response => {
                 this.props.setUsers(response.data.items);
                 this.props.toggleInProgress(false)
             }

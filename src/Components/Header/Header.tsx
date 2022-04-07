@@ -13,13 +13,12 @@ export const Header = (props: HeaderProps) => {
             <img src="https://www.logodesign.net/images/nature-logo.png"/>
             {props.isAuth ?
                 <div className={classes.loginBlock}>
-                    {props.data.id}
-                    {props.data.login}
-                    {props.data.email}
+                    <div>id: {props.data.id}</div>
+                    <div>login: {props.data.login}</div>
+                    <div>email: {props.data.email}</div>
                 </div>
                 : <div className={classes.loginBlock}>
-                    <>props.data.id, props.data.login, props.data.email</>
-                    : <NavLink to='/login' className={({isActive}) => isActive ? classes.active : ''}>LOGIN</NavLink>
+                    <NavLink to='/login' className={({isActive}) => isActive ? classes.active : ''}>LOGIN</NavLink>
                 </div>}
         </header>
     );
