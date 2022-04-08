@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
-    changeCurrentPage,
+    changeCurrentPage, selectFromToggleFollowFetchingQueue,
     setUsers,
     setUsersTotalCount,
     toggleFollow,
@@ -24,6 +24,8 @@ type UsersContainerPropType = {
     setUsers: (users: Array<UsersType>) => void
     changeCurrentPage: (newPage: number) => void
     setUsersTotalCount: (totalUsersCount: number) => void
+    selectFromToggleFollowFetchingQueue: (userID: number, inProgress: boolean) => void
+    toggleFollowFetchingQueue: number[]
 }
 
 class UsersContainer extends React.Component<UsersContainerPropType, AppStateType> {
@@ -60,13 +62,21 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
                    setUsersTotalCount={this.props.setUsersTotalCount}
                    totalUsersCount={this.props.totalUsersCount}
                    toggleFollow={this.props.toggleFollow}
+                   toggleInProgress={this.props.toggleInProgress}
+                   inProgress={this.props.inProgress}
+                   selectFromToggleFollowFetchingQueue={this.props.selectFromToggleFollowFetchingQueue}
+                   toggleFollowFetchingQueue={this.props.toggleFollowFetchingQueue}
             />
         </>
 }
 
 const mapStateToProps = (state: AppStateType) => ({
-    users: state.usersData.users, totalUsersCount: state.usersData.totalUsersCount,
-    pageSize: state.usersData.pageSize, currentPage: state.usersData.currentPage, inProgress: state.usersData.inProgress
+    users: state.usersData.users,
+    totalUsersCount: state.usersData.totalUsersCount,
+    pageSize: state.usersData.pageSize,
+    currentPage: state.usersData.currentPage,
+    inProgress: state.usersData.inProgress,
+    toggleFollowFetchingQueue: state.usersData.toggleFollowFetchingQueue
 });
 //предыдущий вариант mapDispatchToProps
 /*const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
@@ -96,5 +106,6 @@ export default connect(mapStateToProps,
         setUsers,
         changeCurrentPage,
         setUsersTotalCount,
-        toggleInProgress
+        toggleInProgress,
+        selectFromToggleFollowFetchingQueue,
     })(UsersContainer)

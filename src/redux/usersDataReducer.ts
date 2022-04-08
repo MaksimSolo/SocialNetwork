@@ -5,6 +5,7 @@ const SET_USERS = 'SET_USERS';
 const CHANGE_CURRENT_PAGE = 'CHANGE_CURRENT_PAGE';
 const SET_USERS_TOTALCOUNT = 'SET_USERS_TOTALCOUNT';
 const TOGGLE_INPROGRESS = 'TOGGLE_INPROGRESS';
+const SELECT_FROM_TOGGLE_FOLLOW_FETCHING_QUEUE = 'SELECT_FROM_TOGGLE_FOLLOW_FETCHING_QUEUE'
 
 export type ToggleFollowType = {
     type: typeof TOGGLE_FOLLOW
@@ -24,6 +25,12 @@ export type SetUsersTotalCountType = {
 }
 export type toggleInProgressType = {
     type: typeof TOGGLE_INPROGRESS
+    inProgress: boolean
+}
+
+export type FollowFetchingQueueType = {
+    type: typeof SELECT_FROM_TOGGLE_FOLLOW_FETCHING_QUEUE
+    userID: number
     inProgress: boolean
 }
 
@@ -47,6 +54,7 @@ export type UsersDataType = {
     pageSize: number
     currentPage: number
     inProgress: boolean
+    toggleFollowFetchingQueue: number[];
 }
 let initialState: UsersDataType = {
 
@@ -54,7 +62,8 @@ let initialState: UsersDataType = {
     totalUsersCount: 0,
     pageSize: 100,
     currentPage: 1,
-    inProgress: false
+    inProgress: false,
+    toggleFollowFetchingQueue: [],
 }
 
 
@@ -62,6 +71,12 @@ export const usersDataReducer = (state: UsersDataType = initialState, action: Ac
     switch (action.type) {
         case TOGGLE_FOLLOW:
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: !u.followed} : u)};
+        case SELECT_FROM_TOGGLE_FOLLOW_FETCHING_QUEUE:
+            return {
+                ...state,
+                toggleFollowFetchingQueue: action.inProgress ? [...state.toggleFollowFetchingQueue, action.userID]
+                    : state.toggleFollowFetchingQueue.filter(id => id !== action.userID)
+            };
         case SET_USERS:
             return {...state, users: action.users}
         case CHANGE_CURRENT_PAGE:
@@ -84,4 +99,9 @@ export const setUsersTotalCount = (totalUsersCount: number): SetUsersTotalCountT
     totalUsersCount
 })
 export const toggleInProgress = (inProgress: boolean): toggleInProgressType => ({type: TOGGLE_INPROGRESS, inProgress})
+export const selectFromToggleFollowFetchingQueue = (userID: number, inProgress: boolean): FollowFetchingQueueType => ({
+    type: SELECT_FROM_TOGGLE_FOLLOW_FETCHING_QUEUE,
+    userID,
+    inProgress,
+})
 

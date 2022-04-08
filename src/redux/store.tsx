@@ -8,7 +8,7 @@ import {
 import {messagesPageReducer, SendMessageType, UpdateMessageTextType} from "./messagesPageReducer";
 import {AppStateType} from "./redux-store";
 import {
-    ChangeCurrentPageType,
+    ChangeCurrentPageType, FollowFetchingQueueType, selectFromToggleFollowFetchingQueue,
     SetUsersTotalCountType,
     SetUsersType,
     ToggleFollowType,
@@ -72,6 +72,7 @@ export type ActionType =
     | toggleInProgressType
     | SetUserProfileType
     | applyAuthDataType
+    | FollowFetchingQueueType
 
 let store = {
     _rerenderEntireTree: function () {
