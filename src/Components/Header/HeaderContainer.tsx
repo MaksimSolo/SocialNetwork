@@ -1,11 +1,11 @@
 import React from 'react';
 import {AppStateType} from "../../redux/redux-store";
 import {Header} from "./Header";
-import axios from "axios";
 import {connect} from "react-redux";
 import {applyAuthData, AuthDataType} from "../../redux/authReducer";
 import {toggleInProgress} from "../../redux/usersDataReducer";
 import Preloader from "../Preloader/Preloader";
+import {getAuthData} from "../../api/api-header";
 
 export type HeaderContainerCompType = {
     data: AuthDataType,
@@ -19,14 +19,12 @@ class HeaderContainerComp extends React.Component<HeaderContainerCompType, AppSt
 
     componentDidMount() {
         this.props.toggleInProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true})
-            .then(response => {
-
-                if (response.data.resultCode === 0) {
-                    this.props.applyAuthData(response.data)
-                }
-                this.props.toggleInProgress(false)
-            })
+        getAuthData().then(response => {
+            if (response.data.resultCode === 0) {
+                this.props.applyAuthData(response.data)
+            }
+            this.props.toggleInProgress(false)
+        });
     }
 
     render = () => {

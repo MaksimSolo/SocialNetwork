@@ -9,9 +9,9 @@ import {
     UsersType
 } from "../../redux/usersDataReducer";
 import React from "react";
-import axios from "axios";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
+import {apiUsersComp} from "../../api/api-users";
 
 type UsersContainerPropType = {
     users: Array<UsersType>
@@ -30,11 +30,9 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
 
     componentDidMount() {
         this.props.toggleInProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        }).then(response => {
-                this.props.setUsers(response.data.items);
-                this.props.setUsersTotalCount(response.data.totalCount)
+        apiUsersComp.getAllUsersData(this.props.currentPage, this.props.pageSize).then(data => {
+                this.props.setUsers(data.items);
+                this.props.setUsersTotalCount(data.totalCount)
                 this.props.toggleInProgress(false)
             }
         );
@@ -43,10 +41,8 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
     onChangingCurrentPage = (newPage: number) => {
         this.props.changeCurrentPage(newPage);
         this.props.toggleInProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${newPage}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        }).then(response => {
-                this.props.setUsers(response.data.items);
+        apiUsersComp.getUsersDataFromChangingPage(newPage, this.props.pageSize).then(data => {
+                this.props.setUsers(data.items);
                 this.props.toggleInProgress(false)
             }
         );
