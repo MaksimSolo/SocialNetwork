@@ -12,11 +12,8 @@ type UsersPropType = {
     pageSize: number
     currentPage: number
     toggleFollow: (userID: number) => void
-    toggleInProgress: (inProgress: boolean) => void,
+    fetchingInProgress: (inProgress: boolean) => void,
     inProgress: boolean
-    setUsers: (users: Array<UsersType>) => void
-    changeCurrentPage: (newPage: number) => void
-    setUsersTotalCount: (totalUsersCount: number) => void
     onChangingCurrentPage: (newPage: number) => void
     selectFromToggleFollowFetchingQueue: (userID: number, inProgress: boolean) => void
     toggleFollowFetchingQueue: number[]
@@ -54,24 +51,24 @@ export const Users = (props: UsersPropType) => {
                                     {u.followed ?
                                         <button disabled={props.toggleFollowFetchingQueue.some(id => id === u.id)}
                                                 onClick={() => {
-                                                    props.toggleInProgress(true);
+                                                    props.fetchingInProgress(true);
                                                     props.selectFromToggleFollowFetchingQueue(u.id, props.inProgress);
                                                     apiUsersComp.unfollowUser(u.id).then(data => {
                                                         if (data.resultCode === 0) {
                                                             props.toggleFollow(u.id);
-                                                            props.toggleInProgress(false);
+                                                            props.fetchingInProgress(false);
                                                             props.selectFromToggleFollowFetchingQueue(u.id, props.inProgress);
                                                         }
                                                     })
                                                 }}>Unfollow</button>
                                         : <button disabled={props.toggleFollowFetchingQueue.some(id => id === u.id)}
                                                   onClick={() => {
-                                                      props.toggleInProgress(true);
+                                                      props.fetchingInProgress(true);
                                                       props.selectFromToggleFollowFetchingQueue(u.id, props.inProgress);
                                                       apiUsersComp.postForFollowUser(u.id).then(data => {
                                                           if (data.resultCode === 0) {
                                                               props.toggleFollow(u.id)
-                                                              props.toggleInProgress(false);
+                                                              props.fetchingInProgress(false);
                                                               props.selectFromToggleFollowFetchingQueue(u.id, props.inProgress);
                                                           }
                                                       })

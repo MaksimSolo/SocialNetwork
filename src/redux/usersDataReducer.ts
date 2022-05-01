@@ -1,4 +1,7 @@
 import {ActionType} from "./store";
+import {apiUsersComp} from "../api/api-users";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -98,10 +101,32 @@ export const setUsersTotalCount = (totalUsersCount: number): SetUsersTotalCountT
     type: SET_USERS_TOTALCOUNT,
     totalUsersCount
 })
-export const toggleInProgress = (inProgress: boolean): toggleInProgressType => ({type: TOGGLE_INPROGRESS, inProgress})
+export const fetchingInProgress = (inProgress: boolean): toggleInProgressType => ({type: TOGGLE_INPROGRESS, inProgress})
 export const selectFromToggleFollowFetchingQueue = (userID: number, inProgress: boolean): FollowFetchingQueueType => ({
     type: SELECT_FROM_TOGGLE_FOLLOW_FETCHING_QUEUE,
     userID,
     inProgress,
 })
+
+export const getAllUsersTC = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, ActionType> => {
+    return (dispatch) => {
+        dispatch(fetchingInProgress(true));
+        apiUsersComp.getAllUsersData(currentPage, pageSize).then(data => {
+            dispatch(setUsers(data.items));
+            dispatch(setUsersTotalCount(data.totalCount));
+            dispatch(fetchingInProgress(false));
+        });
+    }
+}
+
+export const getUsersFromChangingPageTC = (newPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, ActionType> => {
+    return (dispatch) => {
+        dispatch(changeCurrentPage(newPage));
+        dispatch(fetchingInProgress(true));
+        apiUsersComp.getUsersDataFromChangingPage(newPage, pageSize).then(data => {
+            dispatch(setUsers(data.items));
+            dispatch(fetchingInProgress(false));
+        });
+    }
+}
 

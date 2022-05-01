@@ -1,17 +1,16 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
-    changeCurrentPage, selectFromToggleFollowFetchingQueue,
-    setUsers,
-    setUsersTotalCount,
+    fetchingInProgress,
+    getAllUsersTC,
+    getUsersFromChangingPageTC,
+    selectFromToggleFollowFetchingQueue,
     toggleFollow,
-    toggleInProgress,
     UsersType
 } from "../../redux/usersDataReducer";
 import React from "react";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
-import {apiUsersComp} from "../../api/api-users";
 
 type UsersContainerPropType = {
     users: Array<UsersType>
@@ -19,50 +18,34 @@ type UsersContainerPropType = {
     pageSize: number
     currentPage: number
     toggleFollow: (userID: number) => void
-    toggleInProgress: (inProgress: boolean) => void,
+    fetchingInProgress: (inProgress: boolean)=> void
     inProgress: boolean
-    setUsers: (users: Array<UsersType>) => void
-    changeCurrentPage: (newPage: number) => void
-    setUsersTotalCount: (totalUsersCount: number) => void
     selectFromToggleFollowFetchingQueue: (userID: number, inProgress: boolean) => void
     toggleFollowFetchingQueue: number[]
+    getAllUsersTC: (currentPage: number, pageSize: number) => void
+    getUsersFromChangingPageTC: (newPage: number, pageSize: number) => void
 }
 
 class UsersContainer extends React.Component<UsersContainerPropType, AppStateType> {
 
     componentDidMount() {
-        this.props.toggleInProgress(true)
-        apiUsersComp.getAllUsersData(this.props.currentPage, this.props.pageSize).then(data => {
-                this.props.setUsers(data.items);
-                this.props.setUsersTotalCount(data.totalCount)
-                this.props.toggleInProgress(false)
-            }
-        );
+        this.props.getAllUsersTC(this.props.currentPage, this.props.pageSize);
     }
 
     onChangingCurrentPage = (newPage: number) => {
-        this.props.changeCurrentPage(newPage);
-        this.props.toggleInProgress(true)
-        apiUsersComp.getUsersDataFromChangingPage(newPage, this.props.pageSize).then(data => {
-                this.props.setUsers(data.items);
-                this.props.toggleInProgress(false)
-            }
-        );
+        this.props.getUsersFromChangingPageTC(newPage, this.props.pageSize);
     }
 
     render = () =>
         <>
             {this.props.inProgress ? <Preloader/> : null}
             <Users users={this.props.users}
-                   changeCurrentPage={this.props.changeCurrentPage}
                    onChangingCurrentPage={this.onChangingCurrentPage}
                    currentPage={this.props.currentPage}
                    pageSize={this.props.pageSize}
-                   setUsers={this.props.setUsers}
-                   setUsersTotalCount={this.props.setUsersTotalCount}
                    totalUsersCount={this.props.totalUsersCount}
                    toggleFollow={this.props.toggleFollow}
-                   toggleInProgress={this.props.toggleInProgress}
+                   fetchingInProgress={this.props.fetchingInProgress}
                    inProgress={this.props.inProgress}
                    selectFromToggleFollowFetchingQueue={this.props.selectFromToggleFollowFetchingQueue}
                    toggleFollowFetchingQueue={this.props.toggleFollowFetchingQueue}
@@ -93,7 +76,7 @@ const mapStateToProps = (state: AppStateType) => ({
         setUsersTotalCount: (totalUsersCount: number) => {
             dispatch(setUsersTotalCountAC(totalUsersCount))
         },
-        toggleInProgress: (inProgress: boolean) => {
+        fetchingInProgress: (inProgress: boolean) => {
             dispatch(toggleInProgressAC(inProgress))
         }
     }
@@ -103,9 +86,8 @@ const mapStateToProps = (state: AppStateType) => ({
 export default connect(mapStateToProps,
     {
         toggleFollow,
-        setUsers,
-        changeCurrentPage,
-        setUsersTotalCount,
-        toggleInProgress,
+        fetchingInProgress,
         selectFromToggleFollowFetchingQueue,
+        getAllUsersTC,
+        getUsersFromChangingPageTC,
     })(UsersContainer)
