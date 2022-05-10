@@ -5,10 +5,11 @@ import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {UsersProfilePropsType} from "../../redux/profileDataReducer";
 
 type ProfileType = {
-        profile: UsersProfilePropsType | null
+
+    profile: UsersProfilePropsType | null
 }
 
-export function Profile(props:ProfileType) {
+export function Profile(props: ProfileType) {
 
     return (
         <div className={classes.profile}>

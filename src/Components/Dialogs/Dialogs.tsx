@@ -3,9 +3,11 @@ import classes from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {MessagesPageType,} from "../../redux/store";
+import {Navigate} from 'react-router-dom';
 
 
 export type DialogsType = {
+    isAuth: boolean
     messagesPage: MessagesPageType
     sendMessageByButtonADD: () => void
     updateMessageText: (newTextToMessage: string) => void
@@ -13,7 +15,7 @@ export type DialogsType = {
 
 export const Dialogs = (props: DialogsType) => {
 
-
+    if (!props.isAuth) return <Navigate to={'/login'}/>
 
     const sendMessageByButtonADD = () => {
         props.sendMessageByButtonADD()
@@ -23,8 +25,10 @@ export const Dialogs = (props: DialogsType) => {
         props.updateMessageText(newTextToMessage)
     }
 
-    const dialogItems = props.messagesPage.dialogsData.map(dialog => <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>);
-    const messagesItems = props.messagesPage.messagesData.map(mess => <Message key={mess.id} text={mess.text} id={mess.id}/>)
+    const dialogItems = props.messagesPage.dialogsData.map(dialog => <DialogItem key={dialog.id} name={dialog.name}
+                                                                                 id={dialog.id}/>);
+    const messagesItems = props.messagesPage.messagesData.map(mess => <Message key={mess.id} text={mess.text}
+                                                                               id={mess.id}/>)
 
     return (
         <div className={classes.dialogs}>
@@ -43,4 +47,5 @@ export const Dialogs = (props: DialogsType) => {
         </div>
     );
 };
+
 

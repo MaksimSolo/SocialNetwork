@@ -5,7 +5,10 @@ import {ActionType} from "../../redux/store";
 import {AppStateType} from "../../redux/redux-store";
 
 
-const mapStateToProps = (state: AppStateType) => ({messagesPage: state.messagesPage})
+const mapStateToProps = (state: AppStateType) => ({
+    messagesPage: state.messagesPage,
+    isAuth: state.auth.isAuth,
+})
 const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
 

@@ -1,17 +1,19 @@
 import React from 'react';
 import classes from './Navbar.module.css'
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import {Friends} from "./Friends/Friends";
 import {FriendsSideBarType} from "../../redux/store";
 
 type NavbarType = {
     friendsSideBar: FriendsSideBarType
     doSome: () => void
+    isAuth: boolean
 }
 
 export const Navbar = (props: NavbarType) => {
 
         const friendsItems = props.friendsSideBar.friendsData.map((friend) => {
+
                 return (
                     <Friends key={friend.id} id={friend.id} name={friend.name} img={friend.img}/>
                 )
@@ -42,7 +44,7 @@ export const Navbar = (props: NavbarType) => {
                 <div className={classes.friends}>
                     <h2>Friends</h2>
 
-                    {friendsItems}
+                    {!props.isAuth ? <Navigate to={'/login'}/> : friendsItems}
 
                 </div>
             </nav>
