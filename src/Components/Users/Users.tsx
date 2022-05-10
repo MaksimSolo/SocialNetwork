@@ -10,11 +10,10 @@ type UsersPropType = {
     totalUsersCount: number,
     pageSize: number
     currentPage: number
-    inProgress: boolean
     onChangingCurrentPage: (newPage: number) => void
     toggleFollowFetchingQueue: number[]
-    unfollowUser: (userID: number, inProgress: boolean) => void
-    followUser: (userID: number, inProgress: boolean) => void
+    unfollowUser: (userID: number) => void
+    followUser: (userID: number) => void
 }
 
 export const Users = (props: UsersPropType) => {
@@ -49,11 +48,11 @@ export const Users = (props: UsersPropType) => {
                                     {u.followed ?
                                         <button disabled={props.toggleFollowFetchingQueue.some(id => id === u.id)}
                                                 onClick={() => {
-                                                    props.unfollowUser(u.id, props.inProgress)
+                                                    props.unfollowUser(u.id)
                                                 }}>Unfollow</button>
                                         : <button disabled={props.toggleFollowFetchingQueue.some(id => id === u.id)}
                                                   onClick={() => {
-                                                      props.followUser(u.id, props.inProgress)
+                                                      props.followUser(u.id)
                                                   }}>Follow</button>}
                                 </div>
                         </span>

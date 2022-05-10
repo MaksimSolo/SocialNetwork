@@ -119,28 +119,24 @@ export const getUsersTC = (currentPage: number, pageSize: number): ThunkAction<v
         });
     }
 }
-export const unfollowUserTC = (userID: number, inProgress: boolean): ThunkAction<void, AppStateType, unknown, ActionType> => {
+export const unfollowUserTC = (userID: number,): ThunkAction<void, AppStateType, unknown, ActionType> => {
     return (dispatch) => {
-        dispatch(fetchingInProgress(true));
-        dispatch(selectFromToggleFollowFetchingQueue(userID, inProgress));
+        dispatch(selectFromToggleFollowFetchingQueue(userID, true));
         apiUsersComp.unfollowUser(userID).then(data => {
             if (data.resultCode === 0) {
                 dispatch(toggleFollow(userID));
-                dispatch(fetchingInProgress(false));
-                dispatch(selectFromToggleFollowFetchingQueue(userID, inProgress));
+                dispatch(selectFromToggleFollowFetchingQueue(userID, false));
             }
         })
     }
 }
-export const followUserTC = (userID: number, inProgress: boolean): ThunkAction<void, AppStateType, unknown, ActionType> => {
+export const followUserTC = (userID: number,): ThunkAction<void, AppStateType, unknown, ActionType> => {
     return (dispatch) => {
-        dispatch(fetchingInProgress(true));
-        dispatch(selectFromToggleFollowFetchingQueue(userID, inProgress));
+        dispatch(selectFromToggleFollowFetchingQueue(userID, true));
         apiUsersComp.postForFollowUser(userID).then(data => {
             if (data.resultCode === 0) {
                 dispatch(toggleFollow(userID));
-                dispatch(fetchingInProgress(false));
-                dispatch(selectFromToggleFollowFetchingQueue(userID, inProgress));
+                dispatch(selectFromToggleFollowFetchingQueue(userID, false));
             }
         })
     }

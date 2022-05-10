@@ -13,8 +13,8 @@ type UsersContainerPropType = {
     inProgress: boolean
     toggleFollowFetchingQueue: number[]
     getUsersTC: (currentPage: number, pageSize: number) => void
-    unfollowUserTC: (userID: number, inProgress: boolean) => void
-    followUserTC: (userID: number, inProgress: boolean) => void
+    unfollowUserTC: (userID: number) => void
+    followUserTC: (userID: number) => void
 
 }
 
@@ -36,7 +36,6 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
                    currentPage={this.props.currentPage}
                    pageSize={this.props.pageSize}
                    totalUsersCount={this.props.totalUsersCount}
-                   inProgress={this.props.inProgress}
                    toggleFollowFetchingQueue={this.props.toggleFollowFetchingQueue}
                    unfollowUser={this.props.unfollowUserTC}
                    followUser={this.props.followUserTC}

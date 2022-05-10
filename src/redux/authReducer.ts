@@ -53,7 +53,7 @@ export const authReducer = (state: AuthType = initialState, action: ActionType):
 
 export const applyAuthData = (data: AuthDataType): applyAuthDataType => ({type: APPLY_AUTH_DATA, data})
 
-export const applyAuthDataTC = (): ThunkAction<void, AppStateType, unknown, ActionType> => {
+export const getAuthUserDataTC = (): ThunkAction<void, AppStateType, unknown, ActionType> => {
     return (dispatch) => {
         dispatch(fetchingInProgress(true));
         getAuthData().then(response => {
