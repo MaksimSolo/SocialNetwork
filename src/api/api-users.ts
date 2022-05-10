@@ -9,11 +9,8 @@ export const apiUsersInstance = axios.create({
 })
 
 export const apiUsersComp = {
-    getAllUsersData(currentPage: number, pageSize: number) {
+    getUsersData(currentPage: number, pageSize: number) {
         return apiUsersInstance.get(`users?page=${currentPage}&count=${pageSize}`,).then(response => response.data)
-    },
-    getUsersDataFromChangingPage(newPage: number, pageSize: number) {
-        return apiUsersInstance.get(`users?page=${newPage}&count=${pageSize}`,).then(response => response.data)
     },
     unfollowUser(id: number) {
         return apiUsersInstance.delete(`follow/${id}`,).then(response => response.data)

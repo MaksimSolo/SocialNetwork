@@ -2,15 +2,12 @@ import React from 'react';
 import {AppStateType} from "../../redux/redux-store";
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {applyAuthData, AuthDataType} from "../../redux/authReducer";
-import {fetchingInProgress} from "../../redux/usersDataReducer";
+import {applyAuthDataTC, AuthDataType} from "../../redux/authReducer";
 import Preloader from "../Preloader/Preloader";
-import {getAuthData} from "../../api/api-header";
 
 export type HeaderContainerCompType = {
     data: AuthDataType,
-    toggleInProgress: (inProgress: boolean) => void,
-    applyAuthData: (data: AuthDataType) => void,
+    applyAuthDataTC: () => void
     inProgress: boolean,
     isAuth: boolean,
 }
@@ -18,13 +15,7 @@ export type HeaderContainerCompType = {
 class HeaderContainerComp extends React.Component<HeaderContainerCompType, AppStateType> {
 
     componentDidMount() {
-        this.props.toggleInProgress(true)
-        getAuthData().then(response => {
-            if (response.data.resultCode === 0) {
-                this.props.applyAuthData(response.data)
-            }
-            this.props.toggleInProgress(false)
-        });
+        this.props.applyAuthDataTC();
     }
 
     render = () => {
@@ -38,6 +29,10 @@ class HeaderContainerComp extends React.Component<HeaderContainerCompType, AppSt
     }
 }
 
-const mapStateToProps = (state: AppStateType) => ({data: state.auth.data, inProgress: state.auth.inProgress, isAuth: state.auth.isAuth})
+const mapStateToProps = (state: AppStateType) => ({
+    data: state.auth.data,
+    inProgress: state.auth.inProgress,
+    isAuth: state.auth.isAuth
+})
 
-export const HeaderContainer = connect(mapStateToProps, {applyAuthData, toggleInProgress: fetchingInProgress})(HeaderContainerComp)
+export const HeaderContainer = connect(mapStateToProps, {applyAuthDataTC})(HeaderContainerComp)

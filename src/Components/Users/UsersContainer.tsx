@@ -1,13 +1,6 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {
-    fetchingInProgress,
-    getAllUsersTC,
-    getUsersFromChangingPageTC,
-    selectFromToggleFollowFetchingQueue,
-    toggleFollow,
-    UsersType
-} from "../../redux/usersDataReducer";
+import {followUserTC, getUsersTC, unfollowUserTC, UsersType} from "../../redux/usersDataReducer";
 import React from "react";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
@@ -17,23 +10,22 @@ type UsersContainerPropType = {
     totalUsersCount: number,
     pageSize: number
     currentPage: number
-    toggleFollow: (userID: number) => void
-    fetchingInProgress: (inProgress: boolean)=> void
     inProgress: boolean
-    selectFromToggleFollowFetchingQueue: (userID: number, inProgress: boolean) => void
     toggleFollowFetchingQueue: number[]
-    getAllUsersTC: (currentPage: number, pageSize: number) => void
-    getUsersFromChangingPageTC: (newPage: number, pageSize: number) => void
+    getUsersTC: (currentPage: number, pageSize: number) => void
+    unfollowUserTC: (userID: number, inProgress: boolean) => void
+    followUserTC: (userID: number, inProgress: boolean) => void
+
 }
 
 class UsersContainer extends React.Component<UsersContainerPropType, AppStateType> {
 
     componentDidMount() {
-        this.props.getAllUsersTC(this.props.currentPage, this.props.pageSize);
+        this.props.getUsersTC(this.props.currentPage, this.props.pageSize);
     }
 
     onChangingCurrentPage = (newPage: number) => {
-        this.props.getUsersFromChangingPageTC(newPage, this.props.pageSize);
+        this.props.getUsersTC(newPage, this.props.pageSize);
     }
 
     render = () =>
@@ -44,11 +36,10 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
                    currentPage={this.props.currentPage}
                    pageSize={this.props.pageSize}
                    totalUsersCount={this.props.totalUsersCount}
-                   toggleFollow={this.props.toggleFollow}
-                   fetchingInProgress={this.props.fetchingInProgress}
                    inProgress={this.props.inProgress}
-                   selectFromToggleFollowFetchingQueue={this.props.selectFromToggleFollowFetchingQueue}
                    toggleFollowFetchingQueue={this.props.toggleFollowFetchingQueue}
+                   unfollowUser={this.props.unfollowUserTC}
+                   followUser={this.props.followUserTC}
             />
         </>
 }
@@ -85,9 +76,7 @@ const mapStateToProps = (state: AppStateType) => ({
 
 export default connect(mapStateToProps,
     {
-        toggleFollow,
-        fetchingInProgress,
-        selectFromToggleFollowFetchingQueue,
-        getAllUsersTC,
-        getUsersFromChangingPageTC,
+        getUsersTC,
+        unfollowUserTC,
+        followUserTC,
     })(UsersContainer)

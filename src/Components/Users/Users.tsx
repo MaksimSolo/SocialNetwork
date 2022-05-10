@@ -3,7 +3,6 @@ import style from "./Users.module.css";
 import userPhoto from "../../images/userr.png";
 import {UsersType} from "../../redux/usersDataReducer";
 import {NavLink} from "react-router-dom";
-import {apiUsersComp} from "../../api/api-users";
 
 
 type UsersPropType = {
@@ -11,12 +10,11 @@ type UsersPropType = {
     totalUsersCount: number,
     pageSize: number
     currentPage: number
-    toggleFollow: (userID: number) => void
-    fetchingInProgress: (inProgress: boolean) => void,
     inProgress: boolean
     onChangingCurrentPage: (newPage: number) => void
-    selectFromToggleFollowFetchingQueue: (userID: number, inProgress: boolean) => void
     toggleFollowFetchingQueue: number[]
+    unfollowUser: (userID: number, inProgress: boolean) => void
+    followUser: (userID: number, inProgress: boolean) => void
 }
 
 export const Users = (props: UsersPropType) => {
@@ -51,32 +49,17 @@ export const Users = (props: UsersPropType) => {
                                     {u.followed ?
                                         <button disabled={props.toggleFollowFetchingQueue.some(id => id === u.id)}
                                                 onClick={() => {
-                                                    props.fetchingInProgress(true);
-                                                    props.selectFromToggleFollowFetchingQueue(u.id, props.inProgress);
-                                                    apiUsersComp.unfollowUser(u.id).then(data => {
-                                                        if (data.resultCode === 0) {
-                                                            props.toggleFollow(u.id);
-                                                            props.fetchingInProgress(false);
-                                                            props.selectFromToggleFollowFetchingQueue(u.id, props.inProgress);
-                                                        }
-                                                    })
+                                                    props.unfollowUser(u.id, props.inProgress)
                                                 }}>Unfollow</button>
                                         : <button disabled={props.toggleFollowFetchingQueue.some(id => id === u.id)}
                                                   onClick={() => {
-                                                      props.fetchingInProgress(true);
-                                                      props.selectFromToggleFollowFetchingQueue(u.id, props.inProgress);
-                                                      apiUsersComp.postForFollowUser(u.id).then(data => {
-                                                          if (data.resultCode === 0) {
-                                                              props.toggleFollow(u.id)
-                                                              props.fetchingInProgress(false);
-                                                              props.selectFromToggleFollowFetchingQueue(u.id, props.inProgress);
-                                                          }
-                                                      })
+                                                      props.followUser(u.id, props.inProgress)
                                                   }}>Follow</button>}
                                 </div>
                         </span>
                         <span>
                             <span>
+                                    <div>user ID: {u.id}</div>
                                     <div>{u.name}</div>
                                     <div>{u.status}</div>
                             </span>

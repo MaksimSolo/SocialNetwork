@@ -108,25 +108,40 @@ export const selectFromToggleFollowFetchingQueue = (userID: number, inProgress: 
     inProgress,
 })
 
-export const getAllUsersTC = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, ActionType> => {
+export const getUsersTC = (currentPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, ActionType> => {
     return (dispatch) => {
         dispatch(fetchingInProgress(true));
-        apiUsersComp.getAllUsersData(currentPage, pageSize).then(data => {
+        dispatch(changeCurrentPage(currentPage));
+        apiUsersComp.getUsersData(currentPage, pageSize).then(data => {
             dispatch(setUsers(data.items));
             dispatch(setUsersTotalCount(data.totalCount));
             dispatch(fetchingInProgress(false));
         });
     }
 }
-
-export const getUsersFromChangingPageTC = (newPage: number, pageSize: number): ThunkAction<void, AppStateType, unknown, ActionType> => {
+export const unfollowUserTC = (userID: number, inProgress: boolean): ThunkAction<void, AppStateType, unknown, ActionType> => {
     return (dispatch) => {
-        dispatch(changeCurrentPage(newPage));
         dispatch(fetchingInProgress(true));
-        apiUsersComp.getUsersDataFromChangingPage(newPage, pageSize).then(data => {
-            dispatch(setUsers(data.items));
-            dispatch(fetchingInProgress(false));
-        });
+        dispatch(selectFromToggleFollowFetchingQueue(userID, inProgress));
+        apiUsersComp.unfollowUser(userID).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(toggleFollow(userID));
+                dispatch(fetchingInProgress(false));
+                dispatch(selectFromToggleFollowFetchingQueue(userID, inProgress));
+            }
+        })
     }
 }
-
+export const followUserTC = (userID: number, inProgress: boolean): ThunkAction<void, AppStateType, unknown, ActionType> => {
+    return (dispatch) => {
+        dispatch(fetchingInProgress(true));
+        dispatch(selectFromToggleFollowFetchingQueue(userID, inProgress));
+        apiUsersComp.postForFollowUser(userID).then(data => {
+            if (data.resultCode === 0) {
+                dispatch(toggleFollow(userID));
+                dispatch(fetchingInProgress(false));
+                dispatch(selectFromToggleFollowFetchingQueue(userID, inProgress));
+            }
+        })
+    }
+}
