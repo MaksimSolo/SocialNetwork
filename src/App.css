@@ -1,6 +1,6 @@
 .app-wrapper {
     margin: 0 auto;
-        display: grid;
+    display: grid;
     width: 1200px;
 
 
@@ -10,12 +10,12 @@
 
     grid-template-rows: 100px 1fr;
     grid-template-columns: 1fr 7fr;
-
 }
-
 
 
 .app-wrapper-content {
     grid-area: c;
-    background-color: lightgreen;
+    /*background-color: lightgreen;*/
+    background-image: url('https://media.istockphoto.com/photos/concept-of-an-open-magic-book-open-pages-with-water-and-land-and-picture-id1279460648?b=1&k=20&m=1279460648&s=170667a&w=0&h=uZa830sWo8hlFN0Y7FnQ14giNC0Z2EBNuTMuNJeJhQg=');
+    background-size: cover;
 }
