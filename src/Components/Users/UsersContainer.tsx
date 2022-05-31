@@ -5,6 +5,7 @@ import React from "react";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
 import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
+import {compose} from "redux";
 
 type UsersContainerPropType = {
     isAuth: boolean
@@ -75,8 +76,13 @@ const mapStateToProps = (state: AppStateType) => ({
 }*/
 
 
-export default withAuthRedirectComponent(connect(mapStateToProps, {
+/*export default withAuthRedirectComponent(connect(mapStateToProps, {
     getUsersTC,
     unfollowUserTC,
     followUserTC,
-})(UsersContainer))
+})(UsersContainer))*/
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {getUsersTC, unfollowUserTC, followUserTC,}),
+    withAuthRedirectComponent,)
+(UsersContainer)
