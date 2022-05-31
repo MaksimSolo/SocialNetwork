@@ -15,8 +15,6 @@ export type DialogsType = {
 
 export const Dialogs = (props: DialogsType) => {
 
-    if (!props.isAuth) return <Navigate to={'/login'}/>
-
     const sendMessageByButtonADD = () => {
         props.sendMessageByButtonADD()
     }

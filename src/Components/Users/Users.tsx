@@ -25,7 +25,7 @@ export const Users = (props: UsersPropType) => {
     }
     return (
         <div>
-            <div>
+            <div style={{display: "flex", justifyContent: "space-evenly", flexWrap: "wrap",}}>
                 {pagesNumbers.map(p => {
                         return <span key={p}
                                      className={props.currentPage === p ? style.selectedPage : ''}

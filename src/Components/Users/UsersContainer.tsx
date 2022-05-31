@@ -4,8 +4,10 @@ import {followUserTC, getUsersTC, unfollowUserTC, UsersType} from "../../redux/u
 import React from "react";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
+import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
 
 type UsersContainerPropType = {
+    isAuth: boolean
     users: Array<UsersType>
     totalUsersCount: number,
     pageSize: number
@@ -49,7 +51,7 @@ const mapStateToProps = (state: AppStateType) => ({
     pageSize: state.usersData.pageSize,
     currentPage: state.usersData.currentPage,
     inProgress: state.usersData.inProgress,
-    toggleFollowFetchingQueue: state.usersData.toggleFollowFetchingQueue
+    toggleFollowFetchingQueue: state.usersData.toggleFollowFetchingQueue,
 });
 //предыдущий вариант mapDispatchToProps
 /*const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
@@ -73,9 +75,8 @@ const mapStateToProps = (state: AppStateType) => ({
 }*/
 
 
-export default connect(mapStateToProps,
-    {
-        getUsersTC,
-        unfollowUserTC,
-        followUserTC,
-    })(UsersContainer)
+export default withAuthRedirectComponent(connect(mapStateToProps, {
+    getUsersTC,
+    unfollowUserTC,
+    followUserTC,
+})(UsersContainer))
