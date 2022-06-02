@@ -1,7 +1,7 @@
 import {ActionType} from "./store";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {getAuthData} from "../api/api-header";
+import {getAuthData} from "../api/api-auth";
 import {fetchingInProgress} from "./usersDataReducer";
 
 const APPLY_AUTH_DATA = 'APPLY_AUTH_DATA';

@@ -1,7 +1,7 @@
 import {ActionType, ProfileDataType,} from "./store";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {getUserProfileData} from "../api/api-profile";
+import {apiProfileComp} from "../api/api-profile";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
@@ -87,8 +87,8 @@ export const setUserProfile = (profile: UsersProfilePropsType | null): SetUserPr
 
 export const getUserProfileTC = (userID:number): ThunkAction<void, AppStateType, unknown, ActionType> => {
     return (dispatch) => {
-        getUserProfileData (userID).then(response => {
-            dispatch(setUserProfile(response.data));
+        apiProfileComp.getUserProfileData(userID).then(data => {
+                     dispatch(setUserProfile(data));
         })
     }
 }

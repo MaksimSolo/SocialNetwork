@@ -20,7 +20,7 @@ export const ProfileInfo = (props: ProfileInfoType) => {
                 <div>ID: {props.profile.userId}</div>
                 <div>{props.profile.fullName}</div>
                 <div>{props.profile.aboutMe}</div>
-                <ProfileStatus status={'hello!!!!!'}/>
+                <ProfileStatus userID={props.profile.userId}/>
 
 
             </div>
