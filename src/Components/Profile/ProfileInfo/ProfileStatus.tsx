@@ -26,9 +26,12 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatu
         })
     }
 
-    /*componentDidUpdate(prevProps:Readonly<ProfileStatusPropsType>, prevState:Readonly<ProfileStatusStateType>, snapshot?:any) {
-        console.log('componentDidUpdate')
-    }*/
+    componentWillUnmount() {
+        console.log('componentWillUnmount')
+        this.setState({
+            editMode: false
+        })
+    }
 
     onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         console.log('onChange')
@@ -37,7 +40,7 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatu
     }
     updateStatus = () => {
         console.log('updateStatus')
-        apiProfileComp.updateUserProfileStatus(this.state.status).then((r) => {
+        apiProfileComp.updateUserProfileStatus(this.state.status).then(() => {
             console.log('PUT req is OK!')
         }).catch(err => {
             console.log(err)

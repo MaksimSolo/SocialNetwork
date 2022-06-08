@@ -1,14 +1,9 @@
-import {
-    AddPostType,
-    profileDataReducer,
-    SetUserProfileType,
-    UpdatePostTextType,
-    UsersProfilePropsType
-} from "./profileDataReducer";
-import {messagesPageReducer, SendMessageType, UpdateMessageTextType} from "./messagesPageReducer";
+import {AddPostType, SetUserProfileType, UsersProfilePropsType} from "./profileDataReducer";
+import {SendMessageType} from "./messagesPageReducer";
 import {AppStateType} from "./redux-store";
 import {
-    ChangeCurrentPageType, FollowFetchingQueueType, selectFromToggleFollowFetchingQueue,
+    ChangeCurrentPageType,
+    FollowFetchingQueueType,
     SetUsersTotalCountType,
     SetUsersType,
     ToggleFollowType,
@@ -36,21 +31,16 @@ export type FriendsDataType = {
 }
 export type ProfileDataType = {
     postData: Array<PostDataType>
-    newPostText: string
     usersProfile: UsersProfilePropsType | null;
 
 }
 export type MessagesPageType = {
     messagesData: Array<MessageDataType>
     dialogsData: Array<DialogsDataType>
-    textToSendMessage: string
+
 }
 export type FriendsSideBarType = { friendsData: Array<FriendsDataType> }
-/*export type StateType = {
-    friendsSideBar: FriendsSideBarType
-    messagesPage: MessagesPageType
-    profileData: ProfileDataType
-}*/
+
 export type StoreType = {
     _rerenderEntireTree: () => void
     _state: AppStateType
@@ -62,9 +52,7 @@ export type StoreType = {
 
 export type ActionType =
     AddPostType
-    | UpdatePostTextType
     | SendMessageType
-    | UpdateMessageTextType
     | ToggleFollowType
     | SetUsersType
     | ChangeCurrentPageType

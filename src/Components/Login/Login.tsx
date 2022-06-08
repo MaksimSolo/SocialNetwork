@@ -23,9 +23,9 @@ export const Login = () => {
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 //handlesubmit приходит к нам из контейнера
     return <form onSubmit={props.handleSubmit}>
-        <div><Field name={'Login'} placeholder={"Login"} component={'input'}/></div>
-        <div><Field name={'Password'} placeholder={"Password"} component={'input'}/></div>
-        <div><Field name={'remember me'} type={"checkbox"} component={'input'}/> remember me</div>
+        <div><Field name={'login'} placeholder={"Login"} component={'input'}/></div>
+        <div><Field name={'password'} placeholder={"Password"} component={'input'}/></div>
+        <div><Field name={'rememberMe'} type={"checkbox"} component={'input'}/> remember me</div>
         <div>
             <button>Login</button>
         </div>

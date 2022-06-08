@@ -1,4 +1,4 @@
-import {sendMessageAC, updateMessageTextAC} from "../../redux/messagesPageReducer";
+import {sendMessageAC} from "../../redux/messagesPageReducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {ActionType} from "../../redux/store";
@@ -13,13 +13,9 @@ const mapStateToProps = (state: AppStateType) => ({
 })
 const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
-
-        sendMessageByButtonADD: () => {
-            dispatch(sendMessageAC())
+        sendMessageByButtonADD: (newTextToMessage: string) => {
+            dispatch(sendMessageAC(newTextToMessage))
         },
-        updateMessageText: (newTextToMessage: string) => {
-            dispatch(updateMessageTextAC(newTextToMessage))
-        }
     }
 };
 
