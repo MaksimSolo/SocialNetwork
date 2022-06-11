@@ -2,10 +2,11 @@ import React from 'react';
 import {AppStateType} from "../../redux/redux-store";
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {AuthDataType, getAuthUserDataTC} from "../../redux/authReducer";
+import {AuthDataType, getAuthUserDataTC, logoutUserTC} from "../../redux/authReducer";
 import Preloader from "../Preloader/Preloader";
 
 export type HeaderContainerCompType = {
+    logoutUserTC: () => void,
     data: AuthDataType,
     getAuthUserDataTC: () => void
     inProgress: boolean,
@@ -35,4 +36,4 @@ const mapStateToProps = (state: AppStateType) => ({
     isAuth: state.auth.isAuth
 })
 
-export const HeaderContainer = connect(mapStateToProps, {getAuthUserDataTC})(HeaderContainerComp)
+export const HeaderContainer = connect(mapStateToProps, {getAuthUserDataTC, logoutUserTC})(HeaderContainerComp)

@@ -9,6 +9,7 @@ import {compose} from "redux";
 
 
 type ProfileContainerType = {
+    userId:number
     isAuth: boolean
     profile: UsersProfilePropsType | null
     router: { location: any, navigation: any, params: any }
@@ -22,7 +23,7 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
 
         let userID = this.props.router.params['*'];
         if (userID === '') {
-            userID = 22177
+            userID = this.props.userId
         }
         this.props.getUserProfileTC(userID)
     }
@@ -38,7 +39,7 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
 }
 
 
-const mapStateToProps = (state: AppStateType) => ({profile: state.profileData.usersProfile,})
+const mapStateToProps = (state: AppStateType) => ({profile: state.profileData.usersProfile, userId: state.auth.data.id})
 export const WithRouterProfileContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfileTC}),
     withRouter,

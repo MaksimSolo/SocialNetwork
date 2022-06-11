@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import {AuthDataType} from "../../redux/authReducer";
 
 type HeaderProps = {
+    logoutUserTC: () => void,
     data: AuthDataType,
     isAuth: boolean,
 }
@@ -17,6 +18,7 @@ export const Header = (props: HeaderProps) => {
                     <div>id: {props.data.id}</div>
                     <div>login: {props.data.login}</div>
                     <div>email: {props.data.email}</div>
+                    <button onClick={props.logoutUserTC}>Log Out</button>
                 </div>
                 : <div className={classes.loginBlock}>
                     <NavLink to='/login' className={({isActive}) => isActive ? classes.active : ''}>LOGIN</NavLink>

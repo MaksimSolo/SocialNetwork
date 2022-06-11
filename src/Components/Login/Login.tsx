@@ -2,32 +2,45 @@ import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../FormControls/FormControls";
 import {required} from "../../utils/validators/validators";
+import {connect} from "react-redux";
+import {loginUserTC} from "../../redux/authReducer";
+import {AppStateType} from "../../redux/redux-store";
+import {Navigate} from "react-router-dom";
 
-type FormDataType = {
-    login: string
+export type FormDataType = {
+    email: string
     password: string
     rememberMe: boolean
 }
 
-export const Login = () => {
+type LoginType = {
+    isAuth: boolean
+    loginUserTC: (formData: FormDataType) => void
+}
+export const Login = (props: LoginType) => {
 
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
+        props.loginUserTC(formData)
     }
+    if (props.isAuth) {return <Navigate to={'/profile'}/>}
     return (
         <div>
-            <h1>Login</h1>
+            <h3>To log in, please enter your data in the forms below</h3>
             <LoginReduxForm onSubmit={onSubmit}/>
         </div>
     );
 };
 
+const mapStateToPropsRedirectToProfile = (state: AppStateType) => ({isAuth: state.auth.isAuth})
+export const LoginContainer = connect(mapStateToPropsRedirectToProfile, {loginUserTC})(Login)
+
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 //handlesubmit приходит к нам из контейнера
     return <form onSubmit={props.handleSubmit}>
-        <div><Field validate={[required]} name={'login'} placeholder={"Login"} component={Input}/></div>
-        <div><Field validate={[required]} name={'password'} placeholder={"Password"} component={Input}/></div>
+        <div><Field validate={[required]} name={'email'} placeholder={"e-mail"} component={Input}/></div>
+        <div><Field validate={[required]} name={'password'} type={"password"} placeholder={"Password"}
+                    component={Input}/></div>
         <div><Field name={'rememberMe'} type={"checkbox"} component={'input'}/> remember me</div>
         <div>
             <button>Login</button>

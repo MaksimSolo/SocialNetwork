@@ -1,8 +1,9 @@
 import {ActionType} from "./store";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {getAuthData} from "../api/api-auth";
+import {apiAuth} from "../api/api-auth";
 import {fetchingInProgress} from "./usersDataReducer";
+import {FormDataType} from "../Components/Login/Login";
 
 const APPLY_AUTH_DATA = 'APPLY_AUTH_DATA';
 const TOGGLE_INPROGRESS = 'TOGGLE_INPROGRESS';
@@ -15,6 +16,7 @@ export type toggleInProgressType = {
 export type applyAuthDataType = {
     type: typeof APPLY_AUTH_DATA
     data: AuthDataType
+    isAuth: boolean
 }
 
 export type AuthDataType = {
@@ -43,25 +45,49 @@ let initialState: AuthType = {
 export const authReducer = (state: AuthType = initialState, action: ActionType): AuthType => {
     switch (action.type) {
         case APPLY_AUTH_DATA:
-            return {...state, ...action.data, isAuth: true}
+            return {...state, ...action.data, isAuth: action.isAuth}
         case TOGGLE_INPROGRESS:
             return {...state, inProgress: action.inProgress}
         default:
             return state;
     }
 }
+//action-creators
+export const applyAuthData = (data: AuthDataType, isAuth: boolean): applyAuthDataType => ({
+    type: APPLY_AUTH_DATA,
+    data,
+    isAuth
+})
 
-export const applyAuthData = (data: AuthDataType): applyAuthDataType => ({type: APPLY_AUTH_DATA, data})
 
+//thunk-creators
 export const getAuthUserDataTC = (): ThunkAction<void, AppStateType, unknown, ActionType> => {
+
     return (dispatch) => {
         dispatch(fetchingInProgress(true));
-        getAuthData().then(response => {
+        apiAuth.getAuthData().then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(applyAuthData(response.data));
+                dispatch(applyAuthData(response.data, true));
             }
             dispatch(fetchingInProgress(false));
         });
     }
 }
+export const loginUserTC = (formData: FormDataType): ThunkAction<void, AppStateType, unknown, ActionType> => (dispatch) => {
+    apiAuth.loginUser(formData).then(resp => {
+        if (resp.resultCode === 0) {
+                       dispatch(getAuthUserDataTC());
+        }
+    })
+}
+export const logoutUserTC = (): ThunkAction<void, AppStateType, unknown, ActionType> => (dispatch) => {
+    apiAuth.logoutUser().then(resp => {
+        if (resp.resultCode === 0) {
+            debugger
+            dispatch(applyAuthData({id: 0, email: '', login: ''}, false))
+        }
+    })
+}
+
+
 
