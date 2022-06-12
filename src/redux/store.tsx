@@ -10,6 +10,7 @@ import {
     toggleInProgressType
 } from "./usersDataReducer";
 import {applyAuthDataType} from "./authReducer";
+import {FormAction} from "redux-form";
 
 export type PostDataType = {
     id: string
@@ -61,6 +62,7 @@ export type ActionType =
     | SetUserProfileType
     | applyAuthDataType
     | FollowFetchingQueueType
+
 
 let store = {
     _rerenderEntireTree: function () {

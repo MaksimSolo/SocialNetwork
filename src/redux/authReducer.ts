@@ -4,6 +4,7 @@ import {AppStateType} from "./redux-store";
 import {apiAuth} from "../api/api-auth";
 import {fetchingInProgress} from "./usersDataReducer";
 import {FormDataType} from "../Components/Login/Login";
+import {FormAction, stopSubmit} from "redux-form";
 
 const APPLY_AUTH_DATA = 'APPLY_AUTH_DATA';
 const TOGGLE_INPROGRESS = 'TOGGLE_INPROGRESS';
@@ -73,17 +74,21 @@ export const getAuthUserDataTC = (): ThunkAction<void, AppStateType, unknown, Ac
         });
     }
 }
-export const loginUserTC = (formData: FormDataType): ThunkAction<void, AppStateType, unknown, ActionType> => (dispatch) => {
+export const loginUserTC = (formData: FormDataType): ThunkAction<void, AppStateType, unknown, ActionType | FormAction> => (dispatch) => {
+
     apiAuth.loginUser(formData).then(resp => {
+        debugger
         if (resp.resultCode === 0) {
-                       dispatch(getAuthUserDataTC());
+            dispatch(getAuthUserDataTC());
+        } else {
+            let errorMessage = resp.messages.length>0? resp.messages[0] : 'some unspecified error';
+            dispatch(stopSubmit('Login', {_error: errorMessage})); //это инструмент редакс форм, для того чтобы сообщить в UI что необходимо НЕ САБМИТИТЬ!
         }
     })
 }
 export const logoutUserTC = (): ThunkAction<void, AppStateType, unknown, ActionType> => (dispatch) => {
     apiAuth.logoutUser().then(resp => {
         if (resp.resultCode === 0) {
-            debugger
             dispatch(applyAuthData({id: 0, email: '', login: ''}, false))
         }
     })

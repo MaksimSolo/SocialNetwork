@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {loginUserTC} from "../../redux/authReducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Navigate} from "react-router-dom";
+import style from './../FormControls/FormControls.module.css'
 
 export type FormDataType = {
     email: string
@@ -14,6 +15,7 @@ export type FormDataType = {
 }
 
 type LoginType = {
+    authUserId: number
     isAuth: boolean
     loginUserTC: (formData: FormDataType) => void
 }
@@ -22,16 +24,22 @@ export const Login = (props: LoginType) => {
     const onSubmit = (formData: FormDataType) => {
         props.loginUserTC(formData)
     }
-    if (props.isAuth) {return <Navigate to={'/profile'}/>}
-    return (
-        <div>
-            <h3>To log in, please enter your data in the forms below</h3>
-            <LoginReduxForm onSubmit={onSubmit}/>
-        </div>
-    );
+    if (props.isAuth) {
+        return <Navigate to={`/profile/${props.authUserId}`}/>
+    } else {
+        return (
+            <div>
+                <h3>To log in, please enter your data in the forms below</h3>
+                <LoginReduxForm onSubmit={onSubmit}/>
+            </div>
+        );
+    }
 };
 
-const mapStateToPropsRedirectToProfile = (state: AppStateType) => ({isAuth: state.auth.isAuth})
+const mapStateToPropsRedirectToProfile = (state: AppStateType) => ({
+    isAuth: state.auth.isAuth,
+    authUserId: state.auth.data.id
+})
 export const LoginContainer = connect(mapStateToPropsRedirectToProfile, {loginUserTC})(Login)
 
 
@@ -39,9 +47,10 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 //handlesubmit приходит к нам из контейнера
     return <form onSubmit={props.handleSubmit}>
         <div><Field validate={[required]} name={'email'} placeholder={"e-mail"} component={Input}/></div>
-        <div><Field validate={[required]} name={'password'} type={"password"} placeholder={"Password"}
+        <div><Field validate={[required]} name={'password'} type={"password"} placeholder={"password"}
                     component={Input}/></div>
         <div><Field name={'rememberMe'} type={"checkbox"} component={'input'}/> remember me</div>
+        {props.error && <div className={style.formSummaryError}>{props.error}</div>}
         <div>
             <button>Login</button>
         </div>
