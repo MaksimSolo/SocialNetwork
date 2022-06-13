@@ -25,7 +25,7 @@ export const Login = (props: LoginType) => {
         props.loginUserTC(formData)
     }
     if (props.isAuth) {
-        return <Navigate to={`/profile/${props.authUserId}`}/>
+        return <Navigate to={`/profile`}/>
     } else {
         return (
             <div>
@@ -44,6 +44,7 @@ export const LoginContainer = connect(mapStateToPropsRedirectToProfile, {loginUs
 
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
 //handlesubmit приходит к нам из контейнера
     return <form onSubmit={props.handleSubmit}>
         <div><Field validate={[required]} name={'email'} placeholder={"e-mail"} component={Input}/></div>

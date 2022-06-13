@@ -15,6 +15,7 @@ let initialState: ProfileDataType = {
 }
 
 export const profileDataReducer = (state: ProfileDataType = initialState, action: ActionType): ProfileDataType => {
+
     switch (action.type) {
         case ADD_POST:
             return {

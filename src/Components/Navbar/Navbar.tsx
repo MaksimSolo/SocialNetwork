@@ -5,9 +5,9 @@ import {Friends} from "./Friends/Friends";
 import {FriendsSideBarType} from "../../redux/store";
 
 type NavbarType = {
+    isAuth: boolean
     friendsSideBar: FriendsSideBarType
     doSome: () => void
-    isAuth: boolean
 }
 
 export const Navbar = (props: NavbarType) => {
@@ -41,10 +41,12 @@ export const Navbar = (props: NavbarType) => {
             <div className={classes.friends}>
                 <h2>Friends</h2>
 
-                {friendsItems}
+                {props.isAuth && friendsItems}
 
             </div>
         </nav>
     )
 }
+
+
 

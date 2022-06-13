@@ -24,6 +24,7 @@ let initialState = {
 }
 
 export const messagesPageReducer = (state: MessagesPageType = initialState, action: ActionType): MessagesPageType => {
+
     switch (action.type) {
         case SEND_MESSAGE:
             return {

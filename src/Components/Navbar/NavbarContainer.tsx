@@ -3,10 +3,8 @@ import {Navbar} from "./Navbar";
 import {doSomeAC, doSomeType} from "../../redux/friendsSideBarReducer";
 import {AppStateType} from "../../redux/redux-store";
 import React from "react";
-import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
-import {compose} from "redux";
 
-const mapStateToProps = (state: AppStateType) => ({friendsSideBar: state.friendsSideBar,})
+const mapStateToProps = (state: AppStateType) => ({friendsSideBar: state.friendsSideBar, isAuth: state.auth.isAuth})
 const mapDispatchToProps = (dispatch: (action: doSomeType) => void) => {
     return {
         doSome: () => {
@@ -16,8 +14,5 @@ const mapDispatchToProps = (dispatch: (action: doSomeType) => void) => {
 }
 
 
-export const NavbarContainer = compose<React.ComponentType>(
-    connect(mapStateToProps, mapDispatchToProps),
-    withAuthRedirectComponent
-)(Navbar)
+export const NavbarContainer = connect(mapStateToProps, mapDispatchToProps)(Navbar)
 

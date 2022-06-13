@@ -5,7 +5,6 @@ import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {UsersProfilePropsType} from "../../redux/profileDataReducer";
 
 type ProfileType = {
-
     profile: UsersProfilePropsType | null
 }
 

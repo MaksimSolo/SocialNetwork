@@ -4,11 +4,8 @@ import {followUserTC, getUsersTC, unfollowUserTC, UsersType} from "../../redux/u
 import React from "react";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
-import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
-import {compose} from "redux";
 
 type UsersContainerPropType = {
-    isAuth: boolean
     users: Array<UsersType>
     totalUsersCount: number,
     pageSize: number
@@ -24,14 +21,17 @@ type UsersContainerPropType = {
 class UsersContainer extends React.Component<UsersContainerPropType, AppStateType> {
 
     componentDidMount() {
+
         this.props.getUsersTC(this.props.currentPage, this.props.pageSize);
     }
 
     onChangingCurrentPage = (newPage: number) => {
+
         this.props.getUsersTC(newPage, this.props.pageSize);
     }
 
     render = () =>
+
         <>
             {this.props.inProgress ? <Preloader/> : null}
             <Users users={this.props.users}
@@ -82,7 +82,4 @@ const mapStateToProps = (state: AppStateType) => ({
     followUserTC,
 })(UsersContainer))*/
 
-export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUsersTC, unfollowUserTC, followUserTC,}),
-    withAuthRedirectComponent,)
-(UsersContainer)
+export default connect(mapStateToProps, {getUsersTC, unfollowUserTC, followUserTC,})(UsersContainer)

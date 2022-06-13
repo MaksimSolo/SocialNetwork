@@ -44,6 +44,7 @@ export type MyPostFormDataType = {
 
 const maxLength10 =maxLengthCreator(10);
 const MyPostForm: React.FC<InjectedFormProps<MyPostFormDataType>> = props => {
+
      return (
         <form onSubmit={props.handleSubmit}>
             <div>

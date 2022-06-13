@@ -44,6 +44,7 @@ let initialState: AuthType = {
 
 
 export const authReducer = (state: AuthType = initialState, action: ActionType): AuthType => {
+
     switch (action.type) {
         case APPLY_AUTH_DATA:
             return {...state, ...action.data, isAuth: action.isAuth}
@@ -62,31 +63,32 @@ export const applyAuthData = (data: AuthDataType, isAuth: boolean): applyAuthDat
 
 
 //thunk-creators
-export const getAuthUserDataTC = (): ThunkAction<void, AppStateType, unknown, ActionType> => {
-
-    return (dispatch) => {
+export const getAuthUserDataTC = (): ThunkAction<Promise<void>, AppStateType, unknown, ActionType> =>
+    dispatch => {
         dispatch(fetchingInProgress(true));
-        apiAuth.getAuthData().then(response => {
+        return apiAuth.getAuthData().then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(applyAuthData(response.data, true));
             }
             dispatch(fetchingInProgress(false));
-        });
+        })
+
     }
-}
+
 export const loginUserTC = (formData: FormDataType): ThunkAction<void, AppStateType, unknown, ActionType | FormAction> => (dispatch) => {
 
     apiAuth.loginUser(formData).then(resp => {
-        debugger
+
         if (resp.resultCode === 0) {
             dispatch(getAuthUserDataTC());
         } else {
-            let errorMessage = resp.messages.length>0? resp.messages[0] : 'some unspecified error';
+            let errorMessage = resp.messages.length > 0 ? resp.messages[0] : 'some unspecified error';
             dispatch(stopSubmit('Login', {_error: errorMessage})); //это инструмент редакс форм, для того чтобы сообщить в UI что необходимо НЕ САБМИТИТЬ!
         }
     })
 }
 export const logoutUserTC = (): ThunkAction<void, AppStateType, unknown, ActionType> => (dispatch) => {
+
     apiAuth.logoutUser().then(resp => {
         if (resp.resultCode === 0) {
             dispatch(applyAuthData({id: 0, email: '', login: ''}, false))

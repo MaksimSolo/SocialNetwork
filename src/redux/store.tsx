@@ -11,6 +11,7 @@ import {
 } from "./usersDataReducer";
 import {applyAuthDataType} from "./authReducer";
 import {FormAction} from "redux-form";
+import {Initialized} from "./appInitReducer";
 
 export type PostDataType = {
     id: string
@@ -62,6 +63,7 @@ export type ActionType =
     | SetUserProfileType
     | applyAuthDataType
     | FollowFetchingQueueType
+    | Initialized
 
 
 let store = {

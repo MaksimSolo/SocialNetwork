@@ -71,6 +71,7 @@ let initialState: UsersDataType = {
 
 
 export const usersDataReducer = (state: UsersDataType = initialState, action: ActionType): UsersDataType => {
+
     switch (action.type) {
         case TOGGLE_FOLLOW:
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: !u.followed} : u)};

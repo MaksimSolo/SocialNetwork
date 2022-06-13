@@ -21,7 +21,7 @@ export const Header = (props: HeaderProps) => {
                     <button onClick={props.logoutUserTC}>Log Out</button>
                 </div>
                 : <div className={classes.loginBlock}>
-                    <NavLink to='/login' className={({isActive}) => isActive ? classes.active : ''}>LOGIN</NavLink>
+                    <NavLink to='/login' className={({isActive}) => isActive ? classes.active : ''}>Log in</NavLink>
                 </div>}
         </header>
     );

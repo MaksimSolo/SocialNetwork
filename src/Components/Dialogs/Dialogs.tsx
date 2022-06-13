@@ -39,6 +39,7 @@ export const Dialogs = (props: DialogsType) => {
 
 const maxLength50 =maxLengthCreator(50);
 const DialogsForm: React.FC<InjectedFormProps<DialogsFormDataType>> = props => {
+
     return <form onSubmit={props.handleSubmit}>
         <div>
             <Field name={'message'}
