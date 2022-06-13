@@ -8,6 +8,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {Navigate} from "react-router-dom";
 import style from './../FormControls/FormControls.module.css'
 
+
 export type FormDataType = {
     email: string
     password: string
@@ -55,6 +56,9 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
         <div>
             <button>Login</button>
         </div>
+        <p style={{fontStyle:"italic", color: "rebeccapurple"}}>*please enter the following test data in the appropriate forms:
+            <br/>Email: free@samuraijs.com
+            <br/>Password: free</p>
     </form>;
 }
 
