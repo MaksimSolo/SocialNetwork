@@ -1,4 +1,4 @@
-import {AddPostType, SetUserProfileType, UsersProfilePropsType} from "./profileDataReducer";
+import {AddPostType, SetUserProfileType, SetUserStatusType, UsersProfilePropsType} from "./profileDataReducer";
 import {SendMessageType} from "./messagesPageReducer";
 import {AppStateType} from "./redux-store";
 import {
@@ -10,7 +10,6 @@ import {
     toggleInProgressType
 } from "./usersDataReducer";
 import {applyAuthDataType} from "./authReducer";
-import {FormAction} from "redux-form";
 import {Initialized} from "./appInitReducer";
 
 export type PostDataType = {
@@ -34,6 +33,7 @@ export type FriendsDataType = {
 export type ProfileDataType = {
     postData: Array<PostDataType>
     usersProfile: UsersProfilePropsType | null;
+    status:string,
 
 }
 export type MessagesPageType = {
@@ -61,6 +61,7 @@ export type ActionType =
     | SetUsersTotalCountType
     | toggleInProgressType
     | SetUserProfileType
+    | SetUserStatusType
     | applyAuthDataType
     | FollowFetchingQueueType
     | Initialized

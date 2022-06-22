@@ -2,7 +2,12 @@ import React from 'react';
 import {AppStateType} from "../../redux/redux-store";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfileTC, UsersProfilePropsType} from "../../redux/profileDataReducer";
+import {
+    getUserProfileTC,
+    getUserStatusTC,
+    updateUserStatusTC,
+    UsersProfilePropsType
+} from "../../redux/profileDataReducer";
 import {withRouter} from "../../customWithRouter";
 import {compose} from "redux";
 import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
@@ -13,6 +18,9 @@ type ProfileContainerType = {
     profile: UsersProfilePropsType | null
     router: { location: any, navigation: any, params: any }
     getUserProfileTC: (userID: number) => void
+    status: string
+    getUserStatusTC: (userID: number) => void
+    updateUserStatusTC: (newStatus: string,) => void
 }
 
 
@@ -28,6 +36,7 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
             }
         }
         this.props.getUserProfileTC(userID)
+        this.props.getUserStatusTC(userID)
     }
 
 
@@ -38,10 +47,11 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
 
 const mapStateToProps = (state: AppStateType) => ({
     profile: state.profileData.usersProfile,
-    authUserId: state.auth.data.id
+    authUserId: state.auth.data.id,
+    status: state.profileData.status
 })
 export const WithRouterProfileContainer = compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfileTC}),
+    connect(mapStateToProps, {getUserProfileTC, getUserStatusTC, updateUserStatusTC}),
     withAuthRedirectComponent,
     withRouter
 )(ProfileContainer)

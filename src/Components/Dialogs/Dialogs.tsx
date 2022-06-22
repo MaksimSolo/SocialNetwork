@@ -19,7 +19,7 @@ export const Dialogs = (props: DialogsType) => {
     const dialogItems = props.messagesPage.dialogsData.map(dialog => <DialogItem key={dialog.id} name={dialog.name}
                                                                                  id={dialog.id}/>);
     const messagesItems = props.messagesPage.messagesData.map(mess => <Message key={mess.id} text={mess.text}
-                                                                               id={mess.id}/>)
+                                                                               id={mess.id}/>);
     const addNewMessage = (formData: DialogsFormDataType) => {
         props.sendMessageByButtonADD(formData.message)
     }
@@ -30,14 +30,15 @@ export const Dialogs = (props: DialogsType) => {
                 {dialogItems}
             </div>
             <div className={classes.messages}>
-                {messagesItems}
                 <DialogsReduxForm onSubmit={addNewMessage}/>
+                {messagesItems}
+
             </div>
         </div>
     );
 };
 
-const maxLength50 =maxLengthCreator(50);
+const maxLength50 = maxLengthCreator(50);
 const DialogsForm: React.FC<InjectedFormProps<DialogsFormDataType>> = props => {
 
     return <form onSubmit={props.handleSubmit}>

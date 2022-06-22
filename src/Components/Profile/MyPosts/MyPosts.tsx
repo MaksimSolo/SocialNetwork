@@ -21,6 +21,7 @@ export function MyPosts(props: MyPostsType) {
             id={post.id}
             likeCount={post.likeCount}
         />)
+        .reverse()
 
     const addNewPost = (formData: MyPostFormDataType) => {
         props.addPost(formData.postText);

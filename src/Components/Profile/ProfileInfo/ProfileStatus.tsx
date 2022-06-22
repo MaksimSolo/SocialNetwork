@@ -1,60 +1,36 @@
 import React, {ChangeEvent} from 'react';
-import {apiProfileComp} from "../../../api/api-profile";
 
 export type ProfileStatusPropsType = {
     userID: number
+    authUserId: number
+    status: string
+    updateUserStatusTC: (newStatus: string,) => void
 }
 
 export type ProfileStatusStateType = {
     editMode?: boolean
     status: string
-    oldStatus: string
 }
 
 class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatusStateType> {
 
     state: ProfileStatusStateType = {
         editMode: false,
-        status: '',
-        oldStatus: ''
+        status: this.props.status,
     };
-
-    componentDidMount() {
-
-        console.log('componentDidMount')
-        apiProfileComp.getUserProfileStatus(this.props.userID).then((r) => {
-            this.setState({status: r, oldStatus: r})
-        })
-    }
-
-    componentWillUnmount() {
-
-        console.log('componentWillUnmount')
-        this.setState({
-            editMode: false
-        })
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<ProfileStatusStateType>, snapshot?: any) {
+        console.log('componentDidUpdate')
+        if (prevProps.status!== this.props.status) {
+            this.setState({status: this.props.status})
+        }
     }
 
     onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-
         console.log('onChange')
-        this.setState({status: `${e.currentTarget.value}`})
-
-    }
-    updateStatus = () => {
-
-        console.log('updateStatus')
-        apiProfileComp.updateUserProfileStatus(this.state.status).then(() => {
-            console.log('PUT req is OK!')
-        }).catch(err => {
-            console.log(err)
-            this.setState({status: this.state.oldStatus})
-        })
+        this.setState({status: e.currentTarget.value})
     }
 
     activateEditMode = () => {
-
-        console.log('activateEditMode')
         this.setState({       //setstate - асинхронен!!!! поэтому он вызовется тогда евентлупом,
             // когда закончат выполняться таски внутри области видимости где находится сетстейт!!
             editMode: true,
@@ -63,26 +39,28 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatu
         //this.forceUpdate()    - экстренный метод сообщить об изменении стейта и перерендерить компонент
     }
     deactivateEditMode = () => {
-
-        console.log('deactivateEditMode')
-        this.updateStatus()
         this.setState({
             editMode: false
         })
+        this.props.updateUserStatusTC(this.state.status)
     }
 
     render = () => {
 
         console.log('render')
         return <div>
-            {!this.state.editMode ?
-                <div><span onDoubleClick={this.activateEditMode}>{this.state.status || 'no status yet!'}</span></div> :
-                <div><input
-                    onChange={this.onChangeStatusHandler}
-                    autoFocus={true}
-                    onBlur={this.deactivateEditMode}
-                    value={this.state.status}/>
-                </div>}
+            {this.props.userID === this.props.authUserId ?
+                !this.state.editMode ?
+                    <div>Current status: <span
+                        onDoubleClick={this.activateEditMode}>{this.props.status || 'no status yet!'}</span></div> :
+                    <div><input
+                        onChange={this.onChangeStatusHandler}
+                        autoFocus={true}
+                        onBlur={this.deactivateEditMode}
+                        value={this.state.status}/>
+                    </div> :
+                <div>Current status: <span>{this.props.status || 'no status yet!'}</span></div>
+            }
         </div>
     }
 }
