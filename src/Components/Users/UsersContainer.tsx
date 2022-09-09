@@ -4,6 +4,14 @@ import {followUserTC, getUsersTC, unfollowUserTC, UsersType} from "../../redux/u
 import React from "react";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
+import {
+    getCurrentPage,
+    getInProgress,
+    getPageSize,
+    getToggleFollowFetchingQueue,
+    getTotalUsersCount,
+    getUsers
+} from "../../redux/usersSelectors";
 
 type UsersContainerPropType = {
     users: Array<UsersType>
@@ -46,14 +54,25 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
         </>
 }
 
+// до создания функций селекторов ::::
+// const mapStateToProps = (state: AppStateType) => ({
+//     users: state.usersData.users,
+//     totalUsersCount: state.usersData.totalUsersCount,
+//     pageSize: state.usersData.pageSize,
+//     currentPage: state.usersData.currentPage,
+//     inProgress: state.usersData.inProgress,
+//     toggleFollowFetchingQueue: state.usersData.toggleFollowFetchingQueue,
+// });
+
 const mapStateToProps = (state: AppStateType) => ({
-    users: state.usersData.users,
-    totalUsersCount: state.usersData.totalUsersCount,
-    pageSize: state.usersData.pageSize,
-    currentPage: state.usersData.currentPage,
-    inProgress: state.usersData.inProgress,
-    toggleFollowFetchingQueue: state.usersData.toggleFollowFetchingQueue,
+    users: getUsers(state),
+    totalUsersCount: getTotalUsersCount(state),
+    pageSize: getPageSize(state),
+    currentPage: getCurrentPage(state),
+    inProgress: getInProgress(state),
+    toggleFollowFetchingQueue: getToggleFollowFetchingQueue(state),
 });
+
 //предыдущий вариант mapDispatchToProps
 /*const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
     return {
@@ -75,11 +94,5 @@ const mapStateToProps = (state: AppStateType) => ({
     }
 }*/
 
-
-/*export default withAuthRedirectComponent(connect(mapStateToProps, {
-    getUsersTC,
-    unfollowUserTC,
-    followUserTC,
-})(UsersContainer))*/
 
 export default connect(mapStateToProps, {getUsersTC, unfollowUserTC, followUserTC,})(UsersContainer)

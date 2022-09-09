@@ -19,14 +19,12 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatu
         status: this.props.status,
     };
     componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<ProfileStatusStateType>, snapshot?: any) {
-        console.log('componentDidUpdate')
         if (prevProps.status!== this.props.status) {
             this.setState({status: this.props.status})
         }
     }
 
     onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log('onChange')
         this.setState({status: e.currentTarget.value})
     }
 
@@ -46,8 +44,6 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatu
     }
 
     render = () => {
-
-        console.log('render')
         return <div>
             {this.props.userID === this.props.authUserId ?
                 !this.state.editMode ?

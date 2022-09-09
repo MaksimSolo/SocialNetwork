@@ -1,7 +1,7 @@
 import {ActionType, ProfileDataType,} from "./store";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
-import {apiProfileComp, apiProfileInstance} from "../api/api-profile";
+import {apiProfileComp} from "../api/api-profile";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -63,7 +63,6 @@ export const getUserProfileTC = (userID: number): ThunkAction<void, AppStateType
 }
 export const getUserStatusTC = (userID: number): ThunkAction<void, AppStateType, unknown, ActionType> => dispatch =>
     apiProfileComp.getUserProfileStatus(userID).then(r => {
-        console.log(r)
         dispatch(setUserStatus(r))
     })
 
