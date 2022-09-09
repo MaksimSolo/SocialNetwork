@@ -41,15 +41,19 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
 
 
     render = () => {
+        // console.log("Profile")
         return (<><Profile {...this.props} /></>);
     }
 }
 
-const mapStateToProps = (state: AppStateType) => ({
-    profile: state.profileData.usersProfile,
-    authUserId: state.auth.data.id,
-    status: state.profileData.status
-})
+const mapStateToProps = (state: AppStateType) => {
+    // console.log("MSTP Profile")
+    return ({
+        profile: state.profileData.usersProfile,
+        authUserId: state.auth.data.id,
+        status: state.profileData.status
+    })
+}
 export const WithRouterProfileContainer = compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfileTC, getUserStatusTC, updateUserStatusTC}),
     withAuthRedirectComponent,
