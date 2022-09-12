@@ -4,6 +4,7 @@ import {UsersProfilePropsType} from "../../../redux/profileDataReducer";
 import Preloader from "../../Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import userPhoto from "./../../../images/userr.png";
+import {ProfileStatusOnHooks} from "./ProfileStatusOnHooks";
 
 export type ProfileInfoType = {
     profile: UsersProfilePropsType | null
@@ -24,7 +25,7 @@ export const ProfileInfo = (props: ProfileInfoType) => {
                      className={classes.usersPhoto}/>
                 <div>ID: {props.profile.userId}</div>
                 <div>Name: {props.profile.fullName}</div>
-                <ProfileStatus {...props} userID={props.profile.userId}/>
+                <ProfileStatusOnHooks {...props} userID={props.profile.userId}/>
                 {props.profile.aboutMe && <div>About: {props.profile.aboutMe}</div>}
                 {props.profile.contacts.facebook && <div>facebook: {props.profile.contacts.facebook}</div>}
                 {props.profile.contacts.website && <div>website: {props.profile.contacts.website}</div>}

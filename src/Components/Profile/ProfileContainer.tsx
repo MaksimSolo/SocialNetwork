@@ -11,6 +11,7 @@ import {
 import {withRouter} from "../../customWithRouter";
 import {compose} from "redux";
 import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
+import {getAuthUserIdMS, getProfileDataMS, getProfileStatusMS} from "../../redux/profileSelectors";
 
 
 type ProfileContainerType = {
@@ -41,17 +42,17 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
 
 
     render = () => {
-        // console.log("Profile")
+
         return (<><Profile {...this.props} /></>);
     }
 }
 
 const mapStateToProps = (state: AppStateType) => {
-    // console.log("MSTP Profile")
+
     return ({
-        profile: state.profileData.usersProfile,
-        authUserId: state.auth.data.id,
-        status: state.profileData.status
+        profile: getProfileDataMS(state),
+        authUserId: getAuthUserIdMS(state),
+        status: getProfileStatusMS(state),
     })
 }
 export const WithRouterProfileContainer = compose<React.ComponentType>(

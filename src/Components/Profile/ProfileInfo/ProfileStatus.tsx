@@ -20,6 +20,7 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatu
     };
     componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<ProfileStatusStateType>, snapshot?: any) {
         if (prevProps.status!== this.props.status) {
+            debugger
             this.setState({status: this.props.status})
         }
     }
@@ -44,6 +45,7 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType, ProfileStatu
     }
 
     render = () => {
+        debugger
         return <div>
             {this.props.userID === this.props.authUserId ?
                 !this.state.editMode ?

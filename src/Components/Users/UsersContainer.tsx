@@ -5,11 +5,11 @@ import React from "react";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
 import {
-    getCurrentPage,
-    getInProgress,
-    getPageSize,
-    getToggleFollowFetchingQueue,
-    getTotalUsersCount,
+    getCurrentPageMainSelector,
+    getInProgressMainSelector,
+    getPageSizeMainSelector,
+    getToggleFollowFetchingQueueMainSelector,
+    getTotalUsersCountMainSelector,
     getUsersMainSelector
 } from "../../redux/usersSelectors";
 
@@ -65,12 +65,12 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
 // });
 
 const mapStateToProps = (state: AppStateType) => ({
-    users: getUsersMainSelector (state),
-    totalUsersCount: getTotalUsersCount(state),
-    pageSize: getPageSize(state),
-    currentPage: getCurrentPage(state),
-    inProgress: getInProgress(state),
-    toggleFollowFetchingQueue: getToggleFollowFetchingQueue(state),
+    users: getUsersMainSelector(state),
+    totalUsersCount: getTotalUsersCountMainSelector(state),
+    pageSize: getPageSizeMainSelector(state),
+    currentPage: getCurrentPageMainSelector(state),
+    inProgress: getInProgressMainSelector(state),
+    toggleFollowFetchingQueue: getToggleFollowFetchingQueueMainSelector(state),
 });
 
 //предыдущий вариант mapDispatchToProps
