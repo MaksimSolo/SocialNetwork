@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {ProfileDataType} from "../../../redux/store";
@@ -12,15 +12,17 @@ type MyPostsType = {
     addPost: (postText: string) => void
 }
 
-export class MyPosts extends React.Component<MyPostsType> {
+
+//pure component делает оптимизацию по умолчанию
+export class MyPosts extends PureComponent<MyPostsType> {
 
     // componentDidMount() { //имитируем изм-е стейта чтобы встал вопрос о перерисовке
     //     setTimeout(()=>{this.setState({a:12})},3000)
     // }
 
-    shouldComponentUpdate(nextProps: Readonly<MyPostsType>, nextState: Readonly<{}>, nextContext: any): boolean {
-        return nextProps !== this.props || nextState !== this.state;
-    }
+    // shouldComponentUpdate(nextProps: Readonly<MyPostsType>, nextState: Readonly<{}>, nextContext: any): boolean {
+    //     return nextProps !== this.props || nextState !== this.state;
+    // }
     //shouldComponentUpdate возвращает true - тогда будет перерисовка
     //shouldComponentUpdate возвращает false - тогда перерисовки не будет
 
