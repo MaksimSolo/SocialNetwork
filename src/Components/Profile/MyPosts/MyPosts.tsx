@@ -12,30 +12,45 @@ type MyPostsType = {
     addPost: (postText: string) => void
 }
 
-export function MyPosts(props: MyPostsType) {
+export class MyPosts extends React.Component<MyPostsType> {
 
-    let postsItems = props.profileData.postData.map(post =>
-        <Post
-            key={post.id}
-            message={post.message}
-            id={post.id}
-            likeCount={post.likeCount}
-        />)
-        .reverse()
+    // componentDidMount() { //имитируем изм-е стейта чтобы встал вопрос о перерисовке
+    //     setTimeout(()=>{this.setState({a:12})},3000)
+    // }
 
-    const addNewPost = (formData: MyPostFormDataType) => {
-        props.addPost(formData.postText);
+    shouldComponentUpdate(nextProps: Readonly<MyPostsType>, nextState: Readonly<{}>, nextContext: any): boolean {
+        return nextProps !== this.props || nextState !== this.state;
     }
+    //shouldComponentUpdate возвращает true - тогда будет перерисовка
+    //shouldComponentUpdate возвращает false - тогда перерисовки не будет
 
-    return (
-        <div className={classes.postsBlock}>
-            <h3>My posts</h3>
-            <MyPostsReduxForm onSubmit={addNewPost}/>
-            <div className={classes.posts}>
-                {postsItems}
+
+    render() {
+        console.log('MyPosts')
+
+        let postsItems = this.props.profileData.postData.map(post =>
+            <Post
+                key={post.id}
+                message={post.message}
+                id={post.id}
+                likeCount={post.likeCount}
+            />)
+            .reverse()
+
+        const addNewPost = (formData: MyPostFormDataType) => {
+            this.props.addPost(formData.postText);
+        }
+
+        return (
+            <div className={classes.postsBlock}>
+                <h3>My posts</h3>
+                <MyPostsReduxForm onSubmit={addNewPost}/>
+                <div className={classes.posts}>
+                    {postsItems}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 };
 
 
@@ -43,10 +58,10 @@ export type MyPostFormDataType = {
     postText: string;
 }
 
-const maxLength10 =maxLengthCreator(10);
+const maxLength10 = maxLengthCreator(10);
 const MyPostForm: React.FC<InjectedFormProps<MyPostFormDataType>> = props => {
 
-     return (
+    return (
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field validate={[required, maxLength10,]}
