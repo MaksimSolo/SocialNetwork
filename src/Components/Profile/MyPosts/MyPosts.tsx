@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {useMemo} from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from "./Post/Post";
 import {ProfileDataType} from "../../../redux/store";
@@ -12,48 +12,32 @@ type MyPostsType = {
     addPost: (postText: string) => void
 }
 
+export const MyPosts = React.memo((props: MyPostsType) => {
+    console.log('MyPosts')
 
-//pure component делает оптимизацию по умолчанию
-export class MyPosts extends PureComponent<MyPostsType> {
+    let postsItems = useMemo(()=>props.profileData.postData.map(post =>
+        <Post
+            key={post.id}
+            message={post.message}
+            id={post.id}
+            likeCount={post.likeCount}
+        />)
+        .reverse(),[props.profileData.postData])
 
-    // componentDidMount() { //имитируем изм-е стейта чтобы встал вопрос о перерисовке
-    //     setTimeout(()=>{this.setState({a:12})},3000)
-    // }
-
-    // shouldComponentUpdate(nextProps: Readonly<MyPostsType>, nextState: Readonly<{}>, nextContext: any): boolean {
-    //     return nextProps !== this.props || nextState !== this.state;
-    // }
-    //shouldComponentUpdate возвращает true - тогда будет перерисовка
-    //shouldComponentUpdate возвращает false - тогда перерисовки не будет
-
-
-    render() {
-        console.log('MyPosts')
-
-        let postsItems = this.props.profileData.postData.map(post =>
-            <Post
-                key={post.id}
-                message={post.message}
-                id={post.id}
-                likeCount={post.likeCount}
-            />)
-            .reverse()
-
-        const addNewPost = (formData: MyPostFormDataType) => {
-            this.props.addPost(formData.postText);
-        }
-
-        return (
-            <div className={classes.postsBlock}>
-                <h3>My posts</h3>
-                <MyPostsReduxForm onSubmit={addNewPost}/>
-                <div className={classes.posts}>
-                    {postsItems}
-                </div>
-            </div>
-        );
+    const addNewPost = (formData: MyPostFormDataType) => {
+        props.addPost(formData.postText);
     }
-};
+
+    return (
+        <div className={classes.postsBlock}>
+            <h3>My posts</h3>
+            <MyPostsReduxForm onSubmit={addNewPost}/>
+            <div className={classes.posts}>
+                {postsItems}
+            </div>
+        </div>
+    );
+});
 
 
 export type MyPostFormDataType = {
