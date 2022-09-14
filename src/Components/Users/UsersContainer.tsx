@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {followUserTC, getUsersTC, unfollowUserTC, UsersType} from "../../redux/usersDataReducer";
+import {followUserTC, getUsersTC, unfollowUserTC, UsersType} from "../../redux/reducers/usersDataReducer";
 import React from "react";
 import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
@@ -11,7 +11,7 @@ import {
     getToggleFollowFetchingQueueMainSelector,
     getTotalUsersCountMainSelector,
     getUsersMainSelector
-} from "../../redux/usersSelectors";
+} from "../../redux/selectors/usersSelectors";
 
 type UsersContainerPropType = {
     users: Array<UsersType>

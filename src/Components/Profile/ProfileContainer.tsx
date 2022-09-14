@@ -7,11 +7,11 @@ import {
     getUserStatusTC,
     updateUserStatusTC,
     UsersProfilePropsType
-} from "../../redux/profileDataReducer";
+} from "../../redux/reducers/profileDataReducer";
 import {withRouter} from "../../customWithRouter";
 import {compose} from "redux";
 import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
-import {getAuthUserIdMS, getProfileDataMS, getProfileStatusMS} from "../../redux/profileSelectors";
+import {getAuthUserIdMS, getProfileDataMS, getProfileStatusMS} from "../../redux/selectors/profileSelectors";
 
 
 type ProfileContainerType = {

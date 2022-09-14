@@ -1,6 +1,6 @@
-import {AppStateType} from "./redux-store";
+import {AppStateType} from "../redux-store";
 import {createSelector} from "reselect";
-import {UsersProfilePropsType} from "./profileDataReducer";
+import {UsersProfilePropsType} from "../reducers/profileDataReducer";
 
 //в селекторах можно производить отдельные нужные действия с элемeнтами стейта!
 

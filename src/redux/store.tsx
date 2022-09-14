@@ -1,5 +1,11 @@
-import {AddPostType, SetUserProfileType, SetUserStatusType, UsersProfilePropsType} from "./profileDataReducer";
-import {SendMessageType} from "./messagesPageReducer";
+import {
+    AddPostType,
+    DeletePostType,
+    SetUserProfileType,
+    SetUserStatusType,
+    UsersProfilePropsType
+} from "./reducers/profileDataReducer";
+import {SendMessageType} from "./reducers/messagesPageReducer";
 import {AppStateType} from "./redux-store";
 import {
     ChangeCurrentPageType,
@@ -8,9 +14,9 @@ import {
     SetUsersType,
     ToggleFollowType,
     toggleInProgressType
-} from "./usersDataReducer";
-import {applyAuthDataType} from "./authReducer";
-import {Initialized} from "./appInitReducer";
+} from "./reducers/usersDataReducer";
+import {applyAuthDataType} from "./reducers/authReducer";
+import {Initialized} from "./reducers/appInitReducer";
 
 export type PostDataType = {
     id: string
@@ -33,7 +39,7 @@ export type FriendsDataType = {
 export type ProfileDataType = {
     postData: Array<PostDataType>
     usersProfile: UsersProfilePropsType | null;
-    status:string,
+    status: string,
 
 }
 export type MessagesPageType = {
@@ -54,6 +60,7 @@ export type StoreType = {
 
 export type ActionType =
     AddPostType
+    | DeletePostType
     | SendMessageType
     | ToggleFollowType
     | SetUsersType

@@ -1,4 +1,4 @@
-import {sendMessageAC} from "../../redux/messagesPageReducer";
+import {sendMessageAC} from "../../redux/reducers/messagesPageReducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {ActionType} from "../../redux/store";

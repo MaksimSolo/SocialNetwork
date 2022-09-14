@@ -1,12 +1,13 @@
-import {ActionType, ProfileDataType,} from "./store";
+import {ActionType, ProfileDataType,} from "../store";
 import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store";
-import {apiProfileComp} from "../api/api-profile";
+import {AppStateType} from "../redux-store";
+import {apiProfileComp} from "../../api/api-profile";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_USER_STATUS = 'SET_USER_STATUS';
-// const UPD_USER_STATUS = 'UPD_USER_STATUS';
+const DELETE_POST = 'DELETE_POST';
+
 
 let initialState: ProfileDataType = {
     postData: [
@@ -28,6 +29,8 @@ export const profileDataReducer = (state: ProfileDataType = initialState, action
                     likeCount: 0
                 }],
             };
+        case "DELETE_POST":
+            return {...state, postData: state.postData.filter(post => post.id !== action.postID)};
         case SET_USER_PROFILE:
             return {...state, usersProfile: action.profile}
         case SET_USER_STATUS:
@@ -52,6 +55,7 @@ export const updateUserStatus = (status: string): SetUserStatusType => ({
     type: SET_USER_STATUS,
     status
 })
+export const deletePost = (postID: string) => ({type: DELETE_POST, postID} as const)
 
 //thunk-creator
 export const getUserProfileTC = (userID: number): ThunkAction<void, AppStateType, unknown, ActionType> => {
@@ -76,6 +80,7 @@ export type AddPostType = {
     type: typeof ADD_POST
     postText: string
 }
+export type DeletePostType = ReturnType<typeof deletePost>
 export type SetUserProfileType = {
     type: typeof SET_USER_PROFILE
     profile: UsersProfilePropsType | null,

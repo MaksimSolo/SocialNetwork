@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Header.module.css'
 import {NavLink} from "react-router-dom";
-import {AuthDataType} from "../../redux/authReducer";
+import {AuthDataType} from "../../redux/reducers/authReducer";
 
 type HeaderProps = {
     logoutUserTC: () => void,

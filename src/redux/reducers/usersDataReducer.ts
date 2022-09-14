@@ -1,7 +1,7 @@
-import {ActionType} from "./store";
-import {apiUsersComp} from "../api/api-users";
+import {ActionType} from "../store";
+import {apiUsersComp} from "../../api/api-users";
 import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store";
+import {AppStateType} from "../redux-store";
 
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
 const SET_USERS = 'SET_USERS';

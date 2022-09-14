@@ -1,6 +1,6 @@
-import {ActionType} from "./store";
+import {ActionType} from "../store";
 import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store";
+import {AppStateType} from "../redux-store";
 import {getAuthUserDataTC} from "./authReducer";
 
 const INITIALIZED = 'INITIALIZED';

@@ -9,7 +9,7 @@ import {LoginContainer} from "./Components/Login/Login";
 import UsersContainer from "./Components/Users/UsersContainer";
 import {AppStateType} from "./redux/redux-store";
 import {connect} from "react-redux";
-import {initializeApp} from "./redux/appInitReducer";
+import {initializeApp} from "./redux/reducers/appInitReducer";
 import Preloader from "./Components/Preloader/Preloader";
 import {compose} from "redux";
 import {withRouter} from "./customWithRouter";

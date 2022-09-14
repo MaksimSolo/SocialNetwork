@@ -1,4 +1,4 @@
-import {ActionType, MessagesPageType} from "./store";
+import {ActionType, MessagesPageType} from "../store";
 
 const SEND_MESSAGE = 'SEND_MESSAGE';
 

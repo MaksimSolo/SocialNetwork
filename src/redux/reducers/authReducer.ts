@@ -1,9 +1,9 @@
-import {ActionType} from "./store";
+import {ActionType} from "../store";
 import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store";
-import {apiAuth} from "../api/api-auth";
+import {AppStateType} from "../redux-store";
+import {apiAuth} from "../../api/api-auth";
 import {fetchingInProgress} from "./usersDataReducer";
-import {FormDataType} from "../Components/Login/Login";
+import {FormDataType} from "../../Components/Login/Login";
 import {FormAction, stopSubmit} from "redux-form";
 
 const APPLY_AUTH_DATA = 'APPLY_AUTH_DATA';

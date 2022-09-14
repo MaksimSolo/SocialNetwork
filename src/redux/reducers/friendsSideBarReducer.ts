@@ -1,4 +1,4 @@
-import {FriendsSideBarType,} from "./store";
+import {FriendsSideBarType,} from "../store";
 
 const DO_SOME = 'DO_SOME';
 
