@@ -1,5 +1,5 @@
 import {ProfileDataType} from "../store";
-import {addPostAC, deletePost, profileDataReducer} from "./profileDataReducer";
+import {addPostAC, deletePost, profileDataReducer} from "../reducers/profileDataReducer";
 
 let currentState: ProfileDataType;
 

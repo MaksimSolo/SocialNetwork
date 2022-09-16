@@ -47,7 +47,7 @@ export const authReducer = (state: AuthType = initialState, action: ActionType):
 
     switch (action.type) {
         case APPLY_AUTH_DATA:
-            return {...state, ...action.data, isAuth: action.isAuth}
+            return {...state, data: action.data, isAuth: action.isAuth}
         case TOGGLE_INPROGRESS:
             return {...state, inProgress: action.inProgress}
         default:
