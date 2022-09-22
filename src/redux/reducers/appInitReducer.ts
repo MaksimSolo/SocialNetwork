@@ -1,20 +1,13 @@
 import {ActionType} from "../store";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../redux-store";
+import {AppThunk} from "../redux-store";
 import {getAuthUserDataTC} from "./authReducer";
+import {AxiosError} from "axios";
 
-const INITIALIZED = 'INITIALIZED';
-
-export type Initialized = {
-    type: typeof INITIALIZED
-}
-export type AppInitType = {
-    initialized: boolean
-}
+const INITIALIZED = 'social-network/appInit/INITIALIZED';
 
 let initialState = {initialized: false}
 
-export const appInitReducer = (state = initialState, action: ActionType): AppInitType => {
+export const appInitReducer = (state: AppInitType = initialState, action: ActionType): AppInitType => {
 
     switch (action.type) {
         case INITIALIZED:
@@ -25,19 +18,22 @@ export const appInitReducer = (state = initialState, action: ActionType): AppIni
 }
 
 //action-creator
-export const initializedAC = (): Initialized => ({type: INITIALIZED,});
+export const initializedAC = () => ({type: INITIALIZED,} as const);
 
 
 //thunk-creator
-export const initializeApp = (): ThunkAction<Promise<void>, AppStateType, unknown, ActionType> =>
+export const initializeApp = (): AppThunk =>
     async dispatch => {
         try {
             await dispatch(getAuthUserDataTC());
             dispatch(initializedAC());
-        } catch (e) {
-            console.log(e)
+        } catch (err) {
+            const error = err as AxiosError
+            console.log(error)
         }
     }
 
-
+//types
+export type Initialized = ReturnType<typeof initializedAC>
+export type AppInitType = typeof initialState;
 

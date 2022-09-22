@@ -1,5 +1,4 @@
-import {ProfileDataType} from "../store";
-import {addPostAC, deletePost, profileDataReducer} from "../reducers/profileDataReducer";
+import {addPostAC, deletePost, profileDataReducer, ProfileDataType} from "../reducers/profileDataReducer";
 
 let currentState: ProfileDataType;
 
@@ -21,12 +20,12 @@ test('post should be added correctly', () => {
 
     expect(newState.postData.length).toBeGreaterThan(2)
     expect(newState.postData[2].message).toStrictEqual('Hello september!')
-    expect(newState.postData.map(el=>el.id)).toBeDefined()
+    expect(newState.postData.map(el => el.id)).toBeDefined()
 })
 
 test('post should be deleted correctly', () => {
-    const deletingID='2'
-    let action=deletePost(deletingID);
+    const deletingID = '2'
+    let action = deletePost(deletingID);
     const newState = profileDataReducer(currentState, action)
 
     expect(newState.postData.length).toBe(1)

@@ -1,38 +1,17 @@
 import {ActionType} from "../store";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../redux-store";
+import {AppThunk} from "../redux-store";
 import {apiAuth} from "../../api/api-auth";
 import {fetchingInProgress} from "./usersDataReducer";
 import {FormDataType} from "../../Components/Login/Login";
-import {FormAction, stopSubmit} from "redux-form";
+import {stopSubmit} from "redux-form";
+import {AxiosError} from "axios";
+import {setUserProfile, setUserStatus} from "./profileDataReducer";
 
-const APPLY_AUTH_DATA = 'APPLY_AUTH_DATA';
-const TOGGLE_INPROGRESS = 'TOGGLE_INPROGRESS';
-
-
-export type toggleInProgressType = {
-    type: typeof TOGGLE_INPROGRESS
-    inProgress: boolean
-}
-export type applyAuthDataType = {
-    type: typeof APPLY_AUTH_DATA
-    data: AuthDataType
-    isAuth: boolean
-}
-
-export type AuthDataType = {
-    id: number,
-    email: string,
-    login: string,
-}
-export type AuthType = {
-    data: AuthDataType
-    inProgress: boolean,
-    isAuth: boolean,
-}
+const APPLY_AUTH_DATA = 'social-network/auth/APPLY_AUTH_DATA';
+const TOGGLE_INPROGRESS = 'social-network/usersData/TOGGLE_INPROGRESS';
 
 
-let initialState: AuthType = {
+let initialState = {
     data: {
         id: 0,
         email: '',
@@ -54,47 +33,61 @@ export const authReducer = (state: AuthType = initialState, action: ActionType):
             return state;
     }
 }
+
+
 //action-creators
-export const applyAuthData = (data: AuthDataType, isAuth: boolean): applyAuthDataType => ({
+export const applyAuthData = (data: AuthDataType, isAuth: boolean) => ({
     type: APPLY_AUTH_DATA,
     data,
     isAuth
-})
-
+} as const)
 
 //thunk-creators
-export const getAuthUserDataTC = (): ThunkAction<Promise<void>, AppStateType, unknown, ActionType> =>
-    dispatch => {
+export const getAuthUserDataTC = (): AppThunk => async dispatch => {
+    try {
         dispatch(fetchingInProgress(true));
-        return apiAuth.getAuthData().then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(applyAuthData(response.data, true));
-            }
-            dispatch(fetchingInProgress(false));
-        })
-
+        const response = await apiAuth.getAuthData();
+        if (response.data.resultCode === 0) {
+            dispatch(applyAuthData(response.data.data, true));
+        }
+        dispatch(fetchingInProgress(false));
+    } catch (err) {
+        const error = err as AxiosError
+        console.log(error)
     }
+}
 
-export const loginUserTC = (formData: FormDataType): ThunkAction<void, AppStateType, unknown, ActionType | FormAction> => (dispatch) => {
-
-    apiAuth.loginUser(formData).then(resp => {
-
-        if (resp.resultCode === 0) {
+export const loginUserTC = (formData: FormDataType): AppThunk => async dispatch => {
+    try {
+        const response = await apiAuth.loginUser(formData);
+        if (response.resultCode === 0) {
             dispatch(getAuthUserDataTC());
         } else {
-            let errorMessage = resp.messages.length > 0 ? resp.messages[0] : 'some unspecified error';
+            let errorMessage = response.messages.length > 0 ? response.messages[0] : 'some unspecified error';
             dispatch(stopSubmit('Login', {_error: errorMessage})); //это инструмент редакс форм, для того чтобы сообщить в UI что необходимо НЕ САБМИТИТЬ!
         }
-    })
-}
-export const logoutUserTC = (): ThunkAction<void, AppStateType, unknown, ActionType> => (dispatch) => {
-
-    apiAuth.logoutUser().then(resp => {
-        if (resp.resultCode === 0) {
-            dispatch(applyAuthData({id: 0, email: '', login: ''}, false))
-        }
-    })
+    } catch (err) {
+        const error = err as AxiosError
+        console.log(error)
+    }
 }
 
 
+export const logoutUserTC = (): AppThunk => async dispatch => {
+    const response = await apiAuth.logoutUser();
+    if (response.resultCode === 0) {
+        dispatch(applyAuthData({id: 0, email: '', login: ''}, false))
+        dispatch(setUserProfile(null))
+        dispatch(setUserStatus(''))
+    }
+}
+
+//types
+export type applyAuthDataType = ReturnType<typeof applyAuthData>
+export type AuthDataType = {
+    id: number,
+    email: string,
+    login: string,
+}
+export type AuthType = typeof initialState
 

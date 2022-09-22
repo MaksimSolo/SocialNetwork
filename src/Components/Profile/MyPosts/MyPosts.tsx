@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
 import classes from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {ProfileDataType} from "../../../redux/store";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utils/validators/validators";
 import {Textarea} from "../../FormControls/FormControls";
+import {ProfileDataType} from "../../../redux/reducers/profileDataReducer";
 
 
 type MyPostsType = {
@@ -13,7 +13,7 @@ type MyPostsType = {
 }
 
 export const MyPosts = React.memo((props: MyPostsType) => {
-    console.log('MyPosts')
+
 
     let postsItems = useMemo(()=>props.profileData.postData.map(post =>
         <Post

@@ -1,11 +1,6 @@
-import {ActionType, MessagesPageType} from "../store";
+import {ActionType} from "../store";
 
-const SEND_MESSAGE = 'SEND_MESSAGE';
-
-export type SendMessageType = {
-    type: typeof SEND_MESSAGE
-    newTextToMessage: string
-}
+const SEND_MESSAGE = 'social-network/messagesPage/SEND_MESSAGE';
 
 let initialState = {
     messagesData: [
@@ -38,4 +33,9 @@ export const messagesPageReducer = (state: MessagesPageType = initialState, acti
     }
 }
 
-export const sendMessageAC = (newTextToMessage: string): SendMessageType => ({type: SEND_MESSAGE, newTextToMessage})
+export const sendMessageAC = (newTextToMessage: string) => ({type: SEND_MESSAGE, newTextToMessage}as const)
+
+
+//types
+export type SendMessageType = ReturnType<typeof sendMessageAC>
+export type MessagesPageType = typeof initialState

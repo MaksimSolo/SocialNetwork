@@ -17,6 +17,7 @@ import {
 } from "./reducers/usersDataReducer";
 import {applyAuthDataType} from "./reducers/authReducer";
 import {Initialized} from "./reducers/appInitReducer";
+import {FormAction} from "redux-form";
 
 export type PostDataType = {
     id: string
@@ -36,18 +37,6 @@ export type FriendsDataType = {
     name: string
     img: string
 }
-export type ProfileDataType = {
-    postData: Array<PostDataType>
-    usersProfile: UsersProfilePropsType | null;
-    status: string,
-
-}
-export type MessagesPageType = {
-    messagesData: Array<MessageDataType>
-    dialogsData: Array<DialogsDataType>
-
-}
-export type FriendsSideBarType = { friendsData: Array<FriendsDataType> }
 
 export type StoreType = {
     _rerenderEntireTree: () => void

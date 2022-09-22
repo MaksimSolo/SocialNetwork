@@ -26,6 +26,7 @@ export class App extends React.Component<AppContainerType, AppStateType> {
     }
 
     render = () => {
+
         if (this.props.initialized) {
             return (
                 <div className='app-wrapper'>

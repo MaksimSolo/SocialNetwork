@@ -1,11 +1,4 @@
-import {FriendsSideBarType,} from "../store";
-
-const DO_SOME = 'DO_SOME';
-
-export type doSomeType = {
-    type: typeof DO_SOME
-}
-
+const DO_SOME = 'social-network/friendsSideBar/DO_SOME';
 
 let initialState = {
     friendsData: [
@@ -37,4 +30,8 @@ export const friendsSideBarReducer = (state: FriendsSideBarType = initialState, 
     }
 }
 
-export const doSomeAC = (): doSomeType => ({type: DO_SOME})
+export const doSomeAC = () => ({type: DO_SOME} as const)
+
+//types
+export type doSomeType = ReturnType<typeof doSomeAC>
+export type FriendsSideBarType = typeof initialState

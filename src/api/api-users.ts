@@ -10,14 +10,22 @@ export const apiUsersInstance = axios.create({
 
 export const apiUsersComp = {
     getUsersData(currentPage: number, pageSize: number) {
-        return apiUsersInstance.get(`users?page=${currentPage}&count=${pageSize}`,).then(response => response.data)
+        return apiUsersInstance.get(`users?page=${currentPage}&count=${pageSize}`,)
     },
     unfollowUser(id: number) {
-        return apiUsersInstance.delete(`follow/${id}`,).then(response => response.data)
+        return apiUsersInstance.delete<ToggleFollowResponseType>(`follow/${id}`,).then(resp=>resp.data)
     },
     postForFollowUser(id: number) {
-        return apiUsersInstance.post(`follow/${id}`,).then(response => response.data)
+        return apiUsersInstance.post<ToggleFollowResponseType>(`follow/${id}`,).then(resp=>resp.data)
     }
+}
+
+
+//types
+export type ToggleFollowResponseType<T = {}> = {
+    resultCode: number
+    messages: string[],
+    data: T
 }
 
 
