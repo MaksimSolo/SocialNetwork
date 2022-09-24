@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../FormControls/FormControls";
+import {Input, createField} from "../FormControls/FormControls";
 import {required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {loginUserTC} from "../../redux/reducers/authReducer";
@@ -22,10 +22,12 @@ type LoginType = {
 }
 export const Login = (props: LoginType) => {
 
+    const {isAuth, loginUserTC, ...rest} = props
+
     const onSubmit = (formData: FormDataType) => {
-        props.loginUserTC(formData)
+        loginUserTC(formData)
     }
-    if (props.isAuth) {
+    if (isAuth) {
         return <Navigate to={`/profile`}/>
     } else {
         return (
@@ -44,19 +46,20 @@ const mapStateToPropsRedirectToProfile = (state: AppStateType) => ({
 export const LoginContainer = connect(mapStateToPropsRedirectToProfile, {loginUserTC})(Login)
 
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error,}) => {
 
 //handlesubmit приходит к нам из контейнера
-    return <form onSubmit={props.handleSubmit}>
-        <div><Field validate={[required]} name={'email'} placeholder={"e-mail"} component={Input}/></div>
-        <div><Field validate={[required]} name={'password'} type={"password"} placeholder={"password"}
-                    component={Input}/></div>
-        <div><Field name={'rememberMe'} type={"checkbox"} component={'input'}/> remember me</div>
-        {props.error && <div className={style.formSummaryError}>{props.error}</div>}
+    return <form onSubmit={handleSubmit}>
+
+        {createField([required], 'email', '', "e-mail", Input, '')}
+        {createField([required], 'password', 'password', "password", Input, '')}
+        {createField([], 'rememberMe', 'checkbox', '', Input, 'remember me')}
+        {error && <div className={style.formSummaryError}>{error}</div>}
         <div>
             <button>Login</button>
         </div>
-        <p style={{fontStyle:"italic", color: "rebeccapurple"}}>*please enter the following test data in the appropriate forms:
+        <p style={{fontStyle: "italic", color: "rebeccapurple"}}>*please enter the following test data in the
+            appropriate forms:
             <br/>Email: free@samuraijs.com
             <br/>Password: free</p>
     </form>;

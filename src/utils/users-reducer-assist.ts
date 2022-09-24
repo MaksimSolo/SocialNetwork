@@ -25,3 +25,4 @@ export const usersToggleFollowFlow =async (dispatch: AppDispatch,userID: number,
 export const changeItemPropsInItemsArray = (items: UsersType[], actionPropName: number, itemPropName:KeysUsersType, changedPropName:KeysUsersType): UsersType[]=>{
     return items.map(item => item[itemPropName] === actionPropName ? {...item, [changedPropName]: !item[changedPropName]} : item)
 }
+
