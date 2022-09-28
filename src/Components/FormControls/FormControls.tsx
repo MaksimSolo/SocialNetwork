@@ -2,11 +2,12 @@ import React from 'react';
 import {WrappedFieldProps} from "redux-form/lib/Field";
 import style from './FormControls.module.css'
 import {Field} from "redux-form";
+import {FieldValidatorType} from "../../utils/validators/validators";
 
 type FormControlType = WrappedFieldProps;
 export const FormControl: React.FC<FormControlType> = (props) => {
 
-    let {meta:{error,touched}, children} = props;
+    let {meta: {error, touched}, children} = props;
     const onError = error && touched;
     return (
         <div className={`${style.formControl} ${onError ? style.error : ""}`}>
@@ -16,12 +17,12 @@ export const FormControl: React.FC<FormControlType> = (props) => {
     )
 }
 
-export const Textarea = (props: FormControlType) => {
+export const Textarea: React.FC<FormControlType> = (props) => {
     let {input, meta, ...restProps} = props;
     return <FormControl {...props}><textarea {...input}{...restProps}/></FormControl>
 }
 
-export const Input = (props: FormControlType) => {
+export const Input: React.FC<FormControlType> = (props) => {
 
     let {input, meta, ...restProps} = props;
     return <FormControl {...props}><input {...input}{...restProps}/></FormControl>
@@ -29,8 +30,8 @@ export const Input = (props: FormControlType) => {
 
 
 //вспомогательная функция автоматизированной генерации полей Field с нужными аргументами
-export const createField = (validators: Array<Function>, name: string, type: string, placeholder: string, component: React.FC<FormControlType>, text: string) =>
-    <div>
+export function createField<FieldsNamesType extends string>(validators: Array<FieldValidatorType>, name: FieldsNamesType, type: string, placeholder: string | undefined, component: React.FC<FormControlType> | string, text: string = '') {
+    return <div>
         <Field validate={validators}
                name={name}
                type={type}
@@ -38,5 +39,6 @@ export const createField = (validators: Array<Function>, name: string, type: str
                component={component}/>
         {text}
     </div>
+}
 
 
