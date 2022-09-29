@@ -13,7 +13,6 @@ const SELECT_FROM_TOGGLE_FOLLOW_FETCHING_QUEUE = 'social-network/usersData/SELEC
 
 
 let initialState = {
-
     users: [] as Array<UsersType> | [],
     totalUsersCount: 0,
     pageSize: 100,
