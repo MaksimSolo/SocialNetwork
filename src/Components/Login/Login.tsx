@@ -1,12 +1,12 @@
 import React from 'react';
 import {InjectedFormProps, reduxForm} from "redux-form";
-import {createField, Input} from "../FormControls/FormControls";
+import {createField, Input} from "../common/FormControls/FormControls";
 import {required} from "../../utils/validators/validators";
 import {connect} from "react-redux";
 import {loginUserTC} from "../../redux/reducers/authReducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Navigate} from "react-router-dom";
-import style from './../FormControls/FormControls.module.css'
+import style from '../common/FormControls/FormControls.module.css'
 
 
 export type FormDataType = {

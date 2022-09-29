@@ -1,8 +1,7 @@
-import React from 'react';
-import style from "./Users.module.css";
-import userPhoto from "../../images/userr.png";
+import React, {useMemo} from 'react';
 import {UsersType} from "../../redux/reducers/usersDataReducer";
-import {NavLink} from "react-router-dom";
+import {Paginator} from "../common/Paginator/Paginator";
+import {User} from "./User/User";
 
 
 type UsersPropType = {
@@ -16,56 +15,24 @@ type UsersPropType = {
     followUser: (userID: number) => void
 }
 
-export const Users = (props: UsersPropType) => {
-
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-    const pagesNumbers = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pagesNumbers.push(i)
+export const Users: React.FC<UsersPropType> = (
+    {
+        currentPage,
+        onChangingCurrentPage,
+        pageSize,
+        totalUsersCount,
+        users,
+        ...props
     }
+) => {
+    const usersForRender = useMemo(() => users.map(u => <User key={u.id} user={u} {...props}/>)
+    , [users, props])
+
     return (
         <div>
-            <div style={{display: "flex", justifyContent: "space-evenly", flexWrap: "wrap",}}>
-                {pagesNumbers.map(p => {
-                        return <span key={p}
-                                     className={props.currentPage === p ? style.selectedPage : ''}
-                                     onClick={(e) => props.onChangingCurrentPage(p)}>..{p}</span>
-                    }
-                )}
-            </div>
-            {
-                props.users.map(u =>
-                    <div key={u.id}>
-                        <span>
-                            <div>
-                                <NavLink to={`/profile/${u.id}`}>
-                                <img src={u.photos.small ? u.photos.small : userPhoto}
-                                     alt={userPhoto}
-                                     className={style.usersPhoto}/>
-                                </NavLink>
-                            </div>
-                            <div>
-                                    {u.followed ?
-                                        <button disabled={props.toggleFollowFetchingQueue.some(id => id === u.id)}
-                                                onClick={() => {
-                                                    props.unfollowUser(u.id)
-                                                }}>Unfollow</button>
-                                        : <button disabled={props.toggleFollowFetchingQueue.some(id => id === u.id)}
-                                                  onClick={() => {
-                                                      props.followUser(u.id)
-                                                  }}>Follow</button>}
-                                </div>
-                        </span>
-                        <span>
-                            <span>
-                                    <div>user ID: {u.id}</div>
-                                    <div>{u.name}</div>
-                                    <div>{u.status}</div>
-                            </span>
-                        </span>
-                    </div>
-                )
-            }
+            <Paginator currentPage={currentPage} onChangingCurrentPage={onChangingCurrentPage} pageSize={pageSize}
+                       totalUsersCount={totalUsersCount}/>
+            {usersForRender}
         </div>
     )
 };

@@ -8,7 +8,6 @@ import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {FormAction, reducer as formReducer} from 'redux-form'
 import {appInitReducer} from "./reducers/appInitReducer";
 import {ActionType} from "./store";
-import {useDispatch} from "react-redux";
 
 const reducers = combineReducers({
     profileData: profileDataReducer,

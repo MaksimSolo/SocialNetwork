@@ -29,17 +29,16 @@ type UsersContainerPropType = {
 class UsersContainer extends React.Component<UsersContainerPropType, AppStateType> {
 
     componentDidMount() {
-
-        this.props.getUsersTC(this.props.currentPage, this.props.pageSize);
+        let {currentPage, pageSize} = this.props
+        this.props.getUsersTC(currentPage, pageSize);
     }
 
     onChangingCurrentPage = (newPage: number) => {
-
-        this.props.getUsersTC(newPage, this.props.pageSize);
+        let {pageSize} = this.props
+        this.props.getUsersTC(newPage, pageSize);
     }
 
     render = () =>
-
         <>
             {this.props.inProgress ? <Preloader/> : null}
             <Users users={this.props.users}

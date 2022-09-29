@@ -2,7 +2,7 @@ import React from 'react';
 import {WrappedFieldProps} from "redux-form/lib/Field";
 import style from './FormControls.module.css'
 import {Field} from "redux-form";
-import {FieldValidatorType} from "../../utils/validators/validators";
+import {FieldValidatorType} from "../../../utils/validators/validators";
 
 type FormControlType = WrappedFieldProps;
 export const FormControl: React.FC<FormControlType> = (props) => {
