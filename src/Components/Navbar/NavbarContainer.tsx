@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {Navbar} from "./Navbar";
-import {doSomeAC, doSomeType} from "../../redux/reducers/friendsSideBarReducer";
+import {doSomeAC, doSomeType} from "../../redux/reducers/friends-sidebar-reducer";
 import {AppStateType} from "../../redux/redux-store";
 
 const mapStateToProps = (state: AppStateType) => ({friendsSideBar: state.friendsSideBar, isAuth: state.auth.isAuth})

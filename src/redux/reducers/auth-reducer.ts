@@ -1,11 +1,11 @@
 import {ActionType} from "../store";
 import {AppThunk} from "../redux-store";
 import {apiAuth} from "../../api/api-auth";
-import {fetchingInProgress} from "./usersDataReducer";
+import {fetchingInProgress} from "./users-data-reducer";
 import {FormDataType} from "../../Components/Login/Login";
 import {stopSubmit} from "redux-form";
 import {AxiosError} from "axios";
-import {setUserProfile, setUserStatus} from "./profileDataReducer";
+import {setUserProfile, setUserStatus} from "./profile-data-reducer";
 
 const APPLY_AUTH_DATA = 'social-network/auth/APPLY_AUTH_DATA';
 const TOGGLE_INPROGRESS = 'social-network/usersData/TOGGLE_INPROGRESS';

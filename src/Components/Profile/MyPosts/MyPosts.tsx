@@ -4,7 +4,7 @@ import {Post} from "./Post/Post";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../utils/validators/validators";
 import {Textarea} from "../../common/FormControls/FormControls";
-import {ProfileDataType} from "../../../redux/reducers/profileDataReducer";
+import {ProfileDataType} from "../../../redux/reducers/profile-data-reducer";
 
 
 type MyPostsType = {

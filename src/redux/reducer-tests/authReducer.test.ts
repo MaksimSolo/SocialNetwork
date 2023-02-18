@@ -1,5 +1,5 @@
-import {applyAuthData, AuthDataType, authReducer, AuthType} from "../reducers/authReducer";
-import {fetchingInProgress} from "../reducers/usersDataReducer";
+import {applyAuthData, AuthDataType, authReducer, AuthType} from "../reducers/auth-reducer";
+import {fetchingInProgress} from "../reducers/users-data-reducer";
 
 let currentState: AuthType;
 

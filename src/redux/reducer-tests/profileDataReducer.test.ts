@@ -1,4 +1,4 @@
-import {addPostAC, deletePost, profileDataReducer, ProfileDataType} from "../reducers/profileDataReducer";
+import {addPostAC, deletePost, profileDataReducer, ProfileDataType} from "../reducers/profile-data-reducer";
 
 let currentState: ProfileDataType;
 

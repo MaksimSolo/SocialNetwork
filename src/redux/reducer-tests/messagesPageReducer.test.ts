@@ -1,4 +1,4 @@
-import {messagesPageReducer, MessagesPageType, sendMessageAC} from "../reducers/messagesPageReducer";
+import {messagesPageReducer, MessagesPageType, sendMessageAC} from "../reducers/messages-page-reducer";
 
 let currentState: MessagesPageType;
 

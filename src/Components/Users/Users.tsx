@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {UsersType} from "../../redux/reducers/usersDataReducer";
+import {UsersType} from "../../redux/reducers/users-data-reducer";
 import {Paginator} from "../common/Paginator/Paginator";
 import {User} from "./User/User";
 

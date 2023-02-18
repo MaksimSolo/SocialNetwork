@@ -21,7 +21,7 @@ let initialState = {
 }
 
 
-export const friendsSideBarReducer = (state: FriendsSideBarType = initialState, action: doSomeType): FriendsSideBarType => {
+export const friendsSidebarReducer = (state: FriendsSideBarType = initialState, action: doSomeType): FriendsSideBarType => {
     switch (action.type) {
         case DO_SOME:
             return state

@@ -1,13 +1,13 @@
 import {ActionType} from "../store";
 import {AppThunk} from "../redux-store";
-import {getAuthUserDataTC} from "./authReducer";
+import {getAuthUserDataTC} from "./auth-reducer";
 import {AxiosError} from "axios";
 
 const INITIALIZED = 'social-network/appInit/INITIALIZED';
 
 let initialState = {initialized: false}
 
-export const appInitReducer = (state: AppInitType = initialState, action: ActionType): AppInitType => {
+export const appReducer = (state: AppInitType = initialState, action: ActionType): AppInitType => {
 
     switch (action.type) {
         case INITIALIZED:

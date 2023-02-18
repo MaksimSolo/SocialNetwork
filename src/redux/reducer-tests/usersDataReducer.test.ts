@@ -3,7 +3,7 @@ import {
     toggleFollow,
     usersDataReducer,
     UsersDataType
-} from "../reducers/usersDataReducer";
+} from "../reducers/users-data-reducer";
 
 let currentState: UsersDataType;
 

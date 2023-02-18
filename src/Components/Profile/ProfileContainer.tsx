@@ -7,7 +7,7 @@ import {
     getUserStatusTC,
     updateUserStatusTC,
     UsersProfilePropsType
-} from "../../redux/reducers/profileDataReducer";
+} from "../../redux/reducers/profile-data-reducer";
 import {withRouter} from "../../customWithRouter";
 import {compose} from "redux";
 import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";

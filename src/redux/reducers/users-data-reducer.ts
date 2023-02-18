@@ -1,5 +1,5 @@
 import {ActionType} from "../store";
-import {apiUsersComp} from "../../api/api-users";
+import {apiUsers} from "../../api/api-users";
 import {AppThunk} from "../redux-store";
 import {AxiosError} from "axios";
 import {changeItemPropsInItemsArray, usersToggleFollowFlow} from "../../utils/users-reducer-assist";
@@ -71,7 +71,7 @@ export const getUsersTC = (currentPage: number, pageSize: number): AppThunk => a
     try {
         dispatch(fetchingInProgress(true));
         dispatch(changeCurrentPage(currentPage));
-        const responseData = await apiUsersComp.getUsersData(currentPage, pageSize);
+        const responseData = await apiUsers.getUsersData(currentPage, pageSize);
         dispatch(setUsers(responseData.data.items));
         dispatch(setUsersTotalCount(responseData.data.totalCount));
         dispatch(fetchingInProgress(false));
@@ -82,11 +82,11 @@ export const getUsersTC = (currentPage: number, pageSize: number): AppThunk => a
 }
 
 export const unfollowUserTC = (userID: number,): AppThunk => async dispatch => {
-    await usersToggleFollowFlow(dispatch, userID, apiUsersComp.unfollowUser)
+    await usersToggleFollowFlow(dispatch, userID, apiUsers.unfollowUser)
 }
 
 export const followUserTC = (userID: number,): AppThunk => async dispatch => {
-    await usersToggleFollowFlow(dispatch, userID, apiUsersComp.postForFollowUser)
+    await usersToggleFollowFlow(dispatch, userID, apiUsers.postForFollowUser)
 }
 
 //types

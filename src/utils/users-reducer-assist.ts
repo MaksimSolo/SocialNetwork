@@ -6,7 +6,7 @@ import {
     selectFromToggleFollowFetchingQueue,
     toggleFollow,
     UsersType
-} from "../redux/reducers/usersDataReducer";
+} from "../redux/reducers/users-data-reducer";
 
 export const usersToggleFollowFlow =async (dispatch: AppDispatch,userID: number, apiMethod: (userID: number)=>  Promise<ToggleFollowResponseType>)=>{
     try {

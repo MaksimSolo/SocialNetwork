@@ -1,22 +1,22 @@
 import {applyMiddleware, combineReducers, compose, createStore,} from "redux";
-import {profileDataReducer} from "./reducers/profileDataReducer";
-import {messagesPageReducer} from "./reducers/messagesPageReducer";
-import {friendsSideBarReducer} from "./reducers/friendsSideBarReducer";
-import {usersDataReducer} from "./reducers/usersDataReducer";
-import {authReducer} from "./reducers/authReducer";
+import {profileDataReducer} from "./reducers/profile-data-reducer";
+import {messagesPageReducer} from "./reducers/messages-page-reducer";
+import {friendsSidebarReducer} from "./reducers/friends-sidebar-reducer";
+import {usersDataReducer} from "./reducers/users-data-reducer";
+import {authReducer} from "./reducers/auth-reducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {FormAction, reducer as formReducer} from 'redux-form'
-import {appInitReducer} from "./reducers/appInitReducer";
+import {appReducer} from "./reducers/app-reducer";
 import {ActionType} from "./store";
 
 const reducers = combineReducers({
     profileData: profileDataReducer,
     messagesPage: messagesPageReducer,
-    friendsSideBar: friendsSideBarReducer,
+    friendsSideBar: friendsSidebarReducer,
     usersData: usersDataReducer,
     auth: authReducer,
     form: formReducer,
-    app: appInitReducer,
+    app: appReducer,
 });
 
 

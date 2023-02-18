@@ -1,6 +1,6 @@
 import {AppStateType} from "../redux-store";
 import {createSelector} from "reselect";
-import {AuthDataType} from "../reducers/authReducer";
+import {AuthDataType} from "../reducers/auth-reducer";
 
 //в селекторах можно производить отдельные нужные действия с элемeнтами стейта!
 

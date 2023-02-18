@@ -1,11 +1,5 @@
-import {
-    AddPostType,
-    DeletePostType,
-    SetUserProfileType,
-    SetUserStatusType,
-    UsersProfilePropsType
-} from "./reducers/profileDataReducer";
-import {SendMessageType} from "./reducers/messagesPageReducer";
+import {AddPostType, DeletePostType, SetUserProfileType, SetUserStatusType} from "./reducers/profile-data-reducer";
+import {SendMessageType} from "./reducers/messages-page-reducer";
 import {AppStateType} from "./redux-store";
 import {
     ChangeCurrentPageType,
@@ -14,10 +8,9 @@ import {
     SetUsersType,
     ToggleFollowType,
     toggleInProgressType
-} from "./reducers/usersDataReducer";
-import {applyAuthDataType} from "./reducers/authReducer";
-import {Initialized} from "./reducers/appInitReducer";
-import {FormAction} from "redux-form";
+} from "./reducers/users-data-reducer";
+import {applyAuthDataType} from "./reducers/auth-reducer";
+import {Initialized} from "./reducers/app-reducer";
 
 export type PostDataType = {
     id: string
