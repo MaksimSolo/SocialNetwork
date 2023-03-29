@@ -2,20 +2,12 @@ import './index.css'
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
 import React from "react";
-import {HashRouter} from "react-router-dom";
-import App from "./App";
-import {Provider} from "react-redux";
-import {store} from "./redux/redux-store";
-
+import SocialNetworkApp from "./App";
 
 
 ReactDOM.render(
-        <HashRouter>
-            <Provider store={store}>
-                <App/>
-            </Provider>
-        </HashRouter>,
-    document.getElementById('root')
+  <SocialNetworkApp/>,
+  document.getElementById('root')
 );
 
 
