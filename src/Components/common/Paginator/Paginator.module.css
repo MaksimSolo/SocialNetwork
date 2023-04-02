@@ -7,10 +7,18 @@
     border: 2px solid #e5e5e5;
     border-radius: 5px;
     text-align: center;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 }
 .selectedPage {
     border: 2px solid #6e0c29;
     font-weight: bold;
     background-color: burlywood;
+}
+
+button {
+    margin-right: 10px;
+}
+
+span {
+    margin-right: 7px;
 }

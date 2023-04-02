@@ -15,7 +15,7 @@ const SELECT_FROM_TOGGLE_FOLLOW_FETCHING_QUEUE = 'social-network/usersData/SELEC
 let initialState = {
     users: [] as Array<UsersType> | [],
     totalUsersCount: 0,
-    pageSize: 100,
+    pageSize: 10,
     currentPage: 1,
     inProgress: false,
     toggleFollowFetchingQueue: [] as number[] | [],
@@ -26,7 +26,6 @@ export const usersDataReducer = (state: UsersDataType = initialState, action: Ac
 
     switch (action.type) {
         case TOGGLE_FOLLOW:
-            // return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: !u.followed} : u)};
             return {
                 ...state,
                 users: changeItemPropsInItemsArray(state.users,action.userID,"id","followed")
@@ -112,12 +111,3 @@ export type UsersType = {
 }
 
 export type KeysUsersType = keyof UsersType
-
-// export type UsersDataType = {
-//     users: Array<UsersType>
-//     totalUsersCount: number,
-//     pageSize: number
-//     currentPage: number
-//     inProgress: boolean
-//     toggleFollowFetchingQueue: number[];
-// }

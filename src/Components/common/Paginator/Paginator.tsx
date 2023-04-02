@@ -1,36 +1,57 @@
-import React from 'react';
+import React, {useState} from 'react';
 import style from './Paginator.module.css';
 
 
-type PaginatorPropsType = {
-    totalUsersCount: number,
-    pageSize: number
-    currentPage: number
-    onChangingCurrentPage: (newPage: number) => void
+type PaginatorType = {
+  totalUsersCount: number,
+  pageSize: number
+  currentPage: number
+  onChangingCurrentPage: (newPage: number) => void
 }
 
-export const Paginator: React.FC<PaginatorPropsType> = (
-    {
-        totalUsersCount,
-        pageSize,
-        currentPage,
-        onChangingCurrentPage,
-    }
+export const Paginator: React.FC<PaginatorType> = (
+  {
+    totalUsersCount,
+    pageSize,
+    currentPage,
+    onChangingCurrentPage,
+  }
 ) => {
 
-    let pagesCount = Math.ceil(totalUsersCount / pageSize);
-    const pagesNumbers = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pagesNumbers.push(i)
+  const pagesCountInPortion: number = 5;
+
+  let pagesCountTotal = Math.ceil(totalUsersCount / pageSize);
+
+  let portionsCountTotal: number = Math.ceil(pagesCountTotal / pagesCountInPortion);
+
+  const [portionNumber, setPortionNumber] = useState<number>(1)
+
+  let endPortionPageNumber = portionNumber * pagesCountInPortion
+  let startPortionPageNumber = 1 + (endPortionPageNumber - pagesCountInPortion)
+
+  const getPortionForRender = () => {
+    const array = []
+    for (let i = 0; i < portionsCountTotal; i++) {
+      array.push(i)
     }
-    return (
-        <div className={style.paginator}>
-            {pagesNumbers.map(p => {
-                    return <span key={p}
-                                 className={currentPage === p ? style.selectedPage : ''}
-                                 onClick={(e) => onChangingCurrentPage(p)}>..{p}</span>
-                }
-            )}
-        </div>
-    )
+    return array
+      .filter(i => i >= startPortionPageNumber && i <= endPortionPageNumber)
+      .map(p => <span key={p}
+                      className={currentPage === p ? style.selectedPage : ''}
+                      onClick={() => onChangingCurrentPage(p)}>..{p}</span>
+      )
+  }
+
+
+  const pagesNumbers = [];
+  for (let i = 1; i <= pagesCountTotal; i++) {
+    pagesNumbers.push(i)
+  }
+  return (
+    <div className={style.paginator}>
+      {portionNumber>1 && <button onClick={()=>setPortionNumber(portionNumber-1)}>PREV</button>}
+      {getPortionForRender()}
+      {portionNumber<portionsCountTotal && <button onClick={()=>setPortionNumber(portionNumber+1)}>NEXT</button>}
+    </div>
+  )
 };

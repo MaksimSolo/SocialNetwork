@@ -53,16 +53,6 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
         </>
 }
 
-// до создания функций селекторов ::::
-// const mapStateToProps = (state: AppStateType) => ({
-//     users: state.usersData.users,
-//     totalUsersCount: state.usersData.totalUsersCount,
-//     pageSize: state.usersData.pageSize,
-//     currentPage: state.usersData.currentPage,
-//     inProgress: state.usersData.inProgress,
-//     toggleFollowFetchingQueue: state.usersData.toggleFollowFetchingQueue,
-// });
-
 const mapStateToProps = (state: AppStateType) => ({
     users: getUsersMainSelector(state),
     totalUsersCount: getTotalUsersCountMainSelector(state),
@@ -71,27 +61,5 @@ const mapStateToProps = (state: AppStateType) => ({
     inProgress: getInProgressMainSelector(state),
     toggleFollowFetchingQueue: getToggleFollowFetchingQueueMainSelector(state),
 });
-
-//предыдущий вариант mapDispatchToProps
-/*const mapDispatchToProps = (dispatch: (action: ActionType) => void) => {
-    return {
-        toggleFollow: (userID: number) => {
-            dispatch(toggleFollowAC(userID))
-        },
-        setUsers: (users: Array<UsersType>) => {
-            dispatch(setUsersAC(users))
-        },
-        changeCurrentPage: (newPage: number) => {
-            dispatch(changeCurrentPageAC(newPage))
-        },
-        setUsersTotalCount: (totalUsersCount: number) => {
-            dispatch(setUsersTotalCountAC(totalUsersCount))
-        },
-        fetchingInProgress: (inProgress: boolean) => {
-            dispatch(toggleInProgressAC(inProgress))
-        }
-    }
-}*/
-
 
 export default connect(mapStateToProps, {getUsersTC, unfollowUserTC, followUserTC,})(UsersContainer)
