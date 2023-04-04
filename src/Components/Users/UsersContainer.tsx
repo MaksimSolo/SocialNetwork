@@ -6,7 +6,7 @@ import {Users} from "./Users";
 import Preloader from "../Preloader/Preloader";
 import {
     getCurrentPageMainSelector,
-    getInProgressMainSelector,
+    getInProgressMainSelector, getPagesCountInPortion,
     getPageSizeMainSelector,
     getToggleFollowFetchingQueueMainSelector,
     getTotalUsersCountMainSelector,
@@ -15,9 +15,10 @@ import {
 
 type UsersContainerPropType = {
     users: Array<UsersType>
-    totalUsersCount: number,
+    totalUsersCount: number
     pageSize: number
     currentPage: number
+    pagesCountInPortion: number
     inProgress: boolean
     toggleFollowFetchingQueue: number[]
     getUsersTC: (currentPage: number, pageSize: number) => void
@@ -46,6 +47,7 @@ class UsersContainer extends React.Component<UsersContainerPropType, AppStateTyp
                    currentPage={this.props.currentPage}
                    pageSize={this.props.pageSize}
                    totalUsersCount={this.props.totalUsersCount}
+                   pagesCountInPortion={this.props.pagesCountInPortion}
                    toggleFollowFetchingQueue={this.props.toggleFollowFetchingQueue}
                    unfollowUser={this.props.unfollowUserTC}
                    followUser={this.props.followUserTC}
@@ -58,6 +60,7 @@ const mapStateToProps = (state: AppStateType) => ({
     totalUsersCount: getTotalUsersCountMainSelector(state),
     pageSize: getPageSizeMainSelector(state),
     currentPage: getCurrentPageMainSelector(state),
+    pagesCountInPortion: getPagesCountInPortion(state),
     inProgress: getInProgressMainSelector(state),
     toggleFollowFetchingQueue: getToggleFollowFetchingQueueMainSelector(state),
 });

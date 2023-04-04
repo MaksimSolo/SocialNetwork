@@ -5,34 +5,36 @@ import {User} from "./User/User";
 
 
 type UsersPropType = {
-    users: Array<UsersType>
-    totalUsersCount: number,
-    pageSize: number
-    currentPage: number
-    onChangingCurrentPage: (newPage: number) => void
-    toggleFollowFetchingQueue: number[]
-    unfollowUser: (userID: number) => void
-    followUser: (userID: number) => void
+  users: Array<UsersType>
+  totalUsersCount: number,
+  pageSize: number
+  currentPage: number
+  pagesCountInPortion: number
+  onChangingCurrentPage: (newPage: number) => void
+  toggleFollowFetchingQueue: number[]
+  unfollowUser: (userID: number) => void
+  followUser: (userID: number) => void
 }
 
 export const Users: React.FC<UsersPropType> = (
-    {
-        currentPage,
-        onChangingCurrentPage,
-        pageSize,
-        totalUsersCount,
-        users,
-        ...props
-    }
+  {
+    currentPage,
+    onChangingCurrentPage,
+    pageSize,
+    totalUsersCount,
+    pagesCountInPortion,
+    users,
+    ...props
+  }
 ) => {
-    const usersForRender = useMemo(() => users.map(u => <User key={u.id} user={u} {...props}/>)
+  const usersForRender = useMemo(() => users.map(u => <User key={u.id} user={u} {...props}/>)
     , [users, props])
 
-    return (
-        <div>
-            <Paginator currentPage={currentPage} onChangingCurrentPage={onChangingCurrentPage} pageSize={pageSize}
-                       totalUsersCount={totalUsersCount}/>
-            {usersForRender}
-        </div>
-    )
+  return (
+    <div>
+      <Paginator currentPage={currentPage} onChangingCurrentPage={onChangingCurrentPage} pageSize={pageSize}
+                 totalUsersCount={totalUsersCount} pagesCountInPortion={pagesCountInPortion}/>
+      {usersForRender}
+    </div>
+  )
 };

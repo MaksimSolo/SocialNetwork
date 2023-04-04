@@ -6,6 +6,7 @@ type PaginatorType = {
   totalUsersCount: number,
   pageSize: number
   currentPage: number
+  pagesCountInPortion: number
   onChangingCurrentPage: (newPage: number) => void
 }
 
@@ -31,7 +32,7 @@ export const Paginator: React.FC<PaginatorType> = (
 
   const getPortionForRender = () => {
     const array = []
-    for (let i = 0; i < portionsCountTotal; i++) {
+    for (let i = 1; i <= portionsCountTotal; i++) {
       array.push(i)
     }
     return array
@@ -42,16 +43,11 @@ export const Paginator: React.FC<PaginatorType> = (
       )
   }
 
-
-  const pagesNumbers = [];
-  for (let i = 1; i <= pagesCountTotal; i++) {
-    pagesNumbers.push(i)
-  }
   return (
     <div className={style.paginator}>
-      {portionNumber>1 && <button onClick={()=>setPortionNumber(portionNumber-1)}>PREV</button>}
+      {portionNumber > 1 && <button onClick={() => setPortionNumber(portionNumber - 1)}>PREV</button>}
       {getPortionForRender()}
-      {portionNumber<portionsCountTotal && <button onClick={()=>setPortionNumber(portionNumber+1)}>NEXT</button>}
+      {portionNumber < portionsCountTotal && <button onClick={() => setPortionNumber(portionNumber + 1)}>NEXT</button>}
     </div>
   )
 };

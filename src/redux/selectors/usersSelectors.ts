@@ -11,6 +11,7 @@ const getPageSize = (state: AppStateType) => state.usersData.pageSize;
 const getCurrentPage = (state: AppStateType) => state.usersData.currentPage;
 const getInProgress = (state: AppStateType) => state.usersData.inProgress;
 const getToggleFollowFetchingQueue = (state: AppStateType) => state.usersData.toggleFollowFetchingQueue;
+export const getPagesCountInPortion = (state: AppStateType) => state.usersData.pagesCountInPortion;
 
 //main selectors (there must be complex logic here)
 export const getUsersMainSelector = createSelector(getUsersSimpleSelector, (users: UsersType[]) => users);

@@ -38,6 +38,7 @@ beforeEach(() => {
         totalUsersCount: 50,
         pageSize: 100,
         currentPage: 10,
+        pagesCountInPortion: 5,
         inProgress: false,
         toggleFollowFetchingQueue: [5152,321],
     }

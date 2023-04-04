@@ -17,6 +17,7 @@ let initialState = {
     totalUsersCount: 0,
     pageSize: 10,
     currentPage: 1,
+    pagesCountInPortion: 5,
     inProgress: false,
     toggleFollowFetchingQueue: [] as number[] | [],
 }
