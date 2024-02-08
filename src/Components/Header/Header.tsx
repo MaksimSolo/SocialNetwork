@@ -12,7 +12,7 @@ export const Header = (props: HeaderProps) => {
 
     return (
         <header className={classes.header}>
-            <img src="https://www.logodesign.net/images/nature-logo.png"/>
+            <img src="https://www.logodesign.net/images/nature-logo.png" alt=''/>
             {props.isAuth ?
                 <div className={classes.loginBlock}>
                     <div>id: {props.data.id}</div>

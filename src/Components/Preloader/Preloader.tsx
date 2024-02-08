@@ -6,7 +6,7 @@ const Preloader = () => {
 
     return (
         <div className={style.main}>
-            <div><img src={preloader}/></div>
+            <div><img src={preloader} alt=''/></div>
             <div>Initializing your Social Network App</div>
         </div>
     );

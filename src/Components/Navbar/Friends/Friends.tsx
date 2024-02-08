@@ -11,7 +11,8 @@ export const Friends = (props: FriendsType) => {
     return (
         <div className={classes.friendItem}>
             <img className={classes.img}
-                 src={props.img}/>
+                 src={props.img}
+                 alt=''/>
             <div><b>{props.name}</b></div>
         </div>
     );
