@@ -33,7 +33,7 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
 
     componentDidMount() {
 
-        let userID = this.props.router.params['*'];
+        let userID = this.props.router.params['*'] ?? '';
         if (userID === '') {
             userID = this.props.authUserId
             if (!userID) {

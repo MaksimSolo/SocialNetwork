@@ -28,7 +28,7 @@ export const Login: React.FC<LoginType> = ({isAuth, loginUserTC,}) => {
     loginUserTC(formData)
   }
   if (isAuth) {
-    return <Navigate to={`/profile`}/>
+    return <Navigate to={`/`}/>
   } else {
     return (
       <div>
