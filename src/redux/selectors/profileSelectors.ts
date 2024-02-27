@@ -5,11 +5,11 @@ import {UsersProfilePropsType} from "../reducers/profile-data-reducer";
 //в селекторах можно производить отдельные нужные действия с элемeнтами стейта!
 
 //simple selectors (without complex logic)
-const getProfileData = (state: AppStateType) => state.profileData.usersProfile;
-const getAuthUserId = (state: AppStateType) => state.auth.data.id;
-const getProfileStatus = (state: AppStateType) => state.profileData.status;
+const selectUserProfile = (state: AppStateType) => state.profileData.usersProfile;
+const selectAuthUserId = (state: AppStateType) => state.auth.data.id;
+const selectProfileStatus = (state: AppStateType) => state.profileData.status;
 
-//main selectors (there must be complex logic here)
-export const getProfileDataMS = createSelector(getProfileData, (usersProfile: UsersProfilePropsType | null) => usersProfile);
-export const getAuthUserIdMS = createSelector(getAuthUserId, (id: number) => id);
-export const getProfileStatusMS = createSelector(getProfileStatus, (status: string) => status);
+//main selectors (complex logic must be here)
+export const selectUserProfileDataMain = createSelector(selectUserProfile, (usersProfile: UsersProfilePropsType | null) => usersProfile);
+export const selectAuthUserIdMain = createSelector(selectAuthUserId, (id: number) => id);
+export const selectProfileStatusMain = createSelector(selectProfileStatus, (status: string) => status);

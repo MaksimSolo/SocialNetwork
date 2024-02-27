@@ -1,17 +1,21 @@
 import React from 'react';
-import {AppStateType} from "../../redux/redux-store";
-import {Profile} from "./Profile";
 import {connect} from "react-redux";
+import {compose} from "redux";
+import {withRouter} from "../../customWithRouter";
+import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
 import {
     getUserProfileTC,
     getUserStatusTC,
     updateUserStatusTC,
     UsersProfilePropsType
 } from "../../redux/reducers/profile-data-reducer";
-import {withRouter} from "../../customWithRouter";
-import {compose} from "redux";
-import {withAuthRedirectComponent} from "../../highOrderComp/withAuthRedirectComponent";
-import {getAuthUserIdMS, getProfileDataMS, getProfileStatusMS} from "../../redux/selectors/profileSelectors";
+import {AppStateType} from "../../redux/redux-store";
+import {
+    selectAuthUserIdMain,
+    selectProfileStatusMain,
+    selectUserProfileDataMain
+} from "../../redux/selectors/profileSelectors";
+import {Profile} from "./Profile";
 
 
 type ProfileContainerType = {
@@ -50,12 +54,12 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
 const mapStateToProps = (state: AppStateType) => {
 
     return ({
-        profile: getProfileDataMS(state),
-        authUserId: getAuthUserIdMS(state),
-        status: getProfileStatusMS(state),
+        profile: selectUserProfileDataMain(state),
+        authUserId: selectAuthUserIdMain(state),
+        status: selectProfileStatusMain(state),
     })
 }
-export const WithRouterProfileContainer = compose<React.ComponentType>(
+export const ProfileContainerWithRouter = compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfileTC, getUserStatusTC, updateUserStatusTC}),
     withAuthRedirectComponent,
     withRouter
