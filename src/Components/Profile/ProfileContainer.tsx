@@ -30,7 +30,6 @@ type ProfileContainerType = {
 
 
 class ProfileContainer extends React.Component<ProfileContainerType, AppStateType> {
-
   protected updateProfile(): void {
     let userId = this.props.router.params['*'] ?? '';
 
@@ -61,8 +60,9 @@ class ProfileContainer extends React.Component<ProfileContainerType, AppStateTyp
 
 
   render = () => {
-
-    return (<><Profile {...this.props} /></>);
+    return <>
+      <Profile {...this.props} isOwner={!this.props.router.params['*']}/>
+    </>
   }
 }
 

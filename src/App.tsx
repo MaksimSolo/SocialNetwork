@@ -40,7 +40,7 @@ export class App extends React.Component<AppContainerType, AppStateType> {
           <NavbarContainer/>
           <div className='app-wrapper-content'>
             <Routes>
-              <Route path='/' element={withSuspense(WithRouterProfileContainer)}/>
+              <Route path='/' element={<Navigate to='/profile'/>}/>
               <Route path='/profile/*'
                      element={withSuspense(WithRouterProfileContainer)}/>
               <Route path='/dialogs'

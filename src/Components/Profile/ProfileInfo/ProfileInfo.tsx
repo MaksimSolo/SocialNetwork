@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import classes from "./ProfileInfo.module.css";
 import {UsersProfilePropsType} from "../../../redux/reducers/profile-data-reducer";
 import Preloader from "../../Preloader/Preloader";
@@ -10,24 +10,29 @@ export type ProfileInfoType = {
   authUserId: number
   updateUserStatusTC: (newStatus: string,) => void
   status: string
+  isOwner: boolean
+
 }
 
-export const ProfileInfo: React.FC<ProfileInfoType> = (
-  {
-    profile,
-    ...props
-  }
-) => {
-
+export const ProfileInfo = ({profile, isOwner, ...props}: ProfileInfoType) => {
   if (!profile) {
     return <Preloader/>
   }
+
+  const onAvatarUploadHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0];
+      console.log(file)
+    }
+  }
+
   return (
     <div>
       <div className={classes.descriptionBlock}>
         <img src={profile.photos.small ?? userPhoto}
              className={classes.usersPhoto} alt=''/>
 
+        <div>{isOwner && <input type={"file"} onChange={onAvatarUploadHandler}/>}</div>
         <div>ID: {profile.userId}</div>
         <div>Name: {profile.fullName}</div>
 
